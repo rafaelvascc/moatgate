@@ -1,0 +1,108 @@
+@page
+@model MoatGate.Pages.User.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>MoatGateIdentityUser</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MoatGateIdentityUser.Id" />
+            <div class="form-group">
+                <label asp-for="MoatGateIdentityUser.UserName" class="control-label"></label>
+                <input asp-for="MoatGateIdentityUser.UserName" class="form-control" />
+                <span asp-validation-for="MoatGateIdentityUser.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoatGateIdentityUser.NormalizedUserName" class="control-label"></label>
+                <input asp-for="MoatGateIdentityUser.NormalizedUserName" class="form-control" />
+                <span asp-validation-for="MoatGateIdentityUser.NormalizedUserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoatGateIdentityUser.Email" class="control-label"></label>
+                <input asp-for="MoatGateIdentityUser.Email" class="form-control" />
+                <span asp-validation-for="MoatGateIdentityUser.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoatGateIdentityUser.NormalizedEmail" class="control-label"></label>
+                <input asp-for="MoatGateIdentityUser.NormalizedEmail" class="form-control" />
+                <span asp-validation-for="MoatGateIdentityUser.NormalizedEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="MoatGateIdentityUser.EmailConfirmed" /> @Html.DisplayNameFor(model => model.EmailConfirmed)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoatGateIdentityUser.PasswordHash" class="control-label"></label>
+                <input asp-for="MoatGateIdentityUser.PasswordHash" class="form-control" />
+                <span asp-validation-for="MoatGateIdentityUser.PasswordHash" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoatGateIdentityUser.SecurityStamp" class="control-label"></label>
+                <input asp-for="MoatGateIdentityUser.SecurityStamp" class="form-control" />
+                <span asp-validation-for="MoatGateIdentityUser.SecurityStamp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoatGateIdentityUser.ConcurrencyStamp" class="control-label"></label>
+                <input asp-for="MoatGateIdentityUser.ConcurrencyStamp" class="form-control" />
+                <span asp-validation-for="MoatGateIdentityUser.ConcurrencyStamp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoatGateIdentityUser.PhoneNumber" class="control-label"></label>
+                <input asp-for="MoatGateIdentityUser.PhoneNumber" class="form-control" />
+                <span asp-validation-for="MoatGateIdentityUser.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="MoatGateIdentityUser.PhoneNumberConfirmed" /> @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="MoatGateIdentityUser.TwoFactorEnabled" /> @Html.DisplayNameFor(model => model.TwoFactorEnabled)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoatGateIdentityUser.LockoutEnd" class="control-label"></label>
+                <input asp-for="MoatGateIdentityUser.LockoutEnd" class="form-control" />
+                <span asp-validation-for="MoatGateIdentityUser.LockoutEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="MoatGateIdentityUser.LockoutEnabled" /> @Html.DisplayNameFor(model => model.LockoutEnabled)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoatGateIdentityUser.AccessFailedCount" class="control-label"></label>
+                <input asp-for="MoatGateIdentityUser.AccessFailedCount" class="form-control" />
+                <span asp-validation-for="MoatGateIdentityUser.AccessFailedCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

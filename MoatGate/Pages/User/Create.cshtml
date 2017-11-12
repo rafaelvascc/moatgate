@@ -1,0 +1,56 @@
+@page
+@model MoatGate.Pages.User.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>MoatGateIdentityUser</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MoatGateIdentityUser.UserName" class="control-label"></label>
+                <input asp-for="MoatGateIdentityUser.UserName" class="form-control" />
+                <span asp-validation-for="MoatGateIdentityUser.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoatGateIdentityUser.Email" class="control-label"></label>
+                <input asp-for="MoatGateIdentityUser.Email" class="form-control" />
+                <span asp-validation-for="MoatGateIdentityUser.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoatGateIdentityUser.PhoneNumber" class="control-label"></label>
+                <input asp-for="MoatGateIdentityUser.PhoneNumber" class="form-control" />
+                <span asp-validation-for="MoatGateIdentityUser.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="MoatGateIdentityUser.TwoFactorEnabled" /> @Html.DisplayNameFor(model => model.MoatGateIdentityUser.TwoFactorEnabled)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

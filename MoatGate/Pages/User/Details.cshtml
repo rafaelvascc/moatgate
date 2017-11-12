@@ -1,0 +1,103 @@
+@page
+@model MoatGate.Pages.User.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MoatGateIdentityUser</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MoatGateIdentityUser.UserName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MoatGateIdentityUser.UserName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MoatGateIdentityUser.NormalizedUserName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MoatGateIdentityUser.NormalizedUserName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MoatGateIdentityUser.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MoatGateIdentityUser.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MoatGateIdentityUser.NormalizedEmail)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MoatGateIdentityUser.NormalizedEmail)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MoatGateIdentityUser.EmailConfirmed)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MoatGateIdentityUser.EmailConfirmed)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MoatGateIdentityUser.PasswordHash)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MoatGateIdentityUser.PasswordHash)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MoatGateIdentityUser.SecurityStamp)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MoatGateIdentityUser.SecurityStamp)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MoatGateIdentityUser.ConcurrencyStamp)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MoatGateIdentityUser.ConcurrencyStamp)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MoatGateIdentityUser.PhoneNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MoatGateIdentityUser.PhoneNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MoatGateIdentityUser.PhoneNumberConfirmed)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MoatGateIdentityUser.PhoneNumberConfirmed)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MoatGateIdentityUser.TwoFactorEnabled)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MoatGateIdentityUser.TwoFactorEnabled)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MoatGateIdentityUser.LockoutEnd)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MoatGateIdentityUser.LockoutEnd)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MoatGateIdentityUser.LockoutEnabled)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MoatGateIdentityUser.LockoutEnabled)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MoatGateIdentityUser.AccessFailedCount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MoatGateIdentityUser.AccessFailedCount)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.MoatGateIdentityUser.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
