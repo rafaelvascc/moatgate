@@ -1,0 +1,58 @@
+﻿@model System.String
+
+<section data-scope="client-partials-grant-types">
+    <div class="radio">
+        <label>
+            <input type="radio" name="GrantTypes" value="ClientCredentials" checked="@Model.Equals("ClientCredentials")">
+            Client Credentials
+        </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="GrantTypes" value="Code" checked="@Model.Equals("Code")">
+            Code
+        </label>
+    </div>
+    <div class="radio disabled">
+        <label>
+            <input type="radio" name="GrantTypes" value="CodeAndClientCredentials" checked="@Model.Equals("CodeAndClientCredentials")">
+            Code And Client Credentials
+        </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="GrantTypes" value="Hybrid" checked="@Model.Equals("Hybrid")">
+            Hybrid
+        </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="GrantTypes" value="HybridAndClientCredentials" checked="@Model.Equals("HybridAndClientCredentials")">
+            Hybrid And Client Credentials
+        </label>
+    </div>
+    <div class="radio disabled">
+        <label>
+            <input type="radio" name="GrantTypes" value="Implicit" checked="@Model.Equals("Implicit")">
+            Implicit
+        </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="GrantTypes" value="ImplicitAndClientCredentials" checked="@Model.Equals("ImplicitAndClientCredentials")">
+            Implicit And Client Credentials
+        </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="GrantTypes" value="ResourceOwnerPassword" checked="@Model.Equals("ResourceOwnerPassword")">
+            Resource Owner Password
+        </label>
+    </div>
+    <div class="radio disabled">
+        <label>
+            <input type="radio" name="GrantTypes" value="ResourceOwnerPasswordAndClientCredentials" checked="@Model.Equals("ResourceOwnerPasswordAndClientCredentials")">
+            Resource Owner Password And Client Credentials
+        </label>
+    </div>
+</section>

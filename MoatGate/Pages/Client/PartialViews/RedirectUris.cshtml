@@ -1,0 +1,37 @@
+﻿@model IList<IdentityServer4.EntityFramework.Entities.ClientRedirectUri>
+<section data-scope="client-partials-redirect-uri">
+    <p>
+        <button type="button" class="btn btn-sm btn-primary" id="btn-add-redirect-uri"><i class="fa fa-plus"></i> Create New</button>
+    </p>
+    <table class="table table-condensed table-responsive table-striped table-hover" id="tbl-redirect-uri">
+        <tbody>
+            @{ int i = 0; }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="url" class="form-control" name="Client.RedirectUris[@i.ToString()].RedirectUri" value="@item.RedirectUri" />
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <button type="button" class="btn btn-sm btn-danger  btn-delete-redirect-uri" title="Delete"><i class="fa fa-trash-o"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+    <script id="redirect-uri-template" type="text/x-jsrender">
+        <tr>
+            <td>
+                <input type="url" class="form-control" name="Client.RedirectUris[{{:index}}].RedirectUri" value="{{:value}}" />
+            </td>
+            <td>
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-sm btn-danger btn-delete-redirect-uri" title="Delete"><i class="fa fa-trash-o"></i></button>
+                </div>
+            </td>
+        </tr>
+    </script>
+</section>

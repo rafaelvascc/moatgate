@@ -1,41 +1,110 @@
 ﻿@page
 @model MoatGate.Pages.Client.CreateModel
+@using IdentityServer4;
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Client";
     Layout = "~/Pages/_Layout.cshtml";
 }
-
-<h2>Create</h2>
 
 <h2>Create</h2>
 <h4>Client</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="MoatGateIdentityUser.UserName" class="control-label"></label>
-                <input asp-for="MoatGateIdentityUser.UserName" class="form-control" />
-                <span asp-validation-for="MoatGateIdentityUser.UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MoatGateIdentityUser.Email" class="control-label"></label>
-                <input asp-for="MoatGateIdentityUser.Email" class="form-control" />
-                <span asp-validation-for="MoatGateIdentityUser.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MoatGateIdentityUser.PhoneNumber" class="control-label"></label>
-                <input asp-for="MoatGateIdentityUser.PhoneNumber" class="form-control" />
-                <span asp-validation-for="MoatGateIdentityUser.PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="MoatGateIdentityUser.TwoFactorEnabled" /> @Html.DisplayNameFor(model => model.MoatGateIdentityUser.TwoFactorEnabled)
-                    </label>
+            <fieldset>
+                <legend>Basic Info</legend>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Client.Enabled" /> @Html.DisplayNameFor(model => model.Client.Enabled)
+                        </label>
+                    </div>
                 </div>
-            </div>
+                <div class="form-group">
+                    <label asp-for="Client.ClientId" class="control-label"></label>
+                    <input asp-for="Client.ClientId" class="form-control" />
+                    <span asp-validation-for="Client.ClientId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Client.ClientSecrets" class="control-label"></label>
+                    @{
+                        var secrets = this.Model?.Client?.ClientSecrets ?? new List<IdentityServer4.EntityFramework.Entities.ClientSecret>()
+                                {
+                                    new IdentityServer4.EntityFramework.Entities.ClientSecret()
+                                };
+                        Html.RenderPartial("./PartialViews/ClientSecret", secrets);
+                    }
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Client.RequireClientSecret" /> @Html.DisplayNameFor(model => model.Client.RequireClientSecret)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Grant Types (Flows)</label>
+                    @{
+                        Html.RenderPartial("./PartialViews/GrantType", Model.GrantTypes);
+                    }
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Client.RequirePkce" /> @Html.DisplayNameFor(model => model.Client.RequirePkce)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Client.AllowPlainTextPkce" /> @Html.DisplayNameFor(model => model.Client.AllowPlainTextPkce)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Client.RedirectUris" class="control-label"></label>
+                    @{
+                        var redirectUris = this.Model?.Client?.RedirectUris ?? new List<IdentityServer4.EntityFramework.Entities.ClientRedirectUri>()
+                                    {
+                                        new IdentityServer4.EntityFramework.Entities.ClientRedirectUri()
+                                    };
+
+                        Html.RenderPartial("./PartialViews/RedirectUris", redirectUris);
+                    }
+                </div>
+                <div class="form-group">
+                    <label asp-for="Client.AllowedScopes" class="control-label"></label>
+                    @{
+                        var alowedScopes = this.Model?.Client?.AllowedScopes ?? new List<IdentityServer4.EntityFramework.Entities.ClientScope>()
+                                    {
+                                        new IdentityServer4.EntityFramework.Entities.ClientScope()
+                                    };
+
+                        Html.RenderPartial("./PartialViews/AllowedScopes", alowedScopes);
+                    }
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Consent Screen</legend>
+                <div class="form-group">
+                    <label asp-for="Client.ClientName" class="control-label"></label>
+                    <input asp-for="Client.ClientName" class="form-control" />
+                    <span asp-validation-for="Client.ClientName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Client.ClientUri" class="control-label"></label>
+                    <input asp-for="Client.ClientUri" class="form-control" />
+                    <span asp-validation-for="Client.ClientUri" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Client.LogoUri" class="control-label"></label>
+                    <input asp-for="Client.LogoUri" class="form-control" />
+                    <span asp-validation-for="Client.LogoUri" class="text-danger"></span>
+                </div>
+            </fieldset>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
@@ -46,5 +115,10 @@
     <a asp-page="Index">Back to List</a>
 </div>
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <environment include="Development">
+        <script type="text/javascript" src="~/js/Clients/client-create.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script type="text/javascript" src="~/js/Clients/client-create.min.js" asp-append-version="true"></script>
+    </environment>
 }

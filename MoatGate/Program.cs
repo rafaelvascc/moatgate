@@ -7,6 +7,10 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
+using IdentityServer4.EntityFramework.DbContexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace MoatGate
 {
@@ -14,7 +18,16 @@ namespace MoatGate
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            var webhost = BuildWebHost(args);
+
+            using (var serviceScope = webhost.Services.CreateScope())
+            {
+                serviceScope.ServiceProvider.GetRequiredService<MoatGateIdentityDbContext>().Database.Migrate();
+                serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+                serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>().Database.Migrate();
+            }
+
+            webhost.Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>

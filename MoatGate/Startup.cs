@@ -29,7 +29,7 @@ namespace MoatGate
         {
             var identityServerConnectionString = Configuration.GetConnectionString("MoatGate.IdentityServer.ConnectionString");
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-            
+
             services.AddDbContext<MoatGateIdentityDbContext>(options =>
                 options.UseSqlServer(identityServerConnectionString));
 
@@ -79,8 +79,13 @@ namespace MoatGate
                 .AddConfigurationStore(options =>
                 {
                     options.ConfigureDbContext = builder =>
+                    {
                         builder.UseSqlServer(identityServerConnectionString,
-                            sql => sql.MigrationsAssembly(migrationsAssembly));
+                            sql =>
+                            {
+                                sql.MigrationsAssembly(migrationsAssembly);
+                            });
+                    };
                 })
                 // this adds the operational data from DB (codes, tokens, consents)
                 .AddOperationalStore(options =>
@@ -101,13 +106,6 @@ namespace MoatGate
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            {
-                serviceScope.ServiceProvider.GetRequiredService<MoatGateIdentityDbContext>().Database.Migrate();
-                serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
-                serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>().Database.Migrate();
-            }
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
