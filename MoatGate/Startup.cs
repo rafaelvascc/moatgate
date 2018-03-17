@@ -31,7 +31,7 @@ namespace MoatGate
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddDbContext<MoatGateIdentityDbContext>(options =>
-                options.UseSqlServer(identityServerConnectionString));
+            options.UseSqlServer(identityServerConnectionString));
 
             services.AddIdentity<MoatGateIdentityUser, MoatGateIdentityRole>()
                 .AddUserStore<UserStore<MoatGateIdentityUser, MoatGateIdentityRole, MoatGateIdentityDbContext, Guid>>()

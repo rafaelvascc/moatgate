@@ -1,5 +1,5 @@
-﻿@page
-@model MoatGate.Pages.Client.CreateModel
+﻿@page "{id:int?}"
+@model MoatGate.Pages.Client.CreateEditModel
 @using IdentityServer4;
 @{
     ViewData["Title"] = "Create Client";
@@ -31,9 +31,9 @@
                     <label asp-for="Client.ClientSecrets" class="control-label"></label>
                     @{
                         var secrets = this.Model?.Client?.ClientSecrets ?? new List<IdentityServer4.EntityFramework.Entities.ClientSecret>()
-                                            {
-                                                new IdentityServer4.EntityFramework.Entities.ClientSecret()
-                                            };
+                                                                                {
+                                                                                    new IdentityServer4.EntityFramework.Entities.ClientSecret()
+                                                                                };
                         Html.RenderPartial("./PartialViews/ClientSecret", secrets);
                     }
                 </div>
@@ -68,9 +68,9 @@
                     <label asp-for="Client.RedirectUris" class="control-label"></label>
                     @{
                         var redirectUris = this.Model?.Client?.RedirectUris ?? new List<IdentityServer4.EntityFramework.Entities.ClientRedirectUri>()
-                                                {
-                                                    new IdentityServer4.EntityFramework.Entities.ClientRedirectUri()
-                                                };
+                                                                                    {
+                                                                                        new IdentityServer4.EntityFramework.Entities.ClientRedirectUri()
+                                                                                    };
 
                         Html.RenderPartial("./PartialViews/RedirectUris", redirectUris);
                     }
@@ -79,9 +79,9 @@
                     <label asp-for="Client.AllowedScopes" class="control-label"></label>
                     @{
                         var alowedScopes = this.Model?.Client?.AllowedScopes ?? new List<IdentityServer4.EntityFramework.Entities.ClientScope>()
-                                                {
-                                                    new IdentityServer4.EntityFramework.Entities.ClientScope()
-                                                };
+                                                                                    {
+                                                                                        new IdentityServer4.EntityFramework.Entities.ClientScope()
+                                                                                    };
 
                         Html.RenderPartial("./PartialViews/AllowedScopes", alowedScopes);
                     }
@@ -104,13 +104,30 @@
                     <label asp-for="Client.Properties" class="control-label"></label>
                     @{
                         var clientPropeties = this.Model?.Client?.Properties ?? new List<IdentityServer4.EntityFramework.Entities.ClientProperty>()
-                                                {
-                                                    new IdentityServer4.EntityFramework.Entities.ClientProperty()
-                                                };
+                                                                                    {
+                                                                                        new IdentityServer4.EntityFramework.Entities.ClientProperty()
+                                                                                    };
 
                         Html.RenderPartial("./PartialViews/ClientProperties", clientPropeties);
                     }
                 </div>
+            </fieldset>
+            <fieldset>
+                <legend>Authentication/Logout</legend>
+                <div class="form-group">
+                    <label asp-for="Client.PostLogoutRedirectUris" class="control-label"></label>
+                    @{
+                        var logooutRedirectUris = this.Model?.Client?.PostLogoutRedirectUris ?? new List<IdentityServer4.EntityFramework.Entities.ClientPostLogoutRedirectUri>()
+                                                                                    {
+                                                                                        new IdentityServer4.EntityFramework.Entities.ClientPostLogoutRedirectUri()
+                                                                                    };
+
+                        Html.RenderPartial("./PartialViews/PostLogoutRedirectUris", logooutRedirectUris);
+                    }
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Token</legend>
             </fieldset>
             <fieldset>
                 <legend>Consent Screen</legend>
@@ -141,9 +158,9 @@
 </div>
 @section Scripts {
     <environment include="Development">
-        <script type="text/javascript" src="~/js/Clients/client-create.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/js/Clients/client-create-edit.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
-        <script type="text/javascript" src="~/js/Clients/client-create.min.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/js/Clients/client-create-edit.min.js" asp-append-version="true"></script>
     </environment>
 }

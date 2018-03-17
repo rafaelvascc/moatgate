@@ -1,5 +1,4 @@
 ﻿@model System.String
-
 <section data-scope="client-partials-grant-types">
     <div class="radio">
         <label>
@@ -13,7 +12,7 @@
             Code
         </label>
     </div>
-    <div class="radio disabled">
+    <div class="radio">
         <label>
             <input type="radio" name="GrantTypes" value="CodeAndClientCredentials" checked="@Model.Equals("CodeAndClientCredentials")">
             Code And Client Credentials
@@ -31,7 +30,7 @@
             Hybrid And Client Credentials
         </label>
     </div>
-    <div class="radio disabled">
+    <div class="radio">
         <label>
             <input type="radio" name="GrantTypes" value="Implicit" checked="@Model.Equals("Implicit")">
             Implicit
@@ -49,7 +48,7 @@
             Resource Owner Password
         </label>
     </div>
-    <div class="radio disabled">
+    <div class="radio">
         <label>
             <input type="radio" name="GrantTypes" value="ResourceOwnerPasswordAndClientCredentials" checked="@Model.Equals("ResourceOwnerPasswordAndClientCredentials")">
             Resource Owner Password And Client Credentials
