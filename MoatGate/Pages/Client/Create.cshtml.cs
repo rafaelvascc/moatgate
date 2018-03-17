@@ -50,8 +50,8 @@ namespace MoatGate.Pages.Client
                 GrantType = g
             }).ToList();
             
-            _context.Clients.Add(Client);            
-            
+            _context.Clients.Add(Client);   
+                        
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

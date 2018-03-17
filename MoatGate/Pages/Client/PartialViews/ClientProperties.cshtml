@@ -1,0 +1,43 @@
+﻿@model IList<IdentityServer4.EntityFramework.Entities.ClientProperty>
+<section data-scope="client-partials-client-property">
+    <p>
+        <button type="button" class="btn btn-sm btn-primary" id="btn-add-client-property"><i class="fa fa-plus"></i> Create New</button>
+    </p>
+    <table class="table table-condensed table-responsive table-striped table-hover" id="tbl-client-property">
+        <tbody>
+            @{ int i = 0; }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="text" class="form-control" name="Client.Properties[@i.ToString()].Key" value="@item.Key" />
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" name="Client.Properties[@i.ToString()].Value" value="@item.Value" />
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <button type="button" class="btn btn-sm btn-danger  btn-delete-client-property" title="Delete"><i class="fa fa-trash-o"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+    <script id="client-property-template" type="text/x-jsrender">
+        <tr>
+            <td>
+                <input type="text" class="form-control" name="Client.Properties[{{:index}}].Key" value="{{:key}}" />
+            </td>
+            <td>
+                <input type="text" class="form-control" name="Client.Properties[{{:index}}].Value" value="{{:value}}" />
+            </td>
+            <td>
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-sm btn-danger btn-delete-client-property" title="Delete"><i class="fa fa-trash-o"></i></button>
+                </div>
+            </td>
+        </tr>
+    </script>
+</section>

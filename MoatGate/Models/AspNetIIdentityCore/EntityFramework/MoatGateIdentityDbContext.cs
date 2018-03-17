@@ -19,8 +19,11 @@ namespace MoatGate.Models.AspNetIIdentityCore.EntityFramework
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
-        {
+        {            
             base.OnModelCreating(builder);
+            builder.Entity<Client>().Property<int>(c => c.Id).ValueGeneratedOnAdd();
+            builder.Entity<MoatGateIdentityUser>().Property<Guid>(c => c.Id).ValueGeneratedOnAdd();
+            builder.Entity<MoatGateIdentityRole>().Property<Guid>(c => c.Id).ValueGeneratedOnAdd();
         }
     }
 }

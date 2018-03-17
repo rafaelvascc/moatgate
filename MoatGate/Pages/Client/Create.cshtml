@@ -31,9 +31,9 @@
                     <label asp-for="Client.ClientSecrets" class="control-label"></label>
                     @{
                         var secrets = this.Model?.Client?.ClientSecrets ?? new List<IdentityServer4.EntityFramework.Entities.ClientSecret>()
-                                {
-                                    new IdentityServer4.EntityFramework.Entities.ClientSecret()
-                                };
+                                            {
+                                                new IdentityServer4.EntityFramework.Entities.ClientSecret()
+                                            };
                         Html.RenderPartial("./PartialViews/ClientSecret", secrets);
                     }
                 </div>
@@ -68,9 +68,9 @@
                     <label asp-for="Client.RedirectUris" class="control-label"></label>
                     @{
                         var redirectUris = this.Model?.Client?.RedirectUris ?? new List<IdentityServer4.EntityFramework.Entities.ClientRedirectUri>()
-                                    {
-                                        new IdentityServer4.EntityFramework.Entities.ClientRedirectUri()
-                                    };
+                                                {
+                                                    new IdentityServer4.EntityFramework.Entities.ClientRedirectUri()
+                                                };
 
                         Html.RenderPartial("./PartialViews/RedirectUris", redirectUris);
                     }
@@ -79,11 +79,36 @@
                     <label asp-for="Client.AllowedScopes" class="control-label"></label>
                     @{
                         var alowedScopes = this.Model?.Client?.AllowedScopes ?? new List<IdentityServer4.EntityFramework.Entities.ClientScope>()
-                                    {
-                                        new IdentityServer4.EntityFramework.Entities.ClientScope()
-                                    };
+                                                {
+                                                    new IdentityServer4.EntityFramework.Entities.ClientScope()
+                                                };
 
                         Html.RenderPartial("./PartialViews/AllowedScopes", alowedScopes);
+                    }
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Client.AllowOfflineAccess" /> @Html.DisplayNameFor(model => model.Client.AllowOfflineAccess)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Client.AllowAccessTokensViaBrowser" /> @Html.DisplayNameFor(model => model.Client.AllowAccessTokensViaBrowser)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Client.Properties" class="control-label"></label>
+                    @{
+                        var clientPropeties = this.Model?.Client?.Properties ?? new List<IdentityServer4.EntityFramework.Entities.ClientProperty>()
+                                                {
+                                                    new IdentityServer4.EntityFramework.Entities.ClientProperty()
+                                                };
+
+                        Html.RenderPartial("./PartialViews/ClientProperties", clientPropeties);
                     }
                 </div>
             </fieldset>
