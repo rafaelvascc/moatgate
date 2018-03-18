@@ -141,6 +141,90 @@
             </fieldset>
             <fieldset>
                 <legend>Token</legend>
+                <div class="form-group">
+                    <label asp-for="Client.IdentityTokenLifetime" class="control-label"></label>
+                    <input asp-for="Client.IdentityTokenLifetime" min="0" class="form-control" />
+                    <span asp-validation-for="Client.IdentityTokenLifetime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Client.AccessTokenLifetime" class="control-label"></label>
+                    <input asp-for="Client.AccessTokenLifetime" min="0" class="form-control" />
+                    <span asp-validation-for="Client.AccessTokenLifetime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Client.AuthorizationCodeLifetime" class="control-label"></label>
+                    <input asp-for="Client.AuthorizationCodeLifetime" min="0" class="form-control" />
+                    <span asp-validation-for="Client.AuthorizationCodeLifetime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Client.AbsoluteRefreshTokenLifetime" class="control-label"></label>
+                    <input asp-for="Client.AbsoluteRefreshTokenLifetime" min="0" class="form-control" />
+                    <span asp-validation-for="Client.AbsoluteRefreshTokenLifetime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Client.SlidingRefreshTokenLifetime" class="control-label"></label>
+                    <input asp-for="Client.SlidingRefreshTokenLifetime" min="0" class="form-control" />
+                    <span asp-validation-for="Client.SlidingRefreshTokenLifetime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">RefreshTokenUsage</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" asp-for="Client.RefreshTokenUsage" value="0">
+                            Reuse
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" asp-for="Client.RefreshTokenUsage" value="1">
+                            One Time Only
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">RefreshTokenExpiration</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" asp-for="Client.RefreshTokenExpiration" value="0">
+                            Sliding
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" asp-for="Client.RefreshTokenExpiration" value="1">
+                            Absolute
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Client.UpdateAccessTokenClaimsOnRefresh" /> @Html.DisplayNameFor(model => model.Client.UpdateAccessTokenClaimsOnRefresh)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">AccessTokenType</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" asp-for="Client.AccessTokenType" value="0">
+                            Json Web Token (JWT)
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" asp-for="Client.AccessTokenType" value="1">
+                            Reference
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Client.IncludeJwtId" /> @Html.DisplayNameFor(model => model.Client.IncludeJwtId)
+                        </label>
+                    </div>
+                </div>
             </fieldset>
             <fieldset>
                 <legend>Consent Screen</legend>

@@ -43,6 +43,11 @@ namespace MoatGate.Pages.Client
                     .Include(c => c.Properties)
                     .Include(c => c.RedirectUris)
                     .SingleOrDefault(c => c.Id == id);
+
+                //Convert grant types
+                GrantTypes = typeof(GrantTypes).GetProperties()
+                    .Where(p => Client.AllowedGrantTypes.Count == ((IList<string>)p.GetValue(null)).Count &&
+                    ((IList<string>)p.GetValue(null)).All(g => Client.AllowedGrantTypes.Select(gt => gt.GrantType).Contains(g))).SingleOrDefault()?.Name ?? "ClientCredentials";
             }
             else
             {
@@ -54,6 +59,8 @@ namespace MoatGate.Pages.Client
                 Client.Properties = new List<IdentityServer4.EntityFramework.Entities.ClientProperty>();
                 Client.PostLogoutRedirectUris = new List<IdentityServer4.EntityFramework.Entities.ClientPostLogoutRedirectUri>();
                 Client.IdentityProviderRestrictions = new List<IdentityServer4.EntityFramework.Entities.ClientIdPRestriction>();
+                Client.AllowedCorsOrigins = new List<IdentityServer4.EntityFramework.Entities.ClientCorsOrigin>();
+                Client.Claims = new List<IdentityServer4.EntityFramework.Entities.ClientClaim>();
             }
         }
 
@@ -96,7 +103,7 @@ namespace MoatGate.Pages.Client
                     .Include(c => c.Properties)
                     .Include(c => c.RedirectUris)
                     .SingleOrDefault(c => c.Id == Client.Id);
-
+                
                 Mapper.Map(Client, CurrentClient);
                 CurrentClient.AllowedCorsOrigins.ReflectEntityFrameworkState(Client.AllowedCorsOrigins, _context);
                 CurrentClient.AllowedGrantTypes.ReflectEntityFrameworkState(Client.AllowedGrantTypes, _context);
