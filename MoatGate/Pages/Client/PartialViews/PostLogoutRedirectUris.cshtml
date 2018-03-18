@@ -10,6 +10,7 @@
             {
             <tr>
                 <td>
+                    <input type="hidden" class="form-control" name="Client.PostLogoutRedirectUris[@i.ToString()].Id" value="@item.Id" />
                     <input type="url" class="form-control" name="Client.PostLogoutRedirectUris[@i.ToString()].PostLogoutRedirectUri" value="@item.PostLogoutRedirectUri" />
                 </td>
                 <td>
@@ -22,9 +23,10 @@
             }
         </tbody>
     </table>
-    <script id="redirect-uri-template" type="text/x-jsrender">
+    <script id="logout-redirect-uri-template" type="text/x-jsrender">
         <tr>
             <td>
+                <input type="hidden" class="form-control" name="Client.PostLogoutRedirectUris[{{:index}}].Id" value="{{:id}}" />
                 <input type="url" class="form-control" name="Client.PostLogoutRedirectUris[{{:index}}].PostLogoutRedirectUri" value="{{:value}}" />
             </td>
             <td>

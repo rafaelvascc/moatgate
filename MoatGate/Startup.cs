@@ -12,6 +12,7 @@ using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
+using AutoMapper;
 
 namespace MoatGate
 {
@@ -31,7 +32,10 @@ namespace MoatGate
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddDbContext<MoatGateIdentityDbContext>(options =>
-            options.UseSqlServer(identityServerConnectionString));
+            {
+                options.UseSqlServer(identityServerConnectionString);
+                options.EnableSensitiveDataLogging(true);
+            });
 
             services.AddIdentity<MoatGateIdentityUser, MoatGateIdentityRole>()
                 .AddUserStore<UserStore<MoatGateIdentityUser, MoatGateIdentityRole, MoatGateIdentityDbContext, Guid>>()
@@ -101,6 +105,30 @@ namespace MoatGate
 
             services.AddMvc();
 
+
+            Mapper.Initialize(c =>
+            {
+                c.CreateMap<IdentityServer4.EntityFramework.Entities.Client, IdentityServer4.EntityFramework.Entities.Client>()
+                .ForMember(e => e.AllowedCorsOrigins, opt => opt.Ignore())
+                .ForMember(e => e.AllowedGrantTypes, opt => opt.Ignore())
+                .ForMember(e => e.AllowedScopes, opt => opt.Ignore())
+                .ForMember(e => e.Claims, opt => opt.Ignore())
+                .ForMember(e => e.ClientSecrets, opt => opt.Ignore())
+                .ForMember(e => e.IdentityProviderRestrictions, opt => opt.Ignore())
+                .ForMember(e => e.PostLogoutRedirectUris, opt => opt.Ignore())
+                .ForMember(e => e.Properties, opt => opt.Ignore())
+                .ForMember(e => e.RedirectUris, opt => opt.Ignore());
+
+                c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientCorsOrigin, IdentityServer4.EntityFramework.Entities.ClientCorsOrigin>().ForMember(e => e.Client, opt => opt.Ignore());
+                c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientGrantType, IdentityServer4.EntityFramework.Entities.ClientGrantType>().ForMember(e => e.Client, opt => opt.Ignore());
+                c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientScope, IdentityServer4.EntityFramework.Entities.ClientScope>().ForMember(e => e.Client, opt => opt.Ignore());
+                c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientClaim, IdentityServer4.EntityFramework.Entities.ClientClaim>().ForMember(e => e.Client, opt => opt.Ignore());
+                c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientSecret, IdentityServer4.EntityFramework.Entities.ClientSecret>().ForMember(e => e.Client, opt => opt.Ignore());
+                c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientIdPRestriction, IdentityServer4.EntityFramework.Entities.ClientIdPRestriction>().ForMember(e => e.Client, opt => opt.Ignore());
+                c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientPostLogoutRedirectUri, IdentityServer4.EntityFramework.Entities.ClientPostLogoutRedirectUri>().ForMember(e => e.Client, opt => opt.Ignore());
+                c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientProperty, IdentityServer4.EntityFramework.Entities.ClientProperty>().ForMember(e => e.Client, opt => opt.Ignore());
+                c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientRedirectUri, IdentityServer4.EntityFramework.Entities.ClientRedirectUri>().ForMember(e => e.Client, opt => opt.Ignore());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

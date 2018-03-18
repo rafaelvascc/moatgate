@@ -10,22 +10,32 @@
 
     function newClientRedirectUriModel(index) {
         this.index = index;
+        this.id = 0;
         this.value = "";
     }
 
     function newClientAllowedScopeModel(index) {
         this.index = index;
+        this.id = 0;
         this.value = "";
     }
 
     function newClientPropertyModel(index) {
         this.index = index;
+        this.id = 0;
         this.key = "";
         this.value = "";
     }
 
     function newClientRedirectLogoutUriModel(index) {
         this.index = index;
+        this.id = 0;
+        this.value = "";
+    }
+
+    function newClientIdpRestrictionModel(index) {
+        this.index = index;
+        this.id = 0;
         this.value = "";
     }
 
@@ -159,7 +169,7 @@
 
     //Redirect Logout Uris
     var $redirectLogoutUriScope = $("section[data-scope='client-partials-logout-redirect-uri']");
-    var redirectLogoutUriCreateTemplate = $.templates("#redirect-uri-template");
+    var redirectLogoutUriCreateTemplate = $.templates("#logout-redirect-uri-template");
     var $tblRedirectLogoutUris = $("#tbl-logout-redirect-uri", $redirectLogoutUriScope);
     var $tblRedirectLogoutUrisBody = $("tbody", $tblRedirectLogoutUris);
     var $btnAddRedirectLogoutUri = $("#btn-add-logout-redirect-uri", $redirectLogoutUriScope);
@@ -182,6 +192,38 @@
         for (var i = 0; i < $rows.length; i++) {
             var $row = $($rows[i]);
             var $fields = $row.find("[name^='Client.PostLogoutRedirectUris[']");
+            for (var j = 0; j < $fields.length; j++) {
+                var $field = $($fields[j]);
+                $field.attr("name", $field.attr("name").replace(/\[([1-9]\d*)\]/, "[" + i + "]"));
+            }
+        }
+    }
+
+    //Client identity provider restrictions
+    var $idpRestrictionScope = $("section[data-scope='client-partials-idp-restrictions']");
+    var idpRestrictionCreateTemplate = $.templates("#idp-restriction-template");
+    var $tblClientIdpRestrictions = $("#tbl-idp-restriction", $idpRestrictionScope);
+    var $tblClientIdpRestrictionsBody = $("tbody", $tblClientIdpRestrictions);
+    var $btnAddIdpRestriction = $("#btn-add-idp-restriction", $idpRestrictionScope);
+
+    $btnAddIdpRestriction.off("click").on("click", function (event) {
+        var count = $("tr", $tblClientIdpRestrictionsBody).length;
+        var newModel = new newClientSecretModel(count);
+        var newHtml = idpRestrictionCreateTemplate.render(newModel);
+        $tblClientIdpRestrictionsBody.append($(newHtml));
+    });
+
+    $tblClientIdpRestrictionsBody.off("click").on("click", ".btn-delete-idp-restriction", function (event) {
+        var $row = $(event.target).parents("tr:first");
+        $row.remove();
+        updateProviderRestrictionsIndexes();
+    });
+
+    function updateProviderRestrictionsIndexes() {
+        var $rows = $tblClientIdpRestrictionsBody.find("tr");
+        for (var i = 0; i < $rows.length; i++) {
+            var $row = $($rows[i]);
+            var $fields = $row.find("[name^='Client.IdentityProviderRestrictions[']");
             for (var j = 0; j < $fields.length; j++) {
                 var $field = $($fields[j]);
                 $field.attr("name", $field.attr("name").replace(/\[([1-9]\d*)\]/, "[" + i + "]"));

@@ -10,6 +10,7 @@
             {
                 <tr>
                     <td>
+                        <input type="hidden" class="form-control" name="Client.Properties[@i.ToString()].Id" value="@item.Id" />
                         <input type="text" class="form-control" name="Client.Properties[@i.ToString()].Key" value="@item.Key" />
                     </td>
                     <td>
@@ -28,6 +29,7 @@
     <script id="client-property-template" type="text/x-jsrender">
         <tr>
             <td>
+                <input type="hidden" class="form-control" name="Client.Properties[{{:index}}].Key" value="{{:id}}" />
                 <input type="text" class="form-control" name="Client.Properties[{{:index}}].Key" value="{{:key}}" />
             </td>
             <td>

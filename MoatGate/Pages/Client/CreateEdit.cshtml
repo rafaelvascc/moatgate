@@ -2,16 +2,14 @@
 @model MoatGate.Pages.Client.CreateEditModel
 @using IdentityServer4;
 @{
-    ViewData["Title"] = "Create Client";
     Layout = "~/Pages/_Layout.cshtml";
 }
 
-<h2>Create</h2>
-<h4>Client</h4>
-<hr />
+<h2>@ViewData["Title"]</h2>
 <div class="row">
     <div class="col-md-12">
         <form method="post">
+            <input type="hidden" asp-for="Client.Id" />
             <div asp-validation-summary="All" class="text-danger"></div>
             <fieldset>
                 <legend>Basic Info</legend>
@@ -30,11 +28,7 @@
                 <div class="form-group">
                     <label asp-for="Client.ClientSecrets" class="control-label"></label>
                     @{
-                        var secrets = this.Model?.Client?.ClientSecrets ?? new List<IdentityServer4.EntityFramework.Entities.ClientSecret>()
-                                                                                {
-                                                                                    new IdentityServer4.EntityFramework.Entities.ClientSecret()
-                                                                                };
-                        Html.RenderPartial("./PartialViews/ClientSecret", secrets);
+                        Html.RenderPartial("./PartialViews/ClientSecret", Model.Client.ClientSecrets);
                     }
                 </div>
                 <div class="form-group">
@@ -67,23 +61,13 @@
                 <div class="form-group">
                     <label asp-for="Client.RedirectUris" class="control-label"></label>
                     @{
-                        var redirectUris = this.Model?.Client?.RedirectUris ?? new List<IdentityServer4.EntityFramework.Entities.ClientRedirectUri>()
-                                                                                    {
-                                                                                        new IdentityServer4.EntityFramework.Entities.ClientRedirectUri()
-                                                                                    };
-
-                        Html.RenderPartial("./PartialViews/RedirectUris", redirectUris);
+                        Html.RenderPartial("./PartialViews/RedirectUris", Model.Client.RedirectUris);
                     }
                 </div>
                 <div class="form-group">
                     <label asp-for="Client.AllowedScopes" class="control-label"></label>
                     @{
-                        var alowedScopes = this.Model?.Client?.AllowedScopes ?? new List<IdentityServer4.EntityFramework.Entities.ClientScope>()
-                                                                                    {
-                                                                                        new IdentityServer4.EntityFramework.Entities.ClientScope()
-                                                                                    };
-
-                        Html.RenderPartial("./PartialViews/AllowedScopes", alowedScopes);
+                        Html.RenderPartial("./PartialViews/AllowedScopes", Model.Client.AllowedScopes);
                     }
                 </div>
                 <div class="form-group">
@@ -103,12 +87,8 @@
                 <div class="form-group">
                     <label asp-for="Client.Properties" class="control-label"></label>
                     @{
-                        var clientPropeties = this.Model?.Client?.Properties ?? new List<IdentityServer4.EntityFramework.Entities.ClientProperty>()
-                                                                                    {
-                                                                                        new IdentityServer4.EntityFramework.Entities.ClientProperty()
-                                                                                    };
 
-                        Html.RenderPartial("./PartialViews/ClientProperties", clientPropeties);
+                        Html.RenderPartial("./PartialViews/ClientProperties", Model.Client.Properties);
                     }
                 </div>
             </fieldset>
@@ -117,12 +97,45 @@
                 <div class="form-group">
                     <label asp-for="Client.PostLogoutRedirectUris" class="control-label"></label>
                     @{
-                        var logooutRedirectUris = this.Model?.Client?.PostLogoutRedirectUris ?? new List<IdentityServer4.EntityFramework.Entities.ClientPostLogoutRedirectUri>()
-                                                                                    {
-                                                                                        new IdentityServer4.EntityFramework.Entities.ClientPostLogoutRedirectUri()
-                                                                                    };
 
-                        Html.RenderPartial("./PartialViews/PostLogoutRedirectUris", logooutRedirectUris);
+                        Html.RenderPartial("./PartialViews/PostLogoutRedirectUris", Model.Client.PostLogoutRedirectUris);
+                    }
+                </div>
+                <div class="form-group">
+                    <label asp-for="Client.FrontChannelLogoutUri" class="control-label"></label>
+                    <input asp-for="Client.FrontChannelLogoutUri" class="form-control" />
+                    <span asp-validation-for="Client.FrontChannelLogoutUri" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Client.FrontChannelLogoutSessionRequired" /> @Html.DisplayNameFor(model => model.Client.FrontChannelLogoutSessionRequired)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Client.BackChannelLogoutUri" class="control-label"></label>
+                    <input asp-for="Client.BackChannelLogoutUri" class="form-control" />
+                    <span asp-validation-for="Client.BackChannelLogoutUri" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Client.BackChannelLogoutSessionRequired" /> @Html.DisplayNameFor(model => model.Client.BackChannelLogoutSessionRequired)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Client.EnableLocalLogin" /> @Html.DisplayNameFor(model => model.Client.EnableLocalLogin)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Client.IdentityProviderRestrictions" class="control-label"></label>
+                    @{
+                        Html.RenderPartial("./PartialViews/ClientIdpRestrictions", Model.Client.IdentityProviderRestrictions);
                     }
                 </div>
             </fieldset>
@@ -148,7 +161,7 @@
                 </div>
             </fieldset>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <button type="submit" class="btn btn-success">Save <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
             </div>
         </form>
     </div>

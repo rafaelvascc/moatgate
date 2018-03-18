@@ -10,6 +10,7 @@
             {
                 <tr>
                     <td>
+                        <input type="hidden" class="form-control" name="Client.RedirectUris[@i.ToString()].Id" value="@item.Id" />
                         <input type="url" class="form-control" name="Client.RedirectUris[@i.ToString()].RedirectUri" value="@item.RedirectUri" />
                     </td>
                     <td>
@@ -25,6 +26,7 @@
     <script id="redirect-uri-template" type="text/x-jsrender">
         <tr>
             <td>
+                <input type="hidden" class="form-control" name="Client.RedirectUris[{{:index}}].Id" value="{{:id}}" />
                 <input type="url" class="form-control" name="Client.RedirectUris[{{:index}}].RedirectUri" value="{{:value}}" />
             </td>
             <td>

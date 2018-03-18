@@ -1,0 +1,39 @@
+﻿@model IList<IdentityServer4.EntityFramework.Entities.ClientIdPRestriction>
+<section data-scope="client-partials-idp-restrictions">
+    <p>
+        <button type="button" class="btn btn-sm btn-primary" id="btn-add-idp-restriction"><i class="fa fa-plus"></i> Create New</button>
+    </p>
+    <table class="table table-condensed table-responsive table-striped table-hover" id="tbl-idp-restriction">
+        <tbody>
+            @{ int i = 0; }
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    <input type="hidden" class="form-control" name="Client.IdentityProviderRestrictions[@i.ToString()].Id" value="@item.Id" />
+                    <input type="text" class="form-control" name="Client.IdentityProviderRestrictions[@i.ToString()].Provider" value="@item.Provider" />
+                </td>
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-sm btn-danger  btn-delete-idp-restriction" title="Delete"><i class="fa fa-trash-o"></i></button>
+                    </div>
+                </td>
+            </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+    <script id="idp-restriction-template" type="text/x-jsrender">
+        <tr>
+            <td>
+                <input type="hidden" class="form-control" name="Client.IdentityProviderRestrictions[{{:index}}].Id" value="{{:id}}" />
+                <input type="text" class="form-control" name="Client.IdentityProviderRestrictions[{{:index}}].Provider" value="{{:value}}" />
+            </td>
+            <td>
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-sm btn-danger btn-delete-idp-restriction" title="Delete"><i class="fa fa-trash-o"></i></button>
+                </div>
+            </td>
+        </tr>
+    </script>
+</section>
