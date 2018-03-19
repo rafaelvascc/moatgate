@@ -225,6 +225,12 @@
                         </label>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label asp-for="Client.Claims" class="control-label"></label>
+                    @{
+                        Html.RenderPartial("./PartialViews/ClientClaims", Model.Client.Claims);
+                    }
+                </div>
             </fieldset>
             <fieldset>
                 <legend>Consent Screen</legend>

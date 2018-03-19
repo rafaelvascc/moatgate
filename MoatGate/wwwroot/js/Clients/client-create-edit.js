@@ -39,6 +39,13 @@
         this.value = "";
     }
 
+    function newClientClaimModel(index) {
+        this.index = index;
+        this.id = 0;
+        this.type = "";
+        this.value = "";
+    }
+
     //Client secrets
     var $secretsScope = $("section[data-scope='client-partials-secret-table']");
     var secretCreateTemplate = $.templates("#client-secret-template");
@@ -208,7 +215,7 @@
 
     $btnAddIdpRestriction.off("click").on("click", function (event) {
         var count = $("tr", $tblClientIdpRestrictionsBody).length;
-        var newModel = new newClientSecretModel(count);
+        var newModel = new newClientIdpRestrictionModel(count);
         var newHtml = idpRestrictionCreateTemplate.render(newModel);
         $tblClientIdpRestrictionsBody.append($(newHtml));
     });
@@ -224,6 +231,38 @@
         for (var i = 0; i < $rows.length; i++) {
             var $row = $($rows[i]);
             var $fields = $row.find("[name^='Client.IdentityProviderRestrictions[']");
+            for (var j = 0; j < $fields.length; j++) {
+                var $field = $($fields[j]);
+                $field.attr("name", $field.attr("name").replace(/\[([1-9]\d*)\]/, "[" + i + "]"));
+            }
+        }
+    }
+    
+    //Client claims
+    var $clientClaimScope = $("section[data-scope='client-partials-client-claim']");
+    var clientClaimCreateTemplate = $.templates("#client-claim-template");
+    var $tblClientClaims = $("#tbl-client-claim", $clientClaimScope);
+    var $tblClientClaimsBody = $("tbody", $tblClientClaims);
+    var $btnAddClientClaim = $("#btn-add-client-claim", $clientClaimScope);
+
+    $btnAddClientClaim.off("click").on("click", function (event) {
+        var count = $("tr", $tblClientClaimsBody).length;
+        var newModel = new newClientClaimModel(count);
+        var newHtml = clientClaimCreateTemplate.render(newModel);
+        $tblClientClaimsBody.append($(newHtml));
+    });
+
+    $tblClientClaimsBody.off("click").on("click", ".btn-delete-client-claim", function (event) {
+        var $row = $(event.target).parents("tr:first");
+        $row.remove();
+        updateClientClaimIndexes();
+    });
+
+    function updateClientClaimIndexes() {
+        var $rows = $tblClientClaimsBody.find("tr");
+        for (var i = 0; i < $rows.length; i++) {
+            var $row = $($rows[i]);
+            var $fields = $row.find("[name^='Client.Claims[']");
             for (var j = 0; j < $fields.length; j++) {
                 var $field = $($fields[j]);
                 $field.attr("name", $field.attr("name").replace(/\[([1-9]\d*)\]/, "[" + i + "]"));

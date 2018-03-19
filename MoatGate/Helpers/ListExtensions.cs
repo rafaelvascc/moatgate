@@ -10,7 +10,7 @@ namespace MoatGate.Helpers
 {
     public static class ListExtensions
     {
-        public  static void ReflectEntityFrameworkState<T>(this IList<T> currentState, IList<T> newState, DbContext context) where T : class
+        public static void ReflectEntityFrameworkState<T>(this IList<T> currentState, IList<T> newState, DbContext context) where T : class
         {
             if (currentState == null)
             {
