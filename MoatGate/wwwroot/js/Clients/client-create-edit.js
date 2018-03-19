@@ -45,6 +45,12 @@
         this.type = "";
         this.value = "";
     }
+    
+    function newCorsOriginModel(index) {
+        this.index = index;
+        this.id = 0;
+        this.origin = "";
+    }
 
     //Client secrets
     var $secretsScope = $("section[data-scope='client-partials-secret-table']");
@@ -260,6 +266,39 @@
 
     function updateClientClaimIndexes() {
         var $rows = $tblClientClaimsBody.find("tr");
+        for (var i = 0; i < $rows.length; i++) {
+            var $row = $($rows[i]);
+            var $fields = $row.find("[name^='Client.Claims[']");
+            for (var j = 0; j < $fields.length; j++) {
+                var $field = $($fields[j]);
+                $field.attr("name", $field.attr("name").replace(/\[([1-9]\d*)\]/, "[" + i + "]"));
+            }
+        }
+    }
+
+
+    //Client Cors Origins
+    var $corsOriginScope = $("section[data-scope='client-partials-cors-origins']");
+    var corsOriginCreateTemplate = $.templates("#cors-origins-template");
+    var $tblCorsOrigins = $("#tbl-cors-origins", $corsOriginScope);
+    var $tblCorsOriginsBody = $("tbody", $tblCorsOrigins);
+    var $btnAddcorsOrigin = $("#btn-add-cors-origins", $corsOriginScope);
+
+    $btnAddcorsOrigin.off("click").on("click", function (event) {
+        var count = $("tr", $tblCorsOriginsBody).length;
+        var newModel = new newCorsOriginModel(count);
+        var newHtml = corsOriginCreateTemplate.render(newModel);
+        $tblCorsOriginsBody.append($(newHtml));
+    });
+
+    $tblCorsOriginsBody.off("click").on("click", ".btn-delete-cors-origins", function (event) {
+        var $row = $(event.target).parents("tr:first");
+        $row.remove();
+        updateCorsOriginIndexes();
+    });
+
+    function updateCorsOriginIndexes() {
+        var $rows = $tblCorsOriginsBody.find("tr");
         for (var i = 0; i < $rows.length; i++) {
             var $row = $($rows[i]);
             var $fields = $row.find("[name^='Client.Claims[']");

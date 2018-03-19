@@ -1,0 +1,39 @@
+﻿@model IList<IdentityServer4.EntityFramework.Entities.ClientCorsOrigin>
+<section data-scope="client-partials-cors-origins">
+    <p>
+        <button type="button" class="btn btn-sm btn-primary" id="btn-add-cors-origins"><i class="fa fa-plus"></i> Create New</button>
+    </p>
+    <table class="table table-condensed table-responsive table-striped table-hover" id="tbl-cors-origins">
+        <tbody>
+            @{ int i = 0; }
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    <input type="hidden" class="form-control" name="Client.AllowedCorsOrigins[@i.ToString()].Id" value="@item.Id" />
+                    <input type="text" class="form-control" name="Client.AllowedCorsOrigins[@i.ToString()].Origin" value="@item.Origin" />
+                </td>
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-sm btn-danger  btn-delete-cors-origins" title="Delete"><i class="fa fa-trash-o"></i></button>
+                    </div>
+                </td>
+            </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+    <script id="cors-origins-template" type="text/x-jsrender">
+        <tr>
+            <td>
+                <input type="hidden" class="form-control" name="Client.AllowedCorsOrigins[{{:index}}].Id" value="{{:id}}" />
+                <input type="text" class="form-control" name="Client.AllowedCorsOrigins[{{:index}}].Origin" value="{{:origin}}" />
+            </td>
+            <td>
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-sm btn-danger btn-delete-cors-origins" title="Delete"><i class="fa fa-trash-o"></i></button>
+                </div>
+            </td>
+        </tr>
+    </script>
+</section>
