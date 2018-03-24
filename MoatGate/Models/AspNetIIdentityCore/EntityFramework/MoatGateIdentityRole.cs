@@ -3,7 +3,7 @@ using System;
 
 namespace MoatGate.Models.AspNetIIdentityCore.EntityFramework
 {
-    public class MoatGateIdentityRole : IdentityRole<Guid>
+    public class MoatGateIdentityRole : IdentityRole<int>
     {
     }
 }

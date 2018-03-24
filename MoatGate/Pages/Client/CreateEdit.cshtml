@@ -237,6 +237,23 @@
                         Html.RenderPartial("./PartialViews/ClientClaims", Model.Client.Claims);
                     }
                 </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Client.AlwaysIncludeUserClaimsInIdToken" /> @Html.DisplayNameFor(model => model.Client.AlwaysIncludeUserClaimsInIdToken)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Client.ClientClaimsPrefix" class="control-label"></label>
+                    <input asp-for="Client.ClientClaimsPrefix" class="form-control" />
+                    <span asp-validation-for="Client.ClientClaimsPrefix" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Client.PairWiseSubjectSalt" class="control-label"></label>
+                    <input asp-for="Client.PairWiseSubjectSalt" class="form-control" />
+                    <span asp-validation-for="Client.PairWiseSubjectSalt" class="text-danger"></span>
+                </div>
             </fieldset>
             <fieldset>
                 <legend>Consent Screen</legend>
@@ -255,9 +272,28 @@
                     <input asp-for="Client.LogoUri" class="form-control" />
                     <span asp-validation-for="Client.LogoUri" class="text-danger"></span>
                 </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Client.RequireConsent" /> @Html.DisplayNameFor(model => model.Client.RequireConsent)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Client.AllowRememberConsent" /> @Html.DisplayNameFor(model => model.Client.AllowRememberConsent)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Client.ConsentLifetime" class="control-label"></label>
+                    <input asp-for="Client.ConsentLifetime" class="form-control" />
+                    <span asp-validation-for="Client.ConsentLifetime" class="text-danger"></span>
+                </div>
             </fieldset>
             <div class="form-group">
-                <button type="submit" class="btn btn-success">Save <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                <button type="submit" class="btn btn-success">Save <i class="fas fa-save" aria-hidden="true"></i></button>
             </div>
         </form>
     </div>

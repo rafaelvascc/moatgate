@@ -38,8 +38,6 @@ namespace MoatGate
             });
 
             services.AddIdentity<MoatGateIdentityUser, MoatGateIdentityRole>()
-                .AddUserStore<UserStore<MoatGateIdentityUser, MoatGateIdentityRole, MoatGateIdentityDbContext, Guid>>()
-                .AddRoleStore<RoleStore<MoatGateIdentityRole, MoatGateIdentityDbContext, Guid>>()
                 .AddUserManager<UserManager<MoatGateIdentityUser>>()
                 .AddRoleManager<RoleManager<MoatGateIdentityRole>>()
                 .AddEntityFrameworkStores<MoatGateIdentityDbContext>()
@@ -75,7 +73,7 @@ namespace MoatGate
                 options.SlidingExpiration = true;
             });
 
-            // configure identity server with in-memory stores, keys, clients and scopes
+            // configure identity server
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
                 .AddAspNetIdentity<MoatGateIdentityUser>()
@@ -104,7 +102,6 @@ namespace MoatGate
                 });
 
             services.AddMvc();
-
 
             Mapper.Initialize(c =>
             {

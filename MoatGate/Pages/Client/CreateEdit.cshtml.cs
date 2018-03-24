@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using MoatGate.Helpers;
 using System;
+using IdentityServer4.Stores;
 
 namespace MoatGate.Pages.Client
 {
@@ -16,9 +17,9 @@ namespace MoatGate.Pages.Client
     {
         private readonly ConfigurationDbContext _context;
 
-        public CreateEditModel(ConfigurationDbContext context)
+        public CreateEditModel(ConfigurationDbContext context, IResourceStore store)
         {
-            _context = context;
+            _context = context; 
         }
 
         [BindProperty]

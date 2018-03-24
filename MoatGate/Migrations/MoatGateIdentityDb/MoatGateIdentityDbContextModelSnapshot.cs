@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.Internal;
 using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 using System;
 
-namespace MoatGate.migrations.MoatGateIdentityDb
+namespace MoatGate.Migrations.MoatGateIdentityDb
 {
     [DbContext(typeof(MoatGateIdentityDbContext))]
     partial class MoatGateIdentityDbContextModelSnapshot : ModelSnapshot
@@ -17,10 +17,10 @@ namespace MoatGate.migrations.MoatGateIdentityDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
+                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -29,7 +29,7 @@ namespace MoatGate.migrations.MoatGateIdentityDb
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<Guid>("RoleId");
+                    b.Property<int>("RoleId");
 
                     b.HasKey("Id");
 
@@ -38,7 +38,7 @@ namespace MoatGate.migrations.MoatGateIdentityDb
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -47,7 +47,7 @@ namespace MoatGate.migrations.MoatGateIdentityDb
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
@@ -56,7 +56,7 @@ namespace MoatGate.migrations.MoatGateIdentityDb
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider");
 
@@ -64,7 +64,7 @@ namespace MoatGate.migrations.MoatGateIdentityDb
 
                     b.Property<string>("ProviderDisplayName");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -73,11 +73,11 @@ namespace MoatGate.migrations.MoatGateIdentityDb
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.Property<Guid>("UserId");
+                    b.Property<int>("UserId");
 
-                    b.Property<Guid>("RoleId");
+                    b.Property<int>("RoleId");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -86,9 +86,9 @@ namespace MoatGate.migrations.MoatGateIdentityDb
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.Property<Guid>("UserId");
+                    b.Property<int>("UserId");
 
                     b.Property<string>("LoginProvider");
 
@@ -103,7 +103,7 @@ namespace MoatGate.migrations.MoatGateIdentityDb
 
             modelBuilder.Entity("MoatGate.Models.AspNetIIdentityCore.EntityFramework.MoatGateIdentityRole", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
@@ -127,7 +127,7 @@ namespace MoatGate.migrations.MoatGateIdentityDb
 
             modelBuilder.Entity("MoatGate.Models.AspNetIIdentityCore.EntityFramework.MoatGateIdentityUser", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
@@ -176,7 +176,7 @@ namespace MoatGate.migrations.MoatGateIdentityDb
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("MoatGate.Models.AspNetIIdentityCore.EntityFramework.MoatGateIdentityRole")
                         .WithMany()
@@ -184,7 +184,7 @@ namespace MoatGate.migrations.MoatGateIdentityDb
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.HasOne("MoatGate.Models.AspNetIIdentityCore.EntityFramework.MoatGateIdentityUser")
                         .WithMany()
@@ -192,7 +192,7 @@ namespace MoatGate.migrations.MoatGateIdentityDb
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.HasOne("MoatGate.Models.AspNetIIdentityCore.EntityFramework.MoatGateIdentityUser")
                         .WithMany()
@@ -200,7 +200,7 @@ namespace MoatGate.migrations.MoatGateIdentityDb
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
                     b.HasOne("MoatGate.Models.AspNetIIdentityCore.EntityFramework.MoatGateIdentityRole")
                         .WithMany()
@@ -213,7 +213,7 @@ namespace MoatGate.migrations.MoatGateIdentityDb
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
                     b.HasOne("MoatGate.Models.AspNetIIdentityCore.EntityFramework.MoatGateIdentityUser")
                         .WithMany()

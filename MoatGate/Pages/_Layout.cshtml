@@ -8,14 +8,14 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
-        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="~/lib/font-awesome/svg-with-js/css/fa-svg-with-js.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="~/lib/font-awesome/svg-with-js/css/fa-svg-with-js.css" />
     </environment>
 </head>
 <body>
@@ -28,12 +28,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-page="/Index" class="navbar-brand"><i class="fa fa-id-card-o"></i> MoatGate</a>
+                <a asp-page="/Index" class="navbar-brand"><i class="fas fa-key"></i> MoatGate</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-page="/Client/Index"><i class="fa fa-server"></i> Clients</a></li>
-                    <li><a asp-page="/User/Index"><i class="fa fa-users"></i> Users</a></li>
+                    <li><a asp-page="/Resources/Api/Index"><i class="fas fa-server"></i> API Resources</a></li>
+                    <li><a asp-page="/Resources/Identity/Index"><i class="fas fa-id-card"></i> Identity Resources</a></li>
+                    <li><a asp-page="/Client/Index"><i class="fas fa-laptop"></i> Clients</a></li>
+                    <li><a asp-page="/User/Index"><i class="fas fa-users"></i> Users</a></li>
+                    <li><a asp-page="/Roles/Index"><i class="fas fa-id-badge"></i> Roles</a></li>
                 </ul>
             </div>
         </div>
