@@ -29,7 +29,7 @@
             @{ int i = 0; }
             @foreach (var item in Model)
             {
-                <tr class="scopeValues">
+                <tr class="scopeValues" data-index="@i">
                     <td>
                         <input type="hidden" class="form-control" name="ApiResource.Scopes[@i.ToString()].Id" value="@item.Id" />
                         <input type="text" class="form-control" name="ApiResource.Scopes[@i.ToString()].Name" value="@item.Name" />
@@ -75,10 +75,33 @@
                     </td>
                     <td>
                         <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-sm btn-danger  btn-delete-api-resource-scope" title="Delete"><i class="fas fa-trash-o"></i></button>
+                            <button type="button" class="btn btn-sm btn-primary  btn-add-api-resource-scope-claim" title="Add Claim Type"><i class="fas fa-plus"></i></button>
+                            <button type="button" class="btn btn-sm btn-danger  btn-delete-api-resource-scope" title="Delete"><i class="fas fa-trash-alt"></i></button>
                         </div>
                     </td>
                 </tr>
+                int k = 0;
+                if (item?.UserClaims?.Count > 0)
+                {
+                    foreach (var claim in item?.UserClaims)
+                    {
+                        <tr class="scopeClaim" data-index="@k" data-parent-index="@i">
+                            <td>
+                                Claim @k
+                            </td>
+                            <td colspan="5">
+                                <input type="hidden" class="form-control" name="ApiResource.Scopes[@i.ToString()].UserClaims[@k].Id" value="@claim.Id" />
+                                <input type="text" class="form-control" name="ApiResource.Scopes[@i.ToString()].UserClaims[@k].Type" value="@claim.Type" />
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button type="button" class="btn btn-sm btn-danger btn-delete-api-resource-scope-claim" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        k++;
+                    }
+                }
                 i++;
             }
         </tbody>
@@ -127,7 +150,24 @@
             </td>
             <td>
                 <div class="btn-group btn-group-sm">
-                    <button type="button" class="btn btn-sm btn-danger btn-delete-api-resource-scope" title="Delete"><i class="fas fa-trash-o"></i></button>
+                    <button type="button" class="btn btn-sm btn-primary  btn-add-api-resource-scope-claim" title="Add Claim Type"><i class="fas fa-plus"></i></button>
+                    <button type="button" class="btn btn-sm btn-danger btn-delete-api-resource-scope" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            </td>
+        </tr>
+    </script>
+    <script id="api-resource-scope-claim-template" type="text/x-jsrender">
+        <tr class="scopeClaim" data-index="{{:index}}" data-parent-index="{{:parentIndex}}">
+            <td>
+                Claim {{:index}}
+            </td>
+            <td colspan="5">
+                <input type="hidden" class="form-control" name="ApiResource.Scopes[{{:parentIndex}}].UserClaims[{{:index}}].id" value="{{:id}}" />
+                <input type="text" class="form-control" name="ApiResource.Scopes[{{:parentIndex}}].UserClaims[{{:index}}].Type" value="{{:type}}" />
+            </td>
+            <td>
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-sm btn-danger btn-delete-api-resource-scope-claim" title="Delete"><i class="fas fa-trash-alt"></i></button>
                 </div>
             </td>
         </tr>

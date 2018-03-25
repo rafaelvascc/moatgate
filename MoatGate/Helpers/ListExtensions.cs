@@ -6,6 +6,7 @@ using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace MoatGate.Helpers
@@ -44,6 +45,21 @@ namespace MoatGate.Helpers
                 if (GetHashCodeFromPropertyValues<T>(entry) != GetHashCodeFromPropertyValues<T>(existingEntity))
                 {
                     Mapper.Map(entry, existingEntity);
+                }
+
+                var collectionsProperties = typeof(T).GetProperties().Where(p => p.PropertyType.IsAssignableFrom(typeof(List<ApiScopeClaim>)));
+                foreach (var p in collectionsProperties)
+                {
+                    var entryCollection = typeof(T).GetProperty(p.Name).GetValue(entry);
+                    var existingEntryCollection = typeof(T).GetProperty(p.Name).GetValue(existingEntity);
+
+                    if (existingEntryCollection == null)
+                    {
+                        existingEntryCollection = new List<ApiScopeClaim>();
+                        typeof(T).GetProperty(p.Name).SetValue(existingEntity, existingEntryCollection);
+                    }
+
+                    ((IList<ApiScopeClaim>)existingEntryCollection).ReflectEntityFrameworkState<ApiScopeClaim>((IList<ApiScopeClaim>)entryCollection, context);
                 }
             }
 

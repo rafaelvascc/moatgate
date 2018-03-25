@@ -17,10 +17,18 @@
         this.required = false;
         this.emphasize = false;
         this.showInDiscoveryDocument = true;
+        this.userScopes = [];
     }
 
     function newApiResourceClaimModel(index) {
         this.index = index;
+        this.id = 0;
+        this.type = "";
+    }
+
+    function newApiScopeClaimModel(index, parentIndex) {
+        this.index = index;
+        this.parentIndex = parentIndex;
         this.id = 0;
         this.type = "";
     }
@@ -73,7 +81,10 @@
 
     $tblAllowedScopesBody.off("click").on("click", ".btn-delete-api-resource-scope", function (event) {
         var $row = $(event.target).parents("tr.scopeValues:first");
+        var parentIndex = $row.attr("data-index");
+        var $children = $("tr[data-parent-index='" + parentIndex + "']", $tblAllowedScopesBody);
         $row.remove();
+        $children.remove();
         updateAllowedScopesIndexes();
     });
 
@@ -81,10 +92,20 @@
         var $rows = $tblAllowedScopesBody.find("tr.scopeValues");
         for (var i = 0; i < $rows.length; i++) {
             var $row = $($rows[i]);
+            var oldIndex = $row.attr("data-index");
+            $row.attr("data-index", i);
             var $fields = $row.find("[name^='ApiResource.Scopes[']");
             for (var j = 0; j < $fields.length; j++) {
                 var $field = $($fields[j]);
-                $field.attr("name", $field.attr("name").replace(/\[([1-9]\d*)\]/, "[" + i + "]"));
+                $field.attr("name", $field.attr("name").replace(/Scopes\[([1-9]\d*)\]/, "Scopes[" + i + "]"));
+            }
+
+            var $children = $("tr[data-parent-index='" + oldIndex + "']", $tblAllowedScopesBody);
+            $children.attr("data-parent-index", i);
+            $fields = $children.find("[name^='ApiResource.Scopes[']");
+            for (var k = 0; k < $fields.length; k++) {
+                var $childField = $($fields[k]);
+                $childField.attr("name", $childField.attr("name").replace(/Scopes\[([1-9]\d*)\]/, "Scopes[" + i + "]"));
             }
         }
     }
@@ -117,6 +138,45 @@
             for (var j = 0; j < $fields.length; j++) {
                 var $field = $($fields[j]);
                 $field.attr("name", $field.attr("name").replace(/\[([1-9]\d*)\]/, "[" + i + "]"));
+            }
+        }
+    }
+
+
+    //Scopes Claims
+    var allowedScopeClaimCreateTemplate = $.templates("#api-resource-scope-claim-template");
+
+    $tblAllowedScopesBody.on("click", "button.btn-add-api-resource-scope-claim", function (event) {
+        var $row = $(event.target).parents("tr:first");
+        var parentIndex = $row.attr("data-index");
+        var $siblings = $("tr[data-parent-index='" + parentIndex + "']", $tblAllowedScopesBody);
+        var count = $siblings.length;
+        var newModel = new newApiScopeClaimModel(count, parentIndex);
+        var newHtml = allowedScopeClaimCreateTemplate.render(newModel);
+        if (count === 0) {
+            $row.after($(newHtml));
+        }
+        else {
+            $siblings.last().after($(newHtml));
+        }
+    });
+
+    $tblAllowedScopesBody.on("click", "tr.scopeClaim button.btn-delete-api-resource-scope-claim", function (event) {       
+        var $row = $(event.target).parents("tr.scopeClaim:first");
+        var parentIndex = $row.attr("data-parent-index");
+        $row.remove();
+        updateScopesClaimsIndexes(parentIndex);
+    });
+
+    function updateScopesClaimsIndexes(parentIndex) {
+        var $rows = $tblAllowedScopesBody.find("tr.scopeClaim[data-parent-index='" + parentIndex + "']");
+        for (var i = 0; i < $rows.length; i++) {
+            var $row = $($rows[i]);
+            $row.attr("data-index", i);
+            var $fields = $row.find("[name^='ApiResource.Scopes[']");
+            for (var j = 0; j < $fields.length; j++) {
+                var $field = $($fields[j]);
+                $field.attr("name", $field.attr("name").replace(/UserClaims\[([1-9]\d*)\]/, "UserClaims[" + i + "]"));
             }
         }
     }

@@ -52,14 +52,14 @@ namespace MoatGate.Pages.Resources.Api
                 ViewData["Title"] = "Edit Api Resource";
                 ApiResource = await _context.ApiResources
                     .AsNoTracking()
-                    .Include(a => a.Scopes)
+                    .Include(a => a.Scopes).ThenInclude(s => s.UserClaims)
                     .Include(a => a.Secrets)
                     .Include(a => a.UserClaims)
                     .SingleOrDefaultAsync(r => r.Id == id.Value);
             }
             else
             {
-                ViewData["Title"] = "Create ApiResource";
+                ViewData["Title"] = "Create Api Resource";
             }
 
             return Page();
@@ -89,7 +89,7 @@ namespace MoatGate.Pages.Resources.Api
             else
             {
                 var CurrentApiResource = _context.ApiResources
-                       .Include(c => c.Scopes)
+                       .Include(c => c.Scopes).ThenInclude(s => s.UserClaims)
                        .Include(c => c.Secrets)
                        .Include(c => c.UserClaims)
                        .SingleOrDefault(c => c.Id == ApiResource.Id);
@@ -98,7 +98,6 @@ namespace MoatGate.Pages.Resources.Api
                 CurrentApiResource.Scopes.ReflectEntityFrameworkState(ApiResource.Scopes, _context);
                 CurrentApiResource.Secrets.ReflectEntityFrameworkState(ApiResource.Secrets, _context);
                 CurrentApiResource.UserClaims.ReflectEntityFrameworkState(ApiResource.UserClaims, _context);
-
                 await _context.SaveChangesAsync();
             }
 
