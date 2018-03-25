@@ -308,4 +308,5 @@
     <environment exclude="Development">
         <script type="text/javascript" src="~/js/Clients/client-create-edit.min.js" asp-append-version="true"></script>
     </environment>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

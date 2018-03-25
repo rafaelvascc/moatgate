@@ -1,16 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 using AutoMapper;
 
@@ -55,7 +50,7 @@ namespace MoatGate
 
                 // Lockout settings
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.AllowedForNewUsers = true;
 
                 // User settings
@@ -125,6 +120,20 @@ namespace MoatGate
                 c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientPostLogoutRedirectUri, IdentityServer4.EntityFramework.Entities.ClientPostLogoutRedirectUri>().ForMember(e => e.Client, opt => opt.Ignore());
                 c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientProperty, IdentityServer4.EntityFramework.Entities.ClientProperty>().ForMember(e => e.Client, opt => opt.Ignore());
                 c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientRedirectUri, IdentityServer4.EntityFramework.Entities.ClientRedirectUri>().ForMember(e => e.Client, opt => opt.Ignore());
+
+                c.CreateMap<IdentityServer4.EntityFramework.Entities.ApiResource, IdentityServer4.EntityFramework.Entities.ApiResource>()
+                .ForMember(e => e.Scopes, opt => opt.Ignore())
+                .ForMember(e => e.Secrets, opt => opt.Ignore())
+                .ForMember(e => e.UserClaims, opt => opt.Ignore());
+
+                c.CreateMap<IdentityServer4.EntityFramework.Entities.ApiScope, IdentityServer4.EntityFramework.Entities.ApiScope>()
+                .ForMember(e => e.ApiResource, opt => opt.Ignore())
+                .ForMember(e => e.UserClaims, opt => opt.Ignore());
+                c.CreateMap<IdentityServer4.EntityFramework.Entities.ApiSecret, IdentityServer4.EntityFramework.Entities.ApiSecret>().ForMember(e => e.ApiResource, opt => opt.Ignore());
+                c.CreateMap<IdentityServer4.EntityFramework.Entities.ApiResourceClaim, IdentityServer4.EntityFramework.Entities.ApiResourceClaim>().ForMember(e => e.ApiResource, opt => opt.Ignore());
+
+                c.CreateMap<IdentityServer4.EntityFramework.Entities.ApiScopeClaim, IdentityServer4.EntityFramework.Entities.ApiScopeClaim>()
+                .ForMember(e => e.ApiScope, opt => opt.Ignore());
             });
         }
 

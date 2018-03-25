@@ -35,7 +35,7 @@ namespace MoatGate.Pages.User
         }
 
 
-        public async Task<IActionResult> OnGet(Guid? id)
+        public async Task<IActionResult> OnGet(int? id)
         {
             if (id.HasValue)
             {

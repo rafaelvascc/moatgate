@@ -17,7 +17,7 @@ namespace MoatGate.Pages.Client
     {
         private readonly ConfigurationDbContext _context;
 
-        public CreateEditModel(ConfigurationDbContext context, IResourceStore store)
+        public CreateEditModel(ConfigurationDbContext context)
         {
             _context = context; 
         }
@@ -53,15 +53,17 @@ namespace MoatGate.Pages.Client
             else
             {
                 ViewData["Title"] = "Create Client";
-                Client = new IdentityServer4.EntityFramework.Entities.Client();
-                Client.ClientSecrets = new List<IdentityServer4.EntityFramework.Entities.ClientSecret>();
-                Client.RedirectUris = new List<IdentityServer4.EntityFramework.Entities.ClientRedirectUri>();
-                Client.AllowedScopes = new List<IdentityServer4.EntityFramework.Entities.ClientScope>();
-                Client.Properties = new List<IdentityServer4.EntityFramework.Entities.ClientProperty>();
-                Client.PostLogoutRedirectUris = new List<IdentityServer4.EntityFramework.Entities.ClientPostLogoutRedirectUri>();
-                Client.IdentityProviderRestrictions = new List<IdentityServer4.EntityFramework.Entities.ClientIdPRestriction>();
-                Client.AllowedCorsOrigins = new List<IdentityServer4.EntityFramework.Entities.ClientCorsOrigin>();
-                Client.Claims = new List<IdentityServer4.EntityFramework.Entities.ClientClaim>();
+                Client = new IdentityServer4.EntityFramework.Entities.Client
+                {
+                    ClientSecrets = new List<IdentityServer4.EntityFramework.Entities.ClientSecret>(),
+                    RedirectUris = new List<IdentityServer4.EntityFramework.Entities.ClientRedirectUri>(),
+                    AllowedScopes = new List<IdentityServer4.EntityFramework.Entities.ClientScope>(),
+                    Properties = new List<IdentityServer4.EntityFramework.Entities.ClientProperty>(),
+                    PostLogoutRedirectUris = new List<IdentityServer4.EntityFramework.Entities.ClientPostLogoutRedirectUri>(),
+                    IdentityProviderRestrictions = new List<IdentityServer4.EntityFramework.Entities.ClientIdPRestriction>(),
+                    AllowedCorsOrigins = new List<IdentityServer4.EntityFramework.Entities.ClientCorsOrigin>(),
+                    Claims = new List<IdentityServer4.EntityFramework.Entities.ClientClaim>()
+                };
             }
         }
 

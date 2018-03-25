@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using IdentityServer4.EntityFramework.Entities;
+using IdentityServer4.Models;
 using Microsoft.EntityFrameworkCore;
 using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 using System;
@@ -40,11 +42,18 @@ namespace MoatGate.Helpers
             {
                 var existingEntity = currentState.Where(e => (int)typeof(T).GetProperty("Id").GetValue(e) == (int)typeof(T).GetProperty("Id").GetValue(entry)).Single();
                 if (GetHashCodeFromPropertyValues<T>(entry) != GetHashCodeFromPropertyValues<T>(existingEntity))
+                {
                     Mapper.Map(entry, existingEntity);
+                }
             }
 
             foreach (var entry in toAdd)
             {
+                if (typeof(T).IsSubclassOf(typeof(IdentityServer4.EntityFramework.Entities.Secret)) || typeof(T).IsSubclassOf(typeof(IdentityServer4.Models.Secret)))
+                {
+                    typeof(T).GetProperty("Value").SetValue(entry, ((string)typeof(T).GetProperty("Value").GetValue(entry)).Sha256());
+                }
+
                 currentState.Add(entry);
                 context.Entry(entry).State = EntityState.Added;
             }
@@ -71,6 +80,7 @@ namespace MoatGate.Helpers
             typeof(float),
             typeof(double),
             typeof(decimal),
+            typeof(bool),
             typeof(DateTime),
             typeof(Guid),
             }.Contains(t);
