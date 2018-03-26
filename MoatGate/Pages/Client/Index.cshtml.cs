@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using IdentityServer4.EntityFramework.Stores;
 using IdentityServer4.EntityFramework.DbContexts;
-using IdentityServer4.EntityFramework.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace MoatGate.Pages.Client
@@ -25,6 +21,14 @@ namespace MoatGate.Pages.Client
         public async Task OnGetAsync()
         {
             Clients = await _context.Clients.ToListAsync();
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            _context.Clients.Remove(await _context.Clients.SingleOrDefaultAsync(c => c.Id == id));
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage();
         }
     }
 }

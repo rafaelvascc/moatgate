@@ -26,5 +26,13 @@ namespace MoatGate.Pages.Resources.Api
         {
             ApiResources = await _context.ApiResources.ToListAsync();
         }
+
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            _context.ApiResources.Remove(await _context.ApiResources.SingleOrDefaultAsync(c => c.Id == id));
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage();
+        }
     }
 }

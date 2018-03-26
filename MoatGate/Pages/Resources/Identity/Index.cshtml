@@ -7,60 +7,62 @@
 <p>
     <a asp-page="CreateEdit" class="btn btn-primary"><i class="fas fa-plus"></i> Create New</a>
 </p>
-<table class="table table-condensed table-responsive table-striped table-hover">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdentityResources[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdentityResources[0].DisplayName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdentityResources[0].Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdentityResources[0].Enabled)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdentityResources[0].Required)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdentityResources[0].ShowInDiscoveryDocument)
-            </th>
-            <th>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.IdentityResources)
-        {
+<form method="post">
+    <table class="table table-condensed table-responsive table-striped table-hover">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DisplayName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Enabled)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Required)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ShowInDiscoveryDocument)
-                </td>
-                <td>
-                    <div class="btn-group btn-group-sm pull-right">
-                        <a asp-page="./CreateEdit" asp-route-id="@item.Id" class="btn btn-sm btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
-                        <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger" title="Delete"><i class="fas fa-trash"></i></a>
-                    </div>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdentityResources[0].Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdentityResources[0].DisplayName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdentityResources[0].Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdentityResources[0].Enabled)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdentityResources[0].Required)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdentityResources[0].ShowInDiscoveryDocument)
+                </th>
+                <th>
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.IdentityResources)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DisplayName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Enabled)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Required)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShowInDiscoveryDocument)
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm pull-right">
+                            <a asp-page="./CreateEdit" asp-route-id="@item.Id" class="btn btn-sm btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
+                            <button type="submit" asp-page-handler="delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger" title="Delete"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
