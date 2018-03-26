@@ -46,7 +46,13 @@
                     <td>
                         <div class="btn-group btn-group-sm pull-right">
                             <a asp-page="./CreateEdit" asp-route-id="@item.Id" class="btn btn-sm btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
-                            <button type="submit" asp-page-handler="delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger" title="Delete"><i class="fas fa-trash"></i></button>
+                            <button type="button" class="btn btn-sm btn-danger deletePopOver"><i class="fas fa-trash"></i></button>
+                        </div>
+                        <div class="confirmDeletePopover">
+                            <div class="btn-group btn-group-sm pull-right confirmDeletePopoverBtnGroup">
+                                <button type="submit" asp-page-handler="delete" asp-route-id="@item.Id" class="btn btn-sm btn-success" title="Delete"><i class="fas fa-check"></i> Confirm</button>
+                                <button type="button" class="btn btn-sm btn-danger btnCancelDelete"><i class="fas fa-times"></i> Cancel</button>
+                            </div>
                         </div>
                     </td>
                 </tr>

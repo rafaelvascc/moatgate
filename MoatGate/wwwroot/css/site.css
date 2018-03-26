@@ -33,3 +33,13 @@ body {
         display: none;
     }
 }
+
+.confirmDeletePopover {
+    display: none;
+}
+
+.confirmDeletePopoverBtnGroup {
+    width: 151px;
+    margin-bottom: 5px;
+}
+
