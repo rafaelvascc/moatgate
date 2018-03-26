@@ -8,43 +8,38 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServer4.EntityFramework.Entities;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using MoatGate.Helpers;
 
 namespace MoatGate.Pages.Resources.Identity
 {
     public class CreateEditModel : PageModel
     {
-        private readonly UserManager<MoatGateIdentityUser> _userManager;
+        private readonly ConfigurationDbContext _context;
 
         [BindProperty]
-        public MoatGateIdentityUser MoatGateIdentityUser { get; set; } = new MoatGateIdentityUser();
-
-        [Required]
-        [DataType(DataType.Password)]
-        [BindProperty]
-        public string Password { get; set; }
-
-        [Required]
-        [DataType(DataType.Password)]
-        [Compare("Password")]
-        [BindProperty]
-        public string ConfirmPassword { get; set; }
-
-        public CreateEditModel(UserManager<MoatGateIdentityUser> userManager)
+        public IdentityResource IdentityResource { get; set; } = new IdentityResource() { UserClaims = new List<IdentityClaim>() };
+        
+        public CreateEditModel(ConfigurationDbContext context)
         {
-            _userManager = userManager;
+            _context = context;
         }
 
-
-        public async Task<IActionResult> OnGet(Guid? id)
+        public async Task<IActionResult> OnGet(int? id)
         {
             if (id.HasValue)
             {
-                ViewData["Title"] = "Edit User";
-                MoatGateIdentityUser = await _userManager.FindByIdAsync(id.ToString());
+                ViewData["Title"] = "Edit Identity Resource";
+                IdentityResource = await _context.IdentityResources
+                    .Include(r => r.UserClaims)
+                    .SingleOrDefaultAsync(i => i.Id == id.Value);
             }
             else
             {
-                ViewData["Title"] = "Create User";
+                ViewData["Title"] = "Create Identity Resource";
             }
 
             return Page();
@@ -57,22 +52,21 @@ namespace MoatGate.Pages.Resources.Identity
                 return Page();
             }
 
-            if (MoatGateIdentityUser.Id == 0)
+            if (IdentityResource.Id == 0)
             {
-                var result = await _userManager.CreateAsync(MoatGateIdentityUser, Password);
-
-                if (!result.Succeeded)
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(error.Code, error.Description);
-                    }
-                    return Page();
-                }
+                _context.IdentityResources.Add(IdentityResource);
+                await _context.SaveChangesAsync();
             }
             else
             {
-                var result = _userManager.UpdateAsync(MoatGateIdentityUser);
+                var CurrentIdentityResource = await _context.IdentityResources
+                    .Include(r => r.UserClaims)
+                    .SingleOrDefaultAsync(i => i.Id == IdentityResource.Id);
+
+                Mapper.Map(IdentityResource, CurrentIdentityResource);
+                CurrentIdentityResource.UserClaims.ReflectEntityFrameworkState(IdentityResource.UserClaims, _context);
+
+                await _context.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");

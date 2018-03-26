@@ -57,9 +57,11 @@ namespace MoatGate.Pages.User
                 return Page();
             }
 
+            IdentityResult result = null;
+
             if (MoatGateIdentityUser.Id == 0)
             {
-                var result = await _userManager.CreateAsync(MoatGateIdentityUser, Password);
+                result = await _userManager.CreateAsync(MoatGateIdentityUser, Password);
 
                 if (!result.Succeeded)
                 {
@@ -72,7 +74,16 @@ namespace MoatGate.Pages.User
             }
             else
             {
-                var result = _userManager.UpdateAsync(MoatGateIdentityUser);
+                result = await _userManager.UpdateAsync(MoatGateIdentityUser);
+            }
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(error.Code, error.Description);
+                }
+                return Page();
             }
 
             return RedirectToPage("./Index");

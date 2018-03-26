@@ -134,6 +134,12 @@ namespace MoatGate
 
                 c.CreateMap<IdentityServer4.EntityFramework.Entities.ApiScopeClaim, IdentityServer4.EntityFramework.Entities.ApiScopeClaim>()
                 .ForMember(e => e.ApiScope, opt => opt.Ignore());
+                
+                c.CreateMap<IdentityServer4.EntityFramework.Entities.IdentityResource, IdentityServer4.EntityFramework.Entities.IdentityResource>()
+                .ForMember(e => e.UserClaims, opt => opt.Ignore());
+
+                c.CreateMap<IdentityServer4.EntityFramework.Entities.IdentityClaim, IdentityServer4.EntityFramework.Entities.IdentityClaim>()
+                .ForMember(e => e.IdentityResource, opt => opt.Ignore());
             });
         }
 

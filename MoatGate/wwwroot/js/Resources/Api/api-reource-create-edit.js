@@ -142,7 +142,6 @@
         }
     }
 
-
     //Scopes Claims
     var allowedScopeClaimCreateTemplate = $.templates("#api-resource-scope-claim-template");
 
