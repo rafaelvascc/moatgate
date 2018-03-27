@@ -1,5 +1,6 @@
 ﻿$(function () {
     appyConfirmPopoverToDeleteButtons();
+    applyTabs();
 });
 
 function appyConfirmPopoverToDeleteButtons() {
@@ -22,4 +23,11 @@ function appyConfirmPopoverToDeleteButtons() {
     }
 
     $("body").popover(options);
+}
+
+function applyTabs() {
+    $('.bootstrapTabs a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
 }

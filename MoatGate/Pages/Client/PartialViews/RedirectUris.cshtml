@@ -1,9 +1,16 @@
 ﻿@model IList<IdentityServer4.EntityFramework.Entities.ClientRedirectUri>
 <section data-scope="client-partials-redirect-uri">
-    <p>
-        <button type="button" class="btn btn-sm btn-primary" id="btn-add-redirect-uri"><i class="fas fa-plus"></i> Create New</button>
-    </p>
     <table class="table table-condensed table-responsive table-striped table-hover" id="tbl-redirect-uri">
+        <thead>
+            <tr>
+                <th>
+                    Redirect Uri
+                </th>
+                <th>
+                    <button type="button" class="btn btn-sm btn-primary pull-right" id="btn-add-redirect-uri" title="Add Redirect URL"><i class="fas fa-plus"></i></button>
+                </th>
+            </tr>
+        </thead>
         <tbody>
             @{ int i = 0; }
             @foreach (var item in Model)

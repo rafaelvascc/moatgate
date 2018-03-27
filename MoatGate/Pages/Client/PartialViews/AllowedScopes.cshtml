@@ -1,9 +1,14 @@
 ﻿@model IList<IdentityServer4.EntityFramework.Entities.ClientScope>
 <section data-scope="client-partials-allowed-scopes">
-    <p>
-        <button type="button" class="btn btn-sm btn-primary" id="btn-add-allowed-scope"><i class="fas fa-plus"></i> Create New</button>
-    </p>
     <table class="table table-condensed table-responsive table-striped table-hover" id="tbl-allowed-scope">
+        <thead>
+            <tr>
+                <th>Scope</th>
+                <th>
+                    <button type="button" class="btn btn-sm btn-primary pull-right" id="btn-add-allowed-scope" title="Add New Allowed Scope"><i class="fas fa-plus"></i></button>
+                </th>
+            </tr>
+        </thead>
         <tbody>
             @{ int i = 0; }
             @foreach (var item in Model)

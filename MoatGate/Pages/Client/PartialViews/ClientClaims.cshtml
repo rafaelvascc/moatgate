@@ -1,9 +1,19 @@
 ﻿@model IList<IdentityServer4.EntityFramework.Entities.ClientClaim>
 <section data-scope="client-partials-client-claim">
-    <p>
-        <button type="button" class="btn btn-sm btn-primary" id="btn-add-client-claim"><i class="fas fa-plus"></i> Create New</button>
-    </p>
     <table class="table table-condensed table-responsive table-striped table-hover" id="tbl-client-claim">
+        <thead>
+            <tr>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Value
+                </th>
+                <th>
+                    <button type="button" class="btn btn-sm btn-primary pull-right" id="btn-add-client-claim" title="Add Client Claim"><i class="fas fa-plus"></i></button>
+                </th>
+            </tr>
+        </thead>
         <tbody>
             @{ int i = 0; }
             @foreach (var item in Model)

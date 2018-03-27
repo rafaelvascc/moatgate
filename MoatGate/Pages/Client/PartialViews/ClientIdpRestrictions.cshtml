@@ -1,9 +1,16 @@
 ﻿@model IList<IdentityServer4.EntityFramework.Entities.ClientIdPRestriction>
 <section data-scope="client-partials-idp-restrictions">
-    <p>
-        <button type="button" class="btn btn-sm btn-primary" id="btn-add-idp-restriction"><i class="fas fa-plus"></i> Create New</button>
-    </p>
     <table class="table table-condensed table-responsive table-striped table-hover" id="tbl-idp-restriction">
+        <thead>
+            <tr>
+                <th>
+                    Provider
+                </th>
+                <th>
+                    <button type="button" class="btn btn-sm btn-primary pull-right" id="btn-add-idp-restriction" title="Add Identity Provider Restriction"><i class="fas fa-plus"></i></button>
+                </th>
+            </tr>
+        </thead>
         <tbody>
             @{ int i = 0; }
             @foreach (var item in Model)

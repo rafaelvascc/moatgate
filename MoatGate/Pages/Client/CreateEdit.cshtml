@@ -10,295 +10,358 @@
         <form method="post">
             <input type="hidden" asp-for="Client.Id" />
             <div asp-validation-summary="All" class="text-danger"></div>
-            <fieldset>
-                <legend>Basic Info</legend>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="Client.Enabled" /> @Html.DisplayNameFor(model => model.Client.Enabled)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Client.ClientId" class="control-label"></label>
-                    <input asp-for="Client.ClientId" class="form-control" />
-                    <span asp-validation-for="Client.ClientId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Client.ClientSecrets" class="control-label"></label>
-                    @{
-                        Html.RenderPartial("./PartialViews/ClientSecret", Model.Client.ClientSecrets);
-                    }
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="Client.RequireClientSecret" /> @Html.DisplayNameFor(model => model.Client.RequireClientSecret)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Grant Types (Flows)</label>
-                    @{
-                        Html.RenderPartial("./PartialViews/GrantType", Model.GrantTypes);
-                    }
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="Client.RequirePkce" /> @Html.DisplayNameFor(model => model.Client.RequirePkce)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="Client.AllowPlainTextPkce" /> @Html.DisplayNameFor(model => model.Client.AllowPlainTextPkce)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Client.RedirectUris" class="control-label"></label>
-                    @{
-                        Html.RenderPartial("./PartialViews/RedirectUris", Model.Client.RedirectUris);
-                    }
-                </div>
-                <div class="form-group">
-                    <label asp-for="Client.AllowedScopes" class="control-label"></label>
-                    @{
-                        Html.RenderPartial("./PartialViews/AllowedScopes", Model.Client.AllowedScopes);
-                    }
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="Client.AllowOfflineAccess" /> @Html.DisplayNameFor(model => model.Client.AllowOfflineAccess)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="Client.AllowAccessTokensViaBrowser" /> @Html.DisplayNameFor(model => model.Client.AllowAccessTokensViaBrowser)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Client.Properties" class="control-label"></label>
-                    @{
+            <ul class="nav nav-tabs bootstrapTabs">
+                <li role="presentation" class="active"><a href="#clientBasicTab">Basic Info</a></li>
+                <li role="presentation"><a href="#clientAuthTab">Authentication/Logout</a></li>
+                <li role="presentation"><a href="#clientTokenTab">Token</a></li>
+                <li role="presentation"><a href="#clientConsentScreenTab">Consent Screen</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="clientBasicTab" class="tab-pane fade in active">
+                    <div class="col-lg-8">
+                        <div class="form-group">
+                            <label asp-for="Client.ClientId" class="control-label"></label>
+                            <input asp-for="Client.ClientId" class="form-control" />
+                            <span asp-validation-for="Client.ClientId" class="text-danger"></span>
+                        </div>
 
-                        Html.RenderPartial("./PartialViews/ClientProperties", Model.Client.Properties);
-                    }
+                        <ul class="nav nav-pills bootstrapTabs">
+                            <li role="presentation" class="active"><a href="#clientBasicTabSecrets">Client Secrets</a></li>
+                            <li role="presentation"><a href="#clientBasicTabRedirects">Redirect URLs</a></li>
+                            <li role="presentation"><a href="#clientBasicTabScopes">Scopes</a></li>
+                            <li role="presentation"><a href="#clientBasicTabProps">Properties</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="clientBasicTabSecrets" class="tab-pane fade in active">
+                                <div class="form-group">
+                                    @{
+                                        Html.RenderPartial("./PartialViews/ClientSecret", Model.Client.ClientSecrets);
+                                    }
+                                </div>
+                            </div>
+                            <div id="clientBasicTabRedirects" class="tab-pane fade">
+                                <div class="form-group">
+                                    @{
+                                        Html.RenderPartial("./PartialViews/RedirectUris", Model.Client.RedirectUris);
+                                    }
+                                </div>
+                            </div>
+                            <div id="clientBasicTabScopes" class="tab-pane fade">
+                                <div class="form-group">
+                                    @{
+                                        Html.RenderPartial("./PartialViews/AllowedScopes", Model.Client.AllowedScopes);
+                                    }
+                                </div>
+                            </div>
+                            <div id="clientBasicTabProps" class="tab-pane fade">
+                                <div class="form-group">
+                                    @{
+                                        Html.RenderPartial("./PartialViews/ClientProperties", Model.Client.Properties);
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="Client.Enabled" /> @Html.DisplayNameFor(model => model.Client.Enabled)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="Client.RequireClientSecret" /> @Html.DisplayNameFor(model => model.Client.RequireClientSecret)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="Client.RequirePkce" /> @Html.DisplayNameFor(model => model.Client.RequirePkce)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="Client.AllowPlainTextPkce" /> @Html.DisplayNameFor(model => model.Client.AllowPlainTextPkce)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="Client.AllowOfflineAccess" /> @Html.DisplayNameFor(model => model.Client.AllowOfflineAccess)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="Client.AllowAccessTokensViaBrowser" /> @Html.DisplayNameFor(model => model.Client.AllowAccessTokensViaBrowser)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Grant Types (Flows)</label>
+                            @{
+                                Html.RenderPartial("./PartialViews/GrantType", Model.GrantTypes);
+                            }
+                        </div>
+                    </div>
                 </div>
-            </fieldset>
-            <fieldset>
-                <legend>Authentication/Logout</legend>
-                <div class="form-group">
-                    <label asp-for="Client.PostLogoutRedirectUris" class="control-label"></label>
-                    @{
+                <div id="clientAuthTab" class="tab-pane fade">
+                    <div class="col-lg-8">
+                        <div class="form-group">
+                            <label asp-for="Client.FrontChannelLogoutUri" class="control-label"></label>
+                            <input asp-for="Client.FrontChannelLogoutUri" class="form-control" />
+                            <span asp-validation-for="Client.FrontChannelLogoutUri" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Client.BackChannelLogoutUri" class="control-label"></label>
+                            <input asp-for="Client.BackChannelLogoutUri" class="form-control" />
+                            <span asp-validation-for="Client.BackChannelLogoutUri" class="text-danger"></span>
+                        </div>
 
-                        Html.RenderPartial("./PartialViews/PostLogoutRedirectUris", Model.Client.PostLogoutRedirectUris);
-                    }
-                </div>
-                <div class="form-group">
-                    <label asp-for="Client.FrontChannelLogoutUri" class="control-label"></label>
-                    <input asp-for="Client.FrontChannelLogoutUri" class="form-control" />
-                    <span asp-validation-for="Client.FrontChannelLogoutUri" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="Client.FrontChannelLogoutSessionRequired" /> @Html.DisplayNameFor(model => model.Client.FrontChannelLogoutSessionRequired)
-                        </label>
+                        <ul class="nav nav-pills bootstrapTabs">
+                            <li role="presentation" class="active"><a href="#clientAuthTabRedirects">Logout Redirect URLs</a></li>
+                            <li role="presentation"><a href="#clientAuthTabRestrictions">Idp Restrictions</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="clientAuthTabRedirects" class="tab-pane fade in active">
+                                <div class="form-group">
+                                    @{
+                                        Html.RenderPartial("./PartialViews/PostLogoutRedirectUris", Model.Client.PostLogoutRedirectUris);
+                                    }
+                                </div>
+                            </div>
+
+                            <div id="clientAuthTabRestrictions" class="tab-pane fade">
+                                <div class="form-group">
+                                    @{
+                                        Html.RenderPartial("./PartialViews/ClientIdpRestrictions", Model.Client.IdentityProviderRestrictions);
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="Client.FrontChannelLogoutSessionRequired" /> @Html.DisplayNameFor(model => model.Client.FrontChannelLogoutSessionRequired)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="Client.BackChannelLogoutSessionRequired" /> @Html.DisplayNameFor(model => model.Client.BackChannelLogoutSessionRequired)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="Client.EnableLocalLogin" /> @Html.DisplayNameFor(model => model.Client.EnableLocalLogin)
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Client.BackChannelLogoutUri" class="control-label"></label>
-                    <input asp-for="Client.BackChannelLogoutUri" class="form-control" />
-                    <span asp-validation-for="Client.BackChannelLogoutUri" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="Client.BackChannelLogoutSessionRequired" /> @Html.DisplayNameFor(model => model.Client.BackChannelLogoutSessionRequired)
-                        </label>
+                <div id="clientTokenTab" class="tab-pane fade">
+                    <div class="col-lg-8">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="Client.IdentityTokenLifetime" class="control-label"></label>
+                                <input asp-for="Client.IdentityTokenLifetime" min="0" class="form-control" />
+                                <span asp-validation-for="Client.IdentityTokenLifetime" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Client.AccessTokenLifetime" class="control-label"></label>
+                                <input asp-for="Client.AccessTokenLifetime" min="0" class="form-control" />
+                                <span asp-validation-for="Client.AccessTokenLifetime" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Client.AuthorizationCodeLifetime" class="control-label"></label>
+                                <input asp-for="Client.AuthorizationCodeLifetime" min="0" class="form-control" />
+                                <span asp-validation-for="Client.AuthorizationCodeLifetime" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label asp-for="Client.AbsoluteRefreshTokenLifetime" class="control-label"></label>
+                                <input asp-for="Client.AbsoluteRefreshTokenLifetime" min="0" class="form-control" />
+                                <span asp-validation-for="Client.AbsoluteRefreshTokenLifetime" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Client.SlidingRefreshTokenLifetime" class="control-label"></label>
+                                <input asp-for="Client.SlidingRefreshTokenLifetime" min="0" class="form-control" />
+                                <span asp-validation-for="Client.SlidingRefreshTokenLifetime" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Client.ClientClaimsPrefix" class="control-label"></label>
+                                <input asp-for="Client.ClientClaimsPrefix" class="form-control" />
+                                <span asp-validation-for="Client.ClientClaimsPrefix" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Client.PairWiseSubjectSalt" class="control-label"></label>
+                            <input asp-for="Client.PairWiseSubjectSalt" class="form-control" />
+                            <span asp-validation-for="Client.PairWiseSubjectSalt" class="text-danger"></span>
+                        </div>
+
+
+                        <ul class="nav nav-pills bootstrapTabs">
+                            <li role="presentation" class="active"><a href="#clientTokenTabCors">Allowed Cors Origins</a></li>
+                            <li role="presentation"><a href="#clientTokenTabClaim">Allowed Claims</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="clientTokenTabCors" class="tab-pane fade in active">
+                                <div class="form-group">
+                                    @{
+                                        Html.RenderPartial("./PartialViews/AllowedCorsOrigins", Model.Client.AllowedCorsOrigins);
+                                    }
+                                </div>
+                            </div>
+                            <div id="clientTokenTabClaim" class="tab-pane fade">
+                                <div class="form-group">
+                                    @{
+                                        Html.RenderPartial("./PartialViews/ClientClaims", Model.Client.Claims);
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="Client.UpdateAccessTokenClaimsOnRefresh" /> @Html.DisplayNameFor(model => model.Client.UpdateAccessTokenClaimsOnRefresh)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="Client.IncludeJwtId" /> @Html.DisplayNameFor(model => model.Client.IncludeJwtId)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="Client.AlwaysIncludeUserClaimsInIdToken" /> @Html.DisplayNameFor(model => model.Client.AlwaysIncludeUserClaimsInIdToken)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">RefreshTokenUsage</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" asp-for="Client.RefreshTokenUsage" value="0">
+                                    Reuse
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" asp-for="Client.RefreshTokenUsage" value="1">
+                                    One Time Only
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">RefreshTokenExpiration</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" asp-for="Client.RefreshTokenExpiration" value="0">
+                                    Sliding
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" asp-for="Client.RefreshTokenExpiration" value="1">
+                                    Absolute
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">AccessTokenType</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" asp-for="Client.AccessTokenType" value="0">
+                                    Json Web Token (JWT)
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" asp-for="Client.AccessTokenType" value="1">
+                                    Reference
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="Client.EnableLocalLogin" /> @Html.DisplayNameFor(model => model.Client.EnableLocalLogin)
-                        </label>
+                <div id="clientConsentScreenTab" class="tab-pane fade">
+                    <div class="col-lg-8">
+
+                        <div class="form-group">
+                            <label asp-for="Client.ClientName" class="control-label"></label>
+                            <input asp-for="Client.ClientName" class="form-control" />
+                            <span asp-validation-for="Client.ClientName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Client.ClientUri" class="control-label"></label>
+                            <input asp-for="Client.ClientUri" class="form-control" />
+                            <span asp-validation-for="Client.ClientUri" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Client.LogoUri" class="control-label"></label>
+                            <input asp-for="Client.LogoUri" class="form-control" />
+                            <span asp-validation-for="Client.LogoUri" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Client.ConsentLifetime" class="control-label"></label>
+                            <input asp-for="Client.ConsentLifetime" class="form-control" />
+                            <span asp-validation-for="Client.ConsentLifetime" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="Client.RequireConsent" /> @Html.DisplayNameFor(model => model.Client.RequireConsent)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="Client.AllowRememberConsent" /> @Html.DisplayNameFor(model => model.Client.AllowRememberConsent)
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Client.IdentityProviderRestrictions" class="control-label"></label>
-                    @{
-                        Html.RenderPartial("./PartialViews/ClientIdpRestrictions", Model.Client.IdentityProviderRestrictions);
-                    }
-                </div>
-            </fieldset>
-            <fieldset>
-                <legend>Token</legend>
-                <div class="form-group">
-                    <label asp-for="Client.IdentityTokenLifetime" class="control-label"></label>
-                    <input asp-for="Client.IdentityTokenLifetime" min="0" class="form-control" />
-                    <span asp-validation-for="Client.IdentityTokenLifetime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Client.AccessTokenLifetime" class="control-label"></label>
-                    <input asp-for="Client.AccessTokenLifetime" min="0" class="form-control" />
-                    <span asp-validation-for="Client.AccessTokenLifetime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Client.AuthorizationCodeLifetime" class="control-label"></label>
-                    <input asp-for="Client.AuthorizationCodeLifetime" min="0" class="form-control" />
-                    <span asp-validation-for="Client.AuthorizationCodeLifetime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Client.AbsoluteRefreshTokenLifetime" class="control-label"></label>
-                    <input asp-for="Client.AbsoluteRefreshTokenLifetime" min="0" class="form-control" />
-                    <span asp-validation-for="Client.AbsoluteRefreshTokenLifetime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Client.SlidingRefreshTokenLifetime" class="control-label"></label>
-                    <input asp-for="Client.SlidingRefreshTokenLifetime" min="0" class="form-control" />
-                    <span asp-validation-for="Client.SlidingRefreshTokenLifetime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">RefreshTokenUsage</label>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" asp-for="Client.RefreshTokenUsage" value="0">
-                            Reuse
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" asp-for="Client.RefreshTokenUsage" value="1">
-                            One Time Only
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">RefreshTokenExpiration</label>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" asp-for="Client.RefreshTokenExpiration" value="0">
-                            Sliding
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" asp-for="Client.RefreshTokenExpiration" value="1">
-                            Absolute
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="Client.UpdateAccessTokenClaimsOnRefresh" /> @Html.DisplayNameFor(model => model.Client.UpdateAccessTokenClaimsOnRefresh)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">AccessTokenType</label>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" asp-for="Client.AccessTokenType" value="0">
-                            Json Web Token (JWT)
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" asp-for="Client.AccessTokenType" value="1">
-                            Reference
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="Client.IncludeJwtId" /> @Html.DisplayNameFor(model => model.Client.IncludeJwtId)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Client.AllowedCorsOrigins" class="control-label"></label>
-                    @{
-                        Html.RenderPartial("./PartialViews/AllowedCorsOrigins", Model.Client.AllowedCorsOrigins);
-                    }
-                </div>
-                <div class="form-group">
-                    <label asp-for="Client.Claims" class="control-label"></label>
-                    @{
-                        Html.RenderPartial("./PartialViews/ClientClaims", Model.Client.Claims);
-                    }
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="Client.AlwaysIncludeUserClaimsInIdToken" /> @Html.DisplayNameFor(model => model.Client.AlwaysIncludeUserClaimsInIdToken)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Client.ClientClaimsPrefix" class="control-label"></label>
-                    <input asp-for="Client.ClientClaimsPrefix" class="form-control" />
-                    <span asp-validation-for="Client.ClientClaimsPrefix" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Client.PairWiseSubjectSalt" class="control-label"></label>
-                    <input asp-for="Client.PairWiseSubjectSalt" class="form-control" />
-                    <span asp-validation-for="Client.PairWiseSubjectSalt" class="text-danger"></span>
-                </div>
-            </fieldset>
-            <fieldset>
-                <legend>Consent Screen</legend>
-                <div class="form-group">
-                    <label asp-for="Client.ClientName" class="control-label"></label>
-                    <input asp-for="Client.ClientName" class="form-control" />
-                    <span asp-validation-for="Client.ClientName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Client.ClientUri" class="control-label"></label>
-                    <input asp-for="Client.ClientUri" class="form-control" />
-                    <span asp-validation-for="Client.ClientUri" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Client.LogoUri" class="control-label"></label>
-                    <input asp-for="Client.LogoUri" class="form-control" />
-                    <span asp-validation-for="Client.LogoUri" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="Client.RequireConsent" /> @Html.DisplayNameFor(model => model.Client.RequireConsent)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="Client.AllowRememberConsent" /> @Html.DisplayNameFor(model => model.Client.AllowRememberConsent)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Client.ConsentLifetime" class="control-label"></label>
-                    <input asp-for="Client.ConsentLifetime" class="form-control" />
-                    <span asp-validation-for="Client.ConsentLifetime" class="text-danger"></span>
-                </div>
-            </fieldset>
-            <div class="form-group">
-                <button type="submit" class="btn btn-success">Save <i class="fas fa-save" aria-hidden="true"></i></button>
             </div>
+            <nav class="navbar navbar-default navbar-fixed-bottom">
+                <div class="container">
+                    <div class="form-group btn-group pull-right btnGroupSave">
+                        <button type="submit" class="btn btn-success"><i class="fas fa-save" aria-hidden="true"></i> Save</button>
+                        <a asp-page="Index" class="btn btn-danger"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to List</a>
+                    </div>
+                </div>
+            </nav>
         </form>
     </div>
 </div>
 <div>
-    <a asp-page="Index">Back to List</a>
 </div>
 @section Scripts {
     <environment include="Development">
