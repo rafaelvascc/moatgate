@@ -13,7 +13,7 @@ namespace MoatGate.Helpers
 {
     public static class ListExtensions
     {
-        public static void ReflectEntityFrameworkState<T>(this IList<T> currentState, IList<T> newState, DbContext context) where T : class
+        public static void ReflectToEntityFrameworkState<T>(this IList<T> currentState, IList<T> newState, DbContext context) where T : class
         {
             if (currentState == null)
             {
@@ -39,27 +39,41 @@ namespace MoatGate.Helpers
                 context.Entry(entry).State = EntityState.Deleted;
             }
 
-            foreach (var entry in toUpdate)
+            if (typeof(T) != typeof(ClientSecret))
             {
-                var existingEntity = currentState.Where(e => (int)typeof(T).GetProperty("Id").GetValue(e) == (int)typeof(T).GetProperty("Id").GetValue(entry)).Single();
-                if (GetHashCodeFromPropertyValues<T>(entry) != GetHashCodeFromPropertyValues<T>(existingEntity))
+                foreach (var entry in toUpdate)
                 {
-                    Mapper.Map(entry, existingEntity);
-                }
-
-                var collectionsProperties = typeof(T).GetProperties().Where(p => p.PropertyType.IsAssignableFrom(typeof(List<ApiScopeClaim>)));
-                foreach (var p in collectionsProperties)
-                {
-                    var entryCollection = typeof(T).GetProperty(p.Name).GetValue(entry);
-                    var existingEntryCollection = typeof(T).GetProperty(p.Name).GetValue(existingEntity);
-
-                    if (existingEntryCollection == null)
+                    var existingEntity = currentState.Where(e => (int)typeof(T).GetProperty("Id").GetValue(e) == (int)typeof(T).GetProperty("Id").GetValue(entry)).Single();
+                    if (GetHashCodeFromPropertyValues<T>(entry) != GetHashCodeFromPropertyValues<T>(existingEntity))
                     {
-                        existingEntryCollection = new List<ApiScopeClaim>();
-                        typeof(T).GetProperty(p.Name).SetValue(existingEntity, existingEntryCollection);
+                        Mapper.Map(entry, existingEntity);
                     }
 
-                    ((IList<ApiScopeClaim>)existingEntryCollection).ReflectEntityFrameworkState<ApiScopeClaim>((IList<ApiScopeClaim>)entryCollection, context);
+                    var collectionsProperties = typeof(T).GetProperties().Where(p => p.PropertyType.IsAssignableFrom(typeof(List<ApiScopeClaim>)));
+                    foreach (var p in collectionsProperties)
+                    {
+                        var entryCollection = typeof(T).GetProperty(p.Name).GetValue(entry);
+                        var existingEntryCollection = typeof(T).GetProperty(p.Name).GetValue(existingEntity);
+
+                        if (existingEntryCollection == null)
+                        {
+                            existingEntryCollection = new List<ApiScopeClaim>();
+                            typeof(T).GetProperty(p.Name).SetValue(existingEntity, existingEntryCollection);
+                        }
+
+                        ((IList<ApiScopeClaim>)existingEntryCollection).ReflectToEntityFrameworkState<ApiScopeClaim>((IList<ApiScopeClaim>)entryCollection, context);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var entry in toUpdate)
+                {
+                    var existingEntity = currentState.Where(e => (int)typeof(T).GetProperty("Id").GetValue(e) == (int)typeof(T).GetProperty("Id").GetValue(entry)).Single();
+                    if ((entry as ClientSecret).Description != (existingEntity as ClientSecret).Description)
+                    {
+                        (existingEntity as ClientSecret).Description = (entry as ClientSecret).Description;
+                    }
                 }
             }
 

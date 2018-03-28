@@ -1,8 +1,8 @@
 ﻿@page "{id:int?}"
 @model MoatGate.Pages.Client.CreateEditModel
-@using IdentityServer4;
 @{
     Layout = "~/Pages/_Layout.cshtml";
+    var editing = (bool)ViewData["Editing"];
 }
 <h2>@ViewData["Title"]</h2>
 <div class="row">

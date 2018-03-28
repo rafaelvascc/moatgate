@@ -50,3 +50,7 @@ body {
 .tab-pane {
     margin-top: 10px;
 }
+
+#tbl-client-secret td {
+    vertical-align: middle;
+}

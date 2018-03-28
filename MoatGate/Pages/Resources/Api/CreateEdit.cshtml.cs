@@ -18,13 +18,6 @@ using MoatGate.Helpers;
 
 namespace MoatGate.Pages.Resources.Api
 {
-    public class ApiResourceScopeChecksModel
-    {
-        public string Required { set; get; }
-        public string Emphasize { set; get; }
-        public string ShowInDiscoveryDocument { set; get; }
-    }
-
     public class CreateEditModel : PageModel
     {
         private readonly ConfigurationDbContext _context;
@@ -36,10 +29,7 @@ namespace MoatGate.Pages.Resources.Api
             Secrets = new List<ApiSecret>(),
             UserClaims = new List<ApiResourceClaim>()
         };
-
-        [BindProperty]
-        public List<ApiResourceScopeChecksModel> ScopeChecks { set; get; } = new List<ApiResourceScopeChecksModel>();
-
+        
         public CreateEditModel(ConfigurationDbContext context)
         {
             _context = context;
@@ -95,9 +85,9 @@ namespace MoatGate.Pages.Resources.Api
                        .SingleOrDefault(c => c.Id == ApiResource.Id);
 
                 Mapper.Map(ApiResource, CurrentApiResource);
-                CurrentApiResource.Scopes.ReflectEntityFrameworkState(ApiResource.Scopes, _context);
-                CurrentApiResource.Secrets.ReflectEntityFrameworkState(ApiResource.Secrets, _context);
-                CurrentApiResource.UserClaims.ReflectEntityFrameworkState(ApiResource.UserClaims, _context);
+                CurrentApiResource.Scopes.ReflectToEntityFrameworkState(ApiResource.Scopes, _context);
+                CurrentApiResource.Secrets.ReflectToEntityFrameworkState(ApiResource.Secrets, _context);
+                CurrentApiResource.UserClaims.ReflectToEntityFrameworkState(ApiResource.UserClaims, _context);
                 await _context.SaveChangesAsync();
             }
 

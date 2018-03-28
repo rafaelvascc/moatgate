@@ -56,14 +56,16 @@
                     Html.RenderPartial("./PartialViews/IdentityResourceClaims", Model.IdentityResource.UserClaims);
                 }
             </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-success">Save <i class="fas fa-save" aria-hidden="true"></i></button>
-            </div>
+            <nav class="navbar navbar-default navbar-fixed-bottom">
+                <div class="container">
+                    <div class="form-group btn-group pull-right btnGroupSave">
+                        <button type="submit" class="btn btn-success"><i class="fas fa-save" aria-hidden="true"></i> Save</button>
+                        <a asp-page="Index" class="btn btn-danger"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to List</a>
+                    </div>
+                </div>
+            </nav>
         </form>
     </div>
-</div>
-<div>
-    <a asp-page="Index">Back to List</a>
 </div>
 @section Scripts {
     <environment include="Development">

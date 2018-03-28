@@ -29,9 +29,10 @@ namespace MoatGate.Pages.Client
         public string GrantTypes { set; get; } = "ClientCredentials";
 
         public void OnGet(int? id)
-        {
+        {            
             if (id.HasValue)
             {
+                ViewData["Editing"] = true;
                 ViewData["Title"] = "Edit Client";
                 Client = _context.Clients.AsNoTracking()
                     .Include(c => c.AllowedCorsOrigins)
@@ -52,6 +53,7 @@ namespace MoatGate.Pages.Client
             }
             else
             {
+                ViewData["Editing"] = false;
                 ViewData["Title"] = "Create Client";
                 Client = new IdentityServer4.EntityFramework.Entities.Client
                 {
@@ -108,15 +110,15 @@ namespace MoatGate.Pages.Client
                     .SingleOrDefault(c => c.Id == Client.Id);
                 
                 Mapper.Map(Client, CurrentClient);
-                CurrentClient.AllowedCorsOrigins.ReflectEntityFrameworkState(Client.AllowedCorsOrigins, _context);
-                CurrentClient.AllowedGrantTypes.ReflectEntityFrameworkState(Client.AllowedGrantTypes, _context);
-                CurrentClient.AllowedScopes.ReflectEntityFrameworkState(Client.AllowedScopes, _context);
-                CurrentClient.Claims.ReflectEntityFrameworkState(Client.Claims, _context);
-                CurrentClient.ClientSecrets.ReflectEntityFrameworkState(Client.ClientSecrets, _context);
-                CurrentClient.IdentityProviderRestrictions.ReflectEntityFrameworkState(Client.IdentityProviderRestrictions, _context);
-                CurrentClient.PostLogoutRedirectUris.ReflectEntityFrameworkState(Client.PostLogoutRedirectUris, _context);
-                CurrentClient.Properties.ReflectEntityFrameworkState(Client.Properties, _context);
-                CurrentClient.RedirectUris.ReflectEntityFrameworkState(Client.RedirectUris, _context);
+                CurrentClient.AllowedCorsOrigins.ReflectToEntityFrameworkState(Client.AllowedCorsOrigins, _context);
+                CurrentClient.AllowedGrantTypes.ReflectToEntityFrameworkState(Client.AllowedGrantTypes, _context);
+                CurrentClient.AllowedScopes.ReflectToEntityFrameworkState(Client.AllowedScopes, _context);
+                CurrentClient.Claims.ReflectToEntityFrameworkState(Client.Claims, _context);
+                CurrentClient.ClientSecrets.ReflectToEntityFrameworkState(Client.ClientSecrets, _context);
+                CurrentClient.IdentityProviderRestrictions.ReflectToEntityFrameworkState(Client.IdentityProviderRestrictions, _context);
+                CurrentClient.PostLogoutRedirectUris.ReflectToEntityFrameworkState(Client.PostLogoutRedirectUris, _context);
+                CurrentClient.Properties.ReflectToEntityFrameworkState(Client.Properties, _context);
+                CurrentClient.RedirectUris.ReflectToEntityFrameworkState(Client.RedirectUris, _context);
 
                 await _context.SaveChangesAsync();
             }

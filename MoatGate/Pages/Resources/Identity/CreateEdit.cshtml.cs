@@ -64,7 +64,7 @@ namespace MoatGate.Pages.Resources.Identity
                     .SingleOrDefaultAsync(i => i.Id == IdentityResource.Id);
 
                 Mapper.Map(IdentityResource, CurrentIdentityResource);
-                CurrentIdentityResource.UserClaims.ReflectEntityFrameworkState(IdentityResource.UserClaims, _context);
+                CurrentIdentityResource.UserClaims.ReflectToEntityFrameworkState(IdentityResource.UserClaims, _context);
 
                 await _context.SaveChangesAsync();
             }

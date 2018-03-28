@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 using AutoMapper;
+using MoatGate.Models.User;
 
 namespace MoatGate
 {
@@ -134,12 +135,32 @@ namespace MoatGate
 
                 c.CreateMap<IdentityServer4.EntityFramework.Entities.ApiScopeClaim, IdentityServer4.EntityFramework.Entities.ApiScopeClaim>()
                 .ForMember(e => e.ApiScope, opt => opt.Ignore());
-                
+
                 c.CreateMap<IdentityServer4.EntityFramework.Entities.IdentityResource, IdentityServer4.EntityFramework.Entities.IdentityResource>()
                 .ForMember(e => e.UserClaims, opt => opt.Ignore());
 
                 c.CreateMap<IdentityServer4.EntityFramework.Entities.IdentityClaim, IdentityServer4.EntityFramework.Entities.IdentityClaim>()
                 .ForMember(e => e.IdentityResource, opt => opt.Ignore());
+
+                c.CreateMap<MoatGateIdentityUser, MoatGateIdentityUserEditViewModel>()
+                .ForSourceMember(s => s.NormalizedUserName, opt => opt.Ignore())
+                .ForSourceMember(s => s.NormalizedEmail, opt => opt.Ignore())
+                .ForSourceMember(s => s.EmailConfirmed, opt => opt.Ignore())
+                .ForSourceMember(s => s.PasswordHash, opt => opt.Ignore())
+                .ForSourceMember(s => s.SecurityStamp, opt => opt.Ignore())
+                .ForSourceMember(s => s.ConcurrencyStamp, opt => opt.Ignore())
+                .ForSourceMember(s => s.PhoneNumberConfirmed, opt => opt.Ignore())
+                .ForSourceMember(s => s.LockoutEnd, opt => opt.Ignore())
+                .ForSourceMember(s => s.LockoutEnabled, opt => opt.Ignore())
+                .ForSourceMember(s => s.AccessFailedCount, opt => opt.Ignore())
+                .IncludeBase<MoatGateIdentityUser, MoatGateIdentityUserViewModel>().ReverseMap()
+                .ForSourceMember(s => s.SendResetPasswordEmail, opt => opt.Ignore())
+                .IncludeBase<MoatGateIdentityUserViewModel, MoatGateIdentityUser>();
+                
+                c.CreateMap<MoatGateIdentityUserCreateViewModel, MoatGateIdentityUser>()
+                .ForSourceMember(s => s.ConfirmPassword, opt => opt.Ignore())
+                .ForSourceMember(s => s.Password, opt => opt.Ignore())
+                .IncludeBase<MoatGateIdentityUserViewModel, MoatGateIdentityUser>();
             });
         }
 
