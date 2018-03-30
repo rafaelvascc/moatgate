@@ -10,12 +10,12 @@ using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 
 namespace MoatGate.Pages.User
 {
-    public class IndexModel : PageModel
+    public class ListModel : PageModel
     {
         private readonly MoatGateIdentityDbContext _context;
         private readonly UserManager<MoatGateIdentityUser> _manager;
 
-        public IndexModel(MoatGateIdentityDbContext context, UserManager<MoatGateIdentityUser> manager)
+        public ListModel(MoatGateIdentityDbContext context, UserManager<MoatGateIdentityUser> manager)
         {
             _context = context;
             _manager = manager;

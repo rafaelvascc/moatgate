@@ -58,3 +58,18 @@ body {
 #tbl-api-resource-scope tr.scopeClaim > td {
     text-align: right;
 }
+
+.btn-logout {
+    color: #9d9d9d;
+    background-color: #222;
+    border-color: #222;
+    margin-top: 5px;
+}
+
+    .btn-logout:hover {
+        color: #9d9d9d;
+        background-color: #222;
+        border-color: #222;
+        margin-top: 7px;
+        text-decoration: underline;
+    }

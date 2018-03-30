@@ -97,7 +97,20 @@ namespace MoatGate
                     options.TokenCleanupInterval = 30;
                 });
 
-            services.AddMvc();
+            services.AddMvc().AddRazorPagesOptions(options => 
+            {
+                options.Conventions.AuthorizeFolder("/Client", "IsIdentityAdmin");
+                options.Conventions.AuthorizeFolder("/Resources", "IsIdentityAdmin");
+                options.Conventions.AuthorizeFolder("/Roles", "IsIdentityAdmin");
+                options.Conventions.AuthorizeFolder("/Users", "IsIdentityAdmin");
+
+                options.Conventions.AddPageRoute("/Account/Login", "");
+            });
+
+            services.AddAuthorization(options => 
+            {
+                options.AddPolicy("IsIdentityAdmin", policy => policy.RequireRole("IdentityAdmin"));
+            });
 
             Mapper.Initialize(c =>
             {
@@ -181,12 +194,7 @@ namespace MoatGate
 
             app.UseStaticFiles();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
-            });
+            app.UseMvc();
         }
     }
 }

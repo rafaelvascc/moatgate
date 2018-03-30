@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace MoatGate
 {
@@ -22,9 +23,13 @@ namespace MoatGate
 
             using (var serviceScope = webhost.Services.CreateScope())
             {
-                serviceScope.ServiceProvider.GetRequiredService<MoatGateIdentityDbContext>().Database.Migrate();
                 serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
                 serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>().Database.Migrate();
+                var context = serviceScope.ServiceProvider.GetRequiredService<MoatGateIdentityDbContext>();
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<MoatGateIdentityUser>>();
+                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<MoatGateIdentityRole>>();
+                context.Database.Migrate();
+                Seed(userManager, roleManager, context).Wait();
             }
 
             webhost.Run();
@@ -34,5 +39,26 @@ namespace MoatGate
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .Build();
+
+        public async static Task Seed(UserManager<MoatGateIdentityUser> userManager, RoleManager<MoatGateIdentityRole> roleManager, MoatGateIdentityDbContext context)
+        {
+            if (!context.Roles.Any())
+            {
+                await roleManager.CreateAsync(new MoatGateIdentityRole() { Name = "IdentityAdmin" });
+            }
+
+            if (!context.Users.Any())
+            {
+                var user = new MoatGateIdentityUser
+                {
+                    UserName = "admin",
+                    Email = "admin@moatgate.com",
+                    SecurityStamp = Guid.NewGuid().ToString()
+                };
+
+                await userManager.CreateAsync(user, "10qp!)QP");
+                await userManager.AddToRoleAsync(user, "IdentityAdmin");
+            }
+        }
     }
 }

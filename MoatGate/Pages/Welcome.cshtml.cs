@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MoatGate.Pages
 {
-    public class IndexModel : PageModel
+    public class WelcomeModel : PageModel
     {
         public void OnGet()
         {

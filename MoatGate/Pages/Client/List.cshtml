@@ -1,7 +1,7 @@
-@page
-@model MoatGate.Pages.Resources.Identity.IndexModel
+﻿@page
+@model MoatGate.Pages.Client.ListModel
 @{
-    ViewData["Title"] = "Identity Resources";
+    ViewData["Title"] = "Clients";
 }
 <h2>@ViewData["Title"]</h2>
 <p>
@@ -12,48 +12,42 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.IdentityResources[0].Name)
+                    @Html.DisplayNameFor(model => model.Clients[0].ClientName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.IdentityResources[0].DisplayName)
+                    @Html.DisplayNameFor(model => model.Clients[0].ClientId)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.IdentityResources[0].Description)
+                    @Html.DisplayNameFor(model => model.Clients[0].ClientUri)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.IdentityResources[0].Enabled)
+                    @Html.DisplayNameFor(model => model.Clients[0].Enabled)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.IdentityResources[0].Required)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IdentityResources[0].ShowInDiscoveryDocument)
+                    @Html.DisplayNameFor(model => model.Clients[0].Description)
                 </th>
                 <th>
                 </th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.IdentityResources)
+            @foreach (var item in Model.Clients)
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Name)
+                        @Html.DisplayFor(modelItem => item.ClientName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DisplayName)
+                        @Html.DisplayFor(modelItem => item.ClientId)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Description)
+                        @Html.DisplayFor(modelItem => item.ClientUri)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Enabled)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Required)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ShowInDiscoveryDocument)
+                        @Html.DisplayFor(modelItem => item.Description)
                     </td>
                     <td>
                         <div class="btn-group btn-group-sm pull-right">

@@ -1,7 +1,7 @@
 ﻿@page
-@model MoatGate.Pages.Client.IndexModel
+@model MoatGate.Pages.Roles.ListModel
 @{
-    ViewData["Title"] = "Clients";
+    ViewData["Title"] = "Roles";
 }
 <h2>@ViewData["Title"]</h2>
 <p>
@@ -12,42 +12,18 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Clients[0].ClientName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Clients[0].ClientId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Clients[0].ClientUri)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Clients[0].Enabled)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Clients[0].Description)
+                    @Html.DisplayNameFor(model => model.MoatGateIdentityRoles[0].Name)
                 </th>
                 <th>
                 </th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.Clients)
+            @foreach (var item in Model.MoatGateIdentityRoles)
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ClientName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ClientId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ClientUri)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Enabled)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
+                        @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
                         <div class="btn-group btn-group-sm pull-right">

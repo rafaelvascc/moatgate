@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MoatGate.Pages.Client
 {
-    public class IndexModel : PageModel
+    public class ListModel : PageModel
     {
         private readonly ConfigurationDbContext _context;
 
-        public IndexModel(ConfigurationDbContext context)
+        public ListModel(ConfigurationDbContext context)
         {
             _context = context;
         }
