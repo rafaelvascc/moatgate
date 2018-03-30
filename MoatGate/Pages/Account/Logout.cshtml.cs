@@ -16,6 +16,7 @@ namespace MoatGate.Pages.Account
     {
         [BindProperty]
         public LogoutViewModel LogoutData { set; get; } = new LogoutViewModel();
+
         private readonly IIdentityServerInteractionService _interaction;
         private readonly SignInManager<MoatGateIdentityUser> _signInManager;
 

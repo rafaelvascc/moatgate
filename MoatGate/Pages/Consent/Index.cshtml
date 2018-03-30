@@ -38,10 +38,7 @@
                             Personal Information
                         </div>
                         <ul class="list-group">
-                            @foreach (var scope in Model.ConsentData.IdentityScopes)
-                            {
-                                @Html.Partial("./PartialViews/ConsetScope", scope)
-                            }
+                            @Html.Partial("./PartialViews/ConsetIdentityScope", Model.ConsentData.IdentityScopes)
                         </ul>
                     </div>
                 }
@@ -54,10 +51,7 @@
                             Application Access
                         </div>
                         <ul class="list-group">
-                            @foreach (var scope in Model.ConsentData.ResourceScopes)
-                            {
-                                @Html.Partial("./PartialViews/ConsetScope", scope)
-                            }
+                            @Html.Partial("./PartialViews/ConsetApiScope", Model.ConsentData.ResourceScopes)
                         </ul>
                     </div>
                 }
@@ -73,8 +67,8 @@
                 }
 
                 <div class="consent-buttons">
-                    <button type="submit" name="button" value="yes" class="btn btn-success"><i class="fas fa-check"></i> Yes, Allow</button>
-                    <button type="submit" name="button" value="no" class="btn btn-danger"><i class="fas fa-times"></i> No, Do Not Allow</button>
+                    <button type="submit" asp-page-handler="Allow" class="btn btn-success"><i class="fas fa-check"></i> Yes, Allow</button>
+                    <button type="submit" asp-page-handler="Deny" class="btn btn-danger"><i class="fas fa-times"></i> No, Do Not Allow</button>
                     @if (Model.ConsentData.ClientUrl != null)
                     {
                         <a class="pull-right btn btn-default" target="_blank" href="@Model.ConsentData.ClientUrl">
@@ -87,4 +81,5 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="~/js/Consent/consent.js" asp-append-version="true"></script>
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

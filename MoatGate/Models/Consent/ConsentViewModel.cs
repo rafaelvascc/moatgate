@@ -5,14 +5,18 @@ using System.Threading.Tasks;
 
 namespace MoatGate.Models.Consent
 {
-    public class ConsentViewModel : ConsentInputModel
+    public class ConsentViewModel
     {
+        public string Allow { get; set; }
+        public bool RememberConsent { get; set; }
+        public string ReturnUrl { get; set; }
         public string ClientName { get; set; }
         public string ClientUrl { get; set; }
         public string ClientLogoUrl { get; set; }
         public bool AllowRememberConsent { get; set; }
 
-        public IEnumerable<ScopeViewModel> IdentityScopes { get; set; }
-        public IEnumerable<ScopeViewModel> ResourceScopes { get; set; }
+        public IEnumerable<ScopeViewModel> IdentityScopes { get; set; } = new List<ScopeViewModel>();
+        public IEnumerable<ScopeViewModel> ResourceScopes { get; set; } = new List<ScopeViewModel>();
+        public IEnumerable<string> ScopesConsented { get; set; }
     }
 }

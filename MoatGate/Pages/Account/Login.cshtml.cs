@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,14 +13,18 @@ namespace MoatGate.Pages.Account
 {
     public class LoginModel : PageModel
     {
-        private readonly SignInManager<MoatGateIdentityUser> _signInManager;
-
         [BindProperty]
         public LoginViewmodel LoginData { set; get; } = new LoginViewmodel();
 
-        public LoginModel(SignInManager<MoatGateIdentityUser> signInManager)
+        private readonly SignInManager<MoatGateIdentityUser> _signInManager;
+        private readonly UserManager<MoatGateIdentityUser> _userManager;
+        private readonly IIdentityServerInteractionService _interaction;
+
+        public LoginModel(IIdentityServerInteractionService interaction, UserManager<MoatGateIdentityUser> userManager, SignInManager<MoatGateIdentityUser> signInManager)
         {
             _signInManager = signInManager;
+            _interaction = interaction;
+            _userManager = userManager;
         }
 
         public void OnGet()
@@ -32,7 +37,7 @@ namespace MoatGate.Pages.Account
             {
                 return Page();
             }
-
+                        
             var result = await _signInManager.PasswordSignInAsync(LoginData.UserName, LoginData.Password, LoginData.RememberMe, true);
             if (result.Succeeded)
             {

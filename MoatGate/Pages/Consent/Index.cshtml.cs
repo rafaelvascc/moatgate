@@ -18,6 +18,7 @@ namespace MoatGate.Pages.Consent
         private readonly IClientStore _clientStore;
         private readonly IResourceStore _resourceStore;
         private readonly ILogger<IndexModel> _logger;
+
         [BindProperty]
         public ConsentViewModel ConsentData { set; get; } = new ConsentViewModel();
 
@@ -28,15 +29,48 @@ namespace MoatGate.Pages.Consent
             _resourceStore = resourceStore;
             _logger = logger;
         }
-        
+
         public async Task OnGetAsync(string returnUrl)
         {
             ConsentData = await BuildViewModelAsync(returnUrl);
         }
 
-        public async Task<IActionResult> OnPostAsync(ConsentInputModel model)
+        public async Task<IActionResult> OnPostAllowAsync()
         {
-            var result = await ProcessConsent(model);
+            ConsentData.Allow = "yes";
+            if (ConsentData.IdentityScopes.Union(ConsentData.ResourceScopes).Where(c => c.Checked).Any())
+                ConsentData.ScopesConsented
+                    = ConsentData.IdentityScopes.Union(ConsentData.ResourceScopes).Where(c => c.Checked).Select(c => c.Name).ToList();
+
+            var result = await ProcessConsent(ConsentData);
+
+            if (result.IsRedirect)
+            {
+                return Redirect(result.RedirectUri);
+            }
+
+            if (result.HasValidationError)
+            {
+                ModelState.AddModelError("", result.ValidationError);
+            }
+
+            if (result.ShowView)
+            {
+                ConsentData = result.ViewModel;
+                return Page();
+            }
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostDenyAsync()
+        {
+            ConsentData.Allow = "no";
+            if (ConsentData.IdentityScopes.Union(ConsentData.ResourceScopes).Where(c => c.Checked).Any())
+                ConsentData.ScopesConsented
+                    = ConsentData.IdentityScopes.Union(ConsentData.ResourceScopes).Where(c => c.Checked).Select(c => c.Name).ToList();
+
+            var result = await ProcessConsent(ConsentData);
 
             if (result.IsRedirect)
             {
@@ -60,19 +94,19 @@ namespace MoatGate.Pages.Consent
         /*****************************************/
         /* helper APIs for the ConsentController */
         /*****************************************/
-        private async Task<ProcessConsentResult> ProcessConsent(ConsentInputModel model)
+        private async Task<ProcessConsentResult> ProcessConsent(ConsentViewModel model)
         {
             var result = new ProcessConsentResult();
 
             ConsentResponse grantedConsent = null;
 
             // user clicked 'no' - send back the standard 'access_denied' response
-            if (model.Button == "no")
+            if (model.Allow == "no")
             {
                 grantedConsent = ConsentResponse.Denied;
             }
             // user clicked 'yes' - validate the data
-            else if (model.Button == "yes" && model != null)
+            else if (model.Allow == "yes" && model != null)
             {
                 // if the user consented to some scope, build the response model
                 if (model.ScopesConsented != null && model.ScopesConsented.Any())
@@ -120,7 +154,7 @@ namespace MoatGate.Pages.Consent
             return result;
         }
 
-        private async Task<ConsentViewModel> BuildViewModelAsync(string returnUrl, ConsentInputModel model = null)
+        private async Task<ConsentViewModel> BuildViewModelAsync(string returnUrl, ConsentViewModel model = null)
         {
             var request = await _interaction.GetAuthorizationContextAsync(returnUrl);
             if (request != null)
@@ -152,7 +186,7 @@ namespace MoatGate.Pages.Consent
         }
 
         private ConsentViewModel CreateConsentViewModel(
-            ConsentInputModel model, string returnUrl,
+            ConsentViewModel model, string returnUrl,
             AuthorizationRequest request,
             IdentityServer4.Models.Client client, IdentityServer4.Models.Resources resources)
         {
