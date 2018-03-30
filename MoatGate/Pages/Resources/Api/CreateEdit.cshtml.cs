@@ -109,7 +109,7 @@ namespace MoatGate.Pages.Resources.Api
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./List");
         }
     }
 }

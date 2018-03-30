@@ -59,7 +59,7 @@ namespace MoatGate.Pages.User
                 return Page();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./List");
         }
     }
 }

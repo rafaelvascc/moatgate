@@ -65,7 +65,7 @@ namespace MoatGate.Pages.Roles
                 return Page();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./List");
         }
     }
 }

@@ -87,9 +87,12 @@ namespace MoatGate.Pages.Client
             if (Client.Id == 0)
             {
                 //Hash secrets
-                foreach (var secret in Client.ClientSecrets)
+                if (Client.ClientSecrets?.Count > 0)
                 {
-                    secret.Value = secret.Value.Sha256();
+                    foreach (var secret in Client.ClientSecrets)
+                    {
+                        secret.Value = secret.Value.Sha256();
+                    }
                 }
 
                 _context.Clients.Add(Client);
@@ -123,7 +126,7 @@ namespace MoatGate.Pages.Client
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./List");
         }
     }
 }
