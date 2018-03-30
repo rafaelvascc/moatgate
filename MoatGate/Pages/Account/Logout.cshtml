@@ -1,0 +1,23 @@
+﻿@page
+@model MoatGate.Pages.Account.LogoutModel
+@section Styles {
+    <link rel="stylesheet" href="~/css/login.css" />
+}
+<!--
+    you can substitue the span of reauth email for a input with the email and
+    include the remember me checkbox
+    -->
+<div class="container">
+    <div class="card card-container">
+        <p id="profile-name" class="profile-name-card"></p>
+        <form class="form-signin" method="post">
+            <h1>
+                Confirm Logout?
+            </h1>
+            <input type="hidden" asp-for="LogoutData.LogoutId" />
+            <input type="hidden" asp-for="LogoutData.RedirectUrl" />
+            <button type="submit" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i> Confirm Logout</button>
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </form><!-- /form -->
+    </div><!-- /card-container -->
+</div><!-- /container -->

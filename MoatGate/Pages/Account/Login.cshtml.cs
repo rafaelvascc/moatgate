@@ -42,7 +42,7 @@ namespace MoatGate.Pages.Account
                 }
                 else
                 {
-                    return RedirectToPage(returnUrl);
+                    return Redirect(returnUrl);
                 }
             }
             if (result.RequiresTwoFactor)

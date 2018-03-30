@@ -12,6 +12,8 @@ using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using IdentityServer4.Models;
+using AutoMapper;
 
 namespace MoatGate
 {
@@ -24,12 +26,14 @@ namespace MoatGate
             using (var serviceScope = webhost.Services.CreateScope())
             {
                 serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
-                serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>().Database.Migrate();
+                var configurationContext = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
                 var context = serviceScope.ServiceProvider.GetRequiredService<MoatGateIdentityDbContext>();
                 var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<MoatGateIdentityUser>>();
                 var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<MoatGateIdentityRole>>();
+                configurationContext.Database.Migrate();
                 context.Database.Migrate();
                 Seed(userManager, roleManager, context).Wait();
+                Seed(configurationContext).Wait();
             }
 
             webhost.Run();
@@ -58,6 +62,19 @@ namespace MoatGate
 
                 await userManager.CreateAsync(user, "10qp!)QP");
                 await userManager.AddToRoleAsync(user, "IdentityAdmin");
+            }
+        }
+
+        public async static Task Seed(ConfigurationDbContext context)
+        {
+            if (!context.IdentityResources.Any())
+            {
+                context.IdentityResources.Add(Mapper.Map<IdentityServer4.EntityFramework.Entities.IdentityResource>(new IdentityResources.Address()));
+                context.IdentityResources.Add(Mapper.Map<IdentityServer4.EntityFramework.Entities.IdentityResource>(new IdentityResources.Email()));
+                context.IdentityResources.Add(Mapper.Map<IdentityServer4.EntityFramework.Entities.IdentityResource>(new IdentityResources.OpenId()));
+                context.IdentityResources.Add(Mapper.Map<IdentityServer4.EntityFramework.Entities.IdentityResource>(new IdentityResources.Phone()));
+                context.IdentityResources.Add(Mapper.Map<IdentityServer4.EntityFramework.Entities.IdentityResource>(new IdentityResources.Profile()));
+                await context.SaveChangesAsync();
             }
         }
     }

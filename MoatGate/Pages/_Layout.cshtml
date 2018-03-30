@@ -31,15 +31,19 @@
                 </button>
                 <a asp-page="/Index" class="navbar-brand"><i class="fas fa-key"></i> MoatGate</a>
             </div>
-            @if (User.Identity.IsAuthenticated && User.IsInRole("IdentityAdmin"))
+            @if (User.Identity.IsAuthenticated)
             {
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a asp-page="/Resources/Api/List"><i class="fas fa-server"></i> API Resources</a></li>
-                        <li><a asp-page="/Resources/Identity/List"><i class="fas fa-id-card"></i> Identity Resources</a></li>
-                        <li><a asp-page="/Client/List"><i class="fas fa-laptop"></i> Clients</a></li>
-                        <li><a asp-page="/User/List"><i class="fas fa-users"></i> Users</a></li>
-                        <li><a asp-page="/Roles/List"><i class="fas fa-id-badge"></i> Roles</a></li>
+                        @if (User.IsInRole("IdentityAdmin"))
+                        {
+                            <li><a asp-page="/Resources/Api/List"><i class="fas fa-server"></i> API Resources</a></li>
+                            <li><a asp-page="/Resources/Identity/List"><i class="fas fa-id-card"></i> Identity Resources</a></li>
+                            <li><a asp-page="/Client/List"><i class="fas fa-laptop"></i> Clients</a></li>
+                            <li><a asp-page="/User/List"><i class="fas fa-users"></i> Users</a></li>
+                            <li><a asp-page="/Roles/List"><i class="fas fa-id-badge"></i> Roles</a></li>
+                        }
+                        <li><a href="/.well-known/openid-configuration"><i class="fas fa-link"></i> Endpoints</a></li>
                     </ul>
                     <form method="post" class="pull-right">
                         <button asp-page="/Account/Login" type="submit" class="btn btn-logout" asp-page-handler="logout"><i class="fas fa-sign-out-alt"></i> Logout</button>

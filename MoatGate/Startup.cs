@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Identity;
 using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 using AutoMapper;
 using MoatGate.Models.User;
+using System.Collections.Generic;
+using IdentityServer4.EntityFramework.Entities;
+using System.Linq;
 
 namespace MoatGate
 {
@@ -97,7 +100,7 @@ namespace MoatGate
                     options.TokenCleanupInterval = 30;
                 });
 
-            services.AddMvc().AddRazorPagesOptions(options => 
+            services.AddMvc().AddRazorPagesOptions(options =>
             {
                 options.Conventions.AuthorizeFolder("/Client", "IsIdentityAdmin");
                 options.Conventions.AuthorizeFolder("/Resources", "IsIdentityAdmin");
@@ -107,14 +110,14 @@ namespace MoatGate
                 options.Conventions.AddPageRoute("/Account/Login", "");
             });
 
-            services.AddAuthorization(options => 
+            services.AddAuthorization(options =>
             {
                 options.AddPolicy("IsIdentityAdmin", policy => policy.RequireRole("IdentityAdmin"));
             });
 
             Mapper.Initialize(c =>
             {
-                c.CreateMap<IdentityServer4.EntityFramework.Entities.Client, IdentityServer4.EntityFramework.Entities.Client>()
+                c.CreateMap<Client, Client>()
                 .ForMember(e => e.AllowedCorsOrigins, opt => opt.Ignore())
                 .ForMember(e => e.AllowedGrantTypes, opt => opt.Ignore())
                 .ForMember(e => e.AllowedScopes, opt => opt.Ignore())
@@ -125,34 +128,34 @@ namespace MoatGate
                 .ForMember(e => e.Properties, opt => opt.Ignore())
                 .ForMember(e => e.RedirectUris, opt => opt.Ignore());
 
-                c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientCorsOrigin, IdentityServer4.EntityFramework.Entities.ClientCorsOrigin>().ForMember(e => e.Client, opt => opt.Ignore());
-                c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientGrantType, IdentityServer4.EntityFramework.Entities.ClientGrantType>().ForMember(e => e.Client, opt => opt.Ignore());
-                c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientScope, IdentityServer4.EntityFramework.Entities.ClientScope>().ForMember(e => e.Client, opt => opt.Ignore());
-                c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientClaim, IdentityServer4.EntityFramework.Entities.ClientClaim>().ForMember(e => e.Client, opt => opt.Ignore());
-                c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientSecret, IdentityServer4.EntityFramework.Entities.ClientSecret>().ForMember(e => e.Client, opt => opt.Ignore());
-                c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientIdPRestriction, IdentityServer4.EntityFramework.Entities.ClientIdPRestriction>().ForMember(e => e.Client, opt => opt.Ignore());
-                c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientPostLogoutRedirectUri, IdentityServer4.EntityFramework.Entities.ClientPostLogoutRedirectUri>().ForMember(e => e.Client, opt => opt.Ignore());
-                c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientProperty, IdentityServer4.EntityFramework.Entities.ClientProperty>().ForMember(e => e.Client, opt => opt.Ignore());
-                c.CreateMap<IdentityServer4.EntityFramework.Entities.ClientRedirectUri, IdentityServer4.EntityFramework.Entities.ClientRedirectUri>().ForMember(e => e.Client, opt => opt.Ignore());
+                c.CreateMap<ClientCorsOrigin, ClientCorsOrigin>().ForMember(e => e.Client, opt => opt.Ignore());
+                c.CreateMap<ClientGrantType, ClientGrantType>().ForMember(e => e.Client, opt => opt.Ignore());
+                c.CreateMap<ClientScope, ClientScope>().ForMember(e => e.Client, opt => opt.Ignore());
+                c.CreateMap<ClientClaim, ClientClaim>().ForMember(e => e.Client, opt => opt.Ignore());
+                c.CreateMap<ClientSecret, ClientSecret>().ForMember(e => e.Client, opt => opt.Ignore());
+                c.CreateMap<ClientIdPRestriction, ClientIdPRestriction>().ForMember(e => e.Client, opt => opt.Ignore());
+                c.CreateMap<ClientPostLogoutRedirectUri, ClientPostLogoutRedirectUri>().ForMember(e => e.Client, opt => opt.Ignore());
+                c.CreateMap<ClientProperty, ClientProperty>().ForMember(e => e.Client, opt => opt.Ignore());
+                c.CreateMap<ClientRedirectUri, ClientRedirectUri>().ForMember(e => e.Client, opt => opt.Ignore());
 
-                c.CreateMap<IdentityServer4.EntityFramework.Entities.ApiResource, IdentityServer4.EntityFramework.Entities.ApiResource>()
+                c.CreateMap<ApiResource, ApiResource>()
                 .ForMember(e => e.Scopes, opt => opt.Ignore())
                 .ForMember(e => e.Secrets, opt => opt.Ignore())
                 .ForMember(e => e.UserClaims, opt => opt.Ignore());
 
-                c.CreateMap<IdentityServer4.EntityFramework.Entities.ApiScope, IdentityServer4.EntityFramework.Entities.ApiScope>()
+                c.CreateMap<ApiScope, ApiScope>()
                 .ForMember(e => e.ApiResource, opt => opt.Ignore())
                 .ForMember(e => e.UserClaims, opt => opt.Ignore());
-                c.CreateMap<IdentityServer4.EntityFramework.Entities.ApiSecret, IdentityServer4.EntityFramework.Entities.ApiSecret>().ForMember(e => e.ApiResource, opt => opt.Ignore());
-                c.CreateMap<IdentityServer4.EntityFramework.Entities.ApiResourceClaim, IdentityServer4.EntityFramework.Entities.ApiResourceClaim>().ForMember(e => e.ApiResource, opt => opt.Ignore());
+                c.CreateMap<ApiSecret, ApiSecret>().ForMember(e => e.ApiResource, opt => opt.Ignore());
+                c.CreateMap<ApiResourceClaim, ApiResourceClaim>().ForMember(e => e.ApiResource, opt => opt.Ignore());
 
-                c.CreateMap<IdentityServer4.EntityFramework.Entities.ApiScopeClaim, IdentityServer4.EntityFramework.Entities.ApiScopeClaim>()
+                c.CreateMap<ApiScopeClaim, ApiScopeClaim>()
                 .ForMember(e => e.ApiScope, opt => opt.Ignore());
 
-                c.CreateMap<IdentityServer4.EntityFramework.Entities.IdentityResource, IdentityServer4.EntityFramework.Entities.IdentityResource>()
+                c.CreateMap<IdentityResource, IdentityResource>()
                 .ForMember(e => e.UserClaims, opt => opt.Ignore());
 
-                c.CreateMap<IdentityServer4.EntityFramework.Entities.IdentityClaim, IdentityServer4.EntityFramework.Entities.IdentityClaim>()
+                c.CreateMap<IdentityClaim, IdentityClaim>()
                 .ForMember(e => e.IdentityResource, opt => opt.Ignore());
 
                 c.CreateMap<MoatGateIdentityUser, MoatGateIdentityUserEditViewModel>()
@@ -169,26 +172,42 @@ namespace MoatGate
                 .IncludeBase<MoatGateIdentityUser, MoatGateIdentityUserViewModel>().ReverseMap()
                 .ForSourceMember(s => s.SendResetPasswordEmail, opt => opt.Ignore())
                 .IncludeBase<MoatGateIdentityUserViewModel, MoatGateIdentityUser>();
-                
+
                 c.CreateMap<MoatGateIdentityUserCreateViewModel, MoatGateIdentityUser>()
                 .ForSourceMember(s => s.ConfirmPassword, opt => opt.Ignore())
                 .ForSourceMember(s => s.Password, opt => opt.Ignore())
                 .IncludeBase<MoatGateIdentityUserViewModel, MoatGateIdentityUser>();
+
+                c.CreateMap<IdentityServer4.Models.IdentityResources.Address, IdentityResource>()
+                .ForMember(r => r.Id, opt => opt.Ignore())
+                .ForMember(r => r.UserClaims, opt => opt.ResolveUsing(src => src.UserClaims.Select(cl => new IdentityClaim { Type = cl }).ToList()));
+                c.CreateMap<IdentityServer4.Models.IdentityResources.Email, IdentityResource>()
+                .ForMember(r => r.Id, opt => opt.Ignore())
+                .ForMember(r => r.UserClaims, opt => opt.ResolveUsing(src => src.UserClaims.Select(cl => new IdentityClaim { Type = cl }).ToList()));
+                c.CreateMap<IdentityServer4.Models.IdentityResources.OpenId, IdentityResource>()
+                .ForMember(r => r.Id, opt => opt.Ignore())
+                .ForMember(r => r.UserClaims, opt => opt.ResolveUsing(src => src.UserClaims.Select(cl => new IdentityClaim { Type = cl }).ToList()));
+                c.CreateMap<IdentityServer4.Models.IdentityResources.Phone, IdentityResource>()
+                .ForMember(r => r.Id, opt => opt.Ignore())
+                .ForMember(r => r.UserClaims, opt => opt.ResolveUsing(src => src.UserClaims.Select(cl => new IdentityClaim { Type = cl }).ToList()));
+                c.CreateMap<IdentityServer4.Models.IdentityResources.Profile, IdentityResource>()
+                .ForMember(r => r.Id, opt => opt.Ignore())
+                .ForMember(r => r.UserClaims, opt => opt.ResolveUsing(src => src.UserClaims.Select(cl => new IdentityClaim { Type = cl }).ToList()));
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-            }
+            //if (env.IsDevelopment())
+            //{
+            app.UseDeveloperExceptionPage();
+            app.UseBrowserLink();
+            //}
+            //else
+            //{
+            //    app.UseExceptionHandler("/Error");
+            //}
 
             app.UseIdentityServer();
 
