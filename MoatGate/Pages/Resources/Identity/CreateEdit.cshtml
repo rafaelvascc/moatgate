@@ -7,51 +7,55 @@
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="IdentityResource.Id" />
-            <div class="form-group">
-                <label asp-for="IdentityResource.Name" class="control-label"></label>
-                <input asp-for="IdentityResource.Name" class="form-control" />
-                <span asp-validation-for="IdentityResource.Name" class="text-danger"></span>
+            <div class="col-lg-8">
+                <div class="form-group">
+                    <label asp-for="IdentityResource.Name" class="control-label"></label>
+                    <input asp-for="IdentityResource.Name" class="form-control" />
+                    <span asp-validation-for="IdentityResource.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdentityResource.DisplayName" class="control-label"></label>
+                    <input asp-for="IdentityResource.DisplayName" class="form-control" />
+                    <span asp-validation-for="IdentityResource.DisplayName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdentityResource.Description" class="control-label"></label>
+                    <input asp-for="IdentityResource.Description" class="form-control" />
+                    <span asp-validation-for="IdentityResource.Description" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="IdentityResource.DisplayName" class="control-label"></label>
-                <input asp-for="IdentityResource.DisplayName" class="form-control" />
-                <span asp-validation-for="IdentityResource.DisplayName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdentityResource.Description" class="control-label"></label>
-                <input asp-for="IdentityResource.Description" class="form-control" />
-                <span asp-validation-for="IdentityResource.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IdentityResource.Enabled" /> @Html.DisplayNameFor(model => model.IdentityResource.Enabled)
-                    </label>
+            <div class="col-lg-4">
+                <label> </label>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="IdentityResource.Enabled" /> @Html.DisplayNameFor(model => model.IdentityResource.Enabled)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="IdentityResource.Emphasize" /> @Html.DisplayNameFor(model => model.IdentityResource.Emphasize)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="IdentityResource.Required" /> @Html.DisplayNameFor(model => model.IdentityResource.Required)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="IdentityResource.ShowInDiscoveryDocument" /> @Html.DisplayNameFor(model => model.IdentityResource.ShowInDiscoveryDocument)
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IdentityResource.Emphasize" /> @Html.DisplayNameFor(model => model.IdentityResource.Emphasize)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IdentityResource.Required" /> @Html.DisplayNameFor(model => model.IdentityResource.Required)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IdentityResource.ShowInDiscoveryDocument" /> @Html.DisplayNameFor(model => model.IdentityResource.ShowInDiscoveryDocument)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdentityResource.UserClaims" class="control-label"></label>
                 @{
                     Html.RenderPartial("./PartialViews/IdentityResourceClaims", Model.IdentityResource.UserClaims);
                 }
