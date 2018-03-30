@@ -39,6 +39,7 @@ namespace MoatGate.Pages.Resources.Api
         {
             if (id.HasValue)
             {
+                ViewData["Editing"] = true;
                 ViewData["Title"] = "Edit Api Resource";
                 ApiResource = await _context.ApiResources
                     .AsNoTracking()
@@ -49,6 +50,7 @@ namespace MoatGate.Pages.Resources.Api
             }
             else
             {
+                ViewData["Editing"] = false;
                 ViewData["Title"] = "Create Api Resource";
             }
 
@@ -83,6 +85,22 @@ namespace MoatGate.Pages.Resources.Api
                        .Include(c => c.Secrets)
                        .Include(c => c.UserClaims)
                        .SingleOrDefault(c => c.Id == ApiResource.Id);
+
+                foreach (var scope in CurrentApiResource.Scopes)
+                {
+                    if (scope.UserClaims == null)
+                    {
+                        scope.UserClaims = new List<ApiScopeClaim>();
+                    }
+                }
+
+                foreach (var scope in ApiResource.Scopes)
+                {
+                    if (scope.UserClaims == null)
+                    {
+                        scope.UserClaims = new List<ApiScopeClaim>();
+                    }
+                }
 
                 Mapper.Map(ApiResource, CurrentApiResource);
                 CurrentApiResource.Scopes.ReflectToEntityFrameworkState(ApiResource.Scopes, _context);

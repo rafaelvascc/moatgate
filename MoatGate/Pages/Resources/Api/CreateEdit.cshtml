@@ -28,26 +28,37 @@
                 <input asp-for="ApiResource.Description" class="form-control" />
                 <span asp-validation-for="ApiResource.Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ApiResource.Scopes" class="control-label"></label>
-                @{
-                    Html.RenderPartial("./PartialViews/Scopes", Model.ApiResource.Scopes);
-                }
+
+            <ul class="nav nav-pills bootstrapTabs">
+                <li role="presentation" class="active"><a href="#apiScopesTab">Api Scopes</a></li>
+                <li role="presentation"><a href="#apiSecretTabs">Api Secrets</a></li>
+                <li role="presentation"><a href="#apiResourcesTab">Allowed Claims</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="apiScopesTab" class="tab-pane fade in active">
+                    <div class="form-group">
+                        @{
+                            Html.RenderPartial("./PartialViews/Scopes", Model.ApiResource.Scopes);
+                        }
+                    </div>
+                </div>
+                <div id="apiSecretTabs" class="tab-pane fade">
+                    <div class="form-group">
+                        @{
+                            Html.RenderPartial("./PartialViews/Secrets", Model.ApiResource.Secrets);
+                        }
+                    </div>
+                </div>
+                <div id="apiResourcesTab" class="tab-pane fade">
+                    <div class="form-group">
+                        @{
+                            Html.RenderPartial("./PartialViews/ApiResourceClaims", Model.ApiResource.UserClaims);
+                        }
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label asp-for="ApiResource.Secrets" class="control-label"></label>
-                @{
-                    Html.RenderPartial("./PartialViews/Secrets", Model.ApiResource.Secrets);
-                }
-            </div>
-
-            <div class="form-group">
-                <label asp-for="ApiResource.UserClaims" class="control-label"></label>
-                @{
-                    Html.RenderPartial("./PartialViews/ApiResourceClaims", Model.ApiResource.UserClaims);
-                }
-            </div>
             <nav class="navbar navbar-default navbar-fixed-bottom">
                 <div class="container">
                     <div class="form-group btn-group pull-right btnGroupSave">

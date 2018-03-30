@@ -39,7 +39,8 @@ namespace MoatGate.Helpers
                 context.Entry(entry).State = EntityState.Deleted;
             }
 
-            if (typeof(T) != typeof(ClientSecret))
+            //Do not update secrets values, only descriptions
+            if (!typeof(T).IsSubclassOf(typeof(IdentityServer4.EntityFramework.Entities.Secret)))
             {
                 foreach (var entry in toUpdate)
                 {
@@ -70,9 +71,20 @@ namespace MoatGate.Helpers
                 foreach (var entry in toUpdate)
                 {
                     var existingEntity = currentState.Where(e => (int)typeof(T).GetProperty("Id").GetValue(e) == (int)typeof(T).GetProperty("Id").GetValue(entry)).Single();
-                    if ((entry as ClientSecret).Description != (existingEntity as ClientSecret).Description)
+
+                    if (typeof(T) == typeof(ApiSecret))
                     {
-                        (existingEntity as ClientSecret).Description = (entry as ClientSecret).Description;
+                        if ((entry as ApiSecret).Description != (existingEntity as ApiSecret).Description)
+                        {
+                            (existingEntity as ApiSecret).Description = (entry as ApiSecret).Description;
+                        }
+                    }
+                    if (typeof(T) == typeof(ClientSecret))
+                    {
+                        if ((entry as ClientSecret).Description != (existingEntity as ClientSecret).Description)
+                        {
+                            (existingEntity as ClientSecret).Description = (entry as ClientSecret).Description;
+                        }
                     }
                 }
             }

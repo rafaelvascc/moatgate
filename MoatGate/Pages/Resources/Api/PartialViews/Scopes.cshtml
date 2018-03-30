@@ -1,8 +1,5 @@
 ﻿@model IList<IdentityServer4.EntityFramework.Entities.ApiScope>
 <section data-scope="partials-api-resource-scopes">
-    <p>
-        <button type="button" class="btn btn-sm btn-primary" id="btn-add-api-resource-scope"><i class="fas fa-plus"></i> Create New</button>
-    </p>
     <table class="table table-condensed table-responsive table-striped table-hover" id="tbl-api-resource-scope">
         <thead>
             <tr>
@@ -22,6 +19,7 @@
                 <th>
                 </th>
                 <th>
+                    <button type="button" class="btn btn-sm btn-primary pull-right" id="btn-add-api-resource-scope" title="Add Api Resource Scopes"><i class="fas fa-plus"></i></button>
                 </th>
             </tr>
         </thead>
@@ -87,7 +85,7 @@
                     {
                         <tr class="scopeClaim" data-index="@k" data-parent-index="@i">
                             <td>
-                                Claim @k
+                                <label>Allowed Claim</label>
                             </td>
                             <td colspan="5">
                                 <input type="hidden" class="form-control" name="ApiResource.Scopes[@i.ToString()].UserClaims[@k].Id" value="@claim.Id" />
@@ -159,7 +157,7 @@
     <script id="api-resource-scope-claim-template" type="text/x-jsrender">
         <tr class="scopeClaim" data-index="{{:index}}" data-parent-index="{{:parentIndex}}">
             <td>
-                Claim {{:index}}
+                <label>Allowed Claim</label> 
             </td>
             <td colspan="5">
                 <input type="hidden" class="form-control" name="ApiResource.Scopes[{{:parentIndex}}].UserClaims[{{:index}}].id" value="{{:id}}" />
