@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoatGate", "MoatGate\MoatGate.csproj", "{88F93623-3BC6-4795-9F36-D6CC93D63577}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoatGate.OpenId.ClientExample", "MoatGate.OpenId.ClientExample\MoatGate.OpenId.ClientExample.csproj", "{5AD283F1-F16B-434B-BF4C-8600BD79E476}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoatGate.OpenId.ClientExample", "MoatGate.OpenId.ClientExample\MoatGate.OpenId.ClientExample.csproj", "{5AD283F1-F16B-434B-BF4C-8600BD79E476}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -12,6 +12,7 @@ using MoatGate.Models.User;
 using System.Collections.Generic;
 using IdentityServer4.EntityFramework.Entities;
 using System.Linq;
+using MoatGate.Helpers;
 
 namespace MoatGate
 {
@@ -114,6 +115,10 @@ namespace MoatGate
             {
                 options.AddPolicy("IsIdentityAdmin", policy => policy.RequireRole("IdentityAdmin"));
             });
+            
+            services.AddSingleton<IEmailSender, SendGridEmailSender>();
+
+            services.Configure<AuthMessageSenderOptions>(Configuration);
 
             Mapper.Initialize(c =>
             {

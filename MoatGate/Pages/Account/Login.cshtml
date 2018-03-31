@@ -1,6 +1,7 @@
 ﻿@page
 @model MoatGate.Pages.Account.LoginModel
 @section Styles {
+    <link rel="stylesheet" href="~/lib/animatecss/animatecss.css" />
     <link rel="stylesheet" href="~/css/login.css" />
 }
 <!--
@@ -8,23 +9,65 @@
     include the remember me checkbox
     -->
 <div class="container">
-    <div class="card card-container">
-        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
-        <p id="profile-name" class="profile-name-card"></p>
-        <form class="form-signin" method="post">
-            <span id="reauth-email" class="reauth-email"></span>
-            <input type="text" id="inputUsername" class="form-control" placeholder="User" required autofocus asp-for="LoginData.UserName">
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required asp-for="LoginData.Password">
-            <div id="remember" class="checkbox">
-                <label>
-                    <input asp-for="LoginData.RememberMe" type="checkbox"> Remember me
-                </label>
+
+    <div id="loginCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        @*<ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            </ol>*@
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <div class="card card-container">
+                    <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+                    <p id="profile-name" class="profile-name-card"></p>
+                    <form class="form-signin" method="post">
+                        <span id="reauth-email" class="reauth-email"></span>
+                        <input type="text" id="inputUsername" class="form-control" placeholder="User" required autofocus asp-for="LoginData.UserName">
+                        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required asp-for="LoginData.Password">
+                        <div id="remember" class="checkbox">
+                            <label>
+                                <input asp-for="LoginData.RememberMe" type="checkbox"> Remember me
+                            </label>
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                    </form><!-- /form -->
+                    <a href="#" id="lnkToResetPassword" class="forgot-password">
+                        Forgot the password? <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div><!-- /card-container -->
             </div>
-            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
-            <div asp-validation-summary="All" class="text-danger"></div>
-        </form><!-- /form -->
-        <a href="#" class="forgot-password">
-            Forgot the password?
-        </a>
-    </div><!-- /card-container -->
+            <div class="item">
+                <div class="card card-container">
+                    <label>Reset Password</label>
+                    <form class="form-signin" method="post">
+                        <input type="email" id="inputEmail" class="form-control" placeholder="Account Email" required autofocus name="ResetPasswordEmail">
+                        <button asp-page="ForgotPassword" class="btn btn-lg btn-primary btn-block btn-signin" type="submit"><i class="fas fa-envelope"></i> Send Email</button>
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                    </form><!-- /form -->
+                    <a href="#" id="lnkToLogin" class="forgot-password">
+                        <i class="fas fa-arrow-left"></i> Back to the Login Panel
+                    </a>
+                </div><!-- /card-container -->
+            </div>
+        </div>
+
+        <!-- Controls -->
+        @*<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>*@
+    </div>
 </div><!-- /container -->
+@section Scripts {
+    <script type="text/javascript" src="~/js/Account/login.js" asp-append-version="true"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

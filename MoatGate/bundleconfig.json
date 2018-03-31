@@ -4,6 +4,7 @@
   {
     // An array of relative input file paths. Globbing patterns supported
     "inputFiles": [
+      "wwwroot/lib/animatecss/animatecss.css",
       "wwwroot/css/site.css"
     ],
     "outputFileName": "wwwroot/css/site.min.css"
@@ -29,7 +30,8 @@
       "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
       "wwwroot/lib/bootstrap/dist/js/bootstrap.js",
       "wwwroot/lib/jsrender/jsrender.js",
-      "wwwroot/lib/font-awesome/svg-with-js/js/fontawesome-all.js"
+      "wwwroot/lib/font-awesome/svg-with-js/js/fontawesome-all.js",
+      "wwwroot/lib/remarkable-bootstrap-notify/dist/bootstrap-notify.js"
     ],
     // Optionally specify minification options
     "minify": {
@@ -48,7 +50,8 @@
       "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
       "wwwroot/lib/bootstrap/dist/js/bootstrap.js",
       "wwwroot/lib/jsrender/jsrender.js",
-      "wwwroot/lib/font-awesome/svg-with-js/js/fontawesome-all.js"
+      "wwwroot/lib/font-awesome/svg-with-js/js/fontawesome-all.js",
+      "wwwroot/lib/remarkable-bootstrap-notify/dist/bootstrap-notify.js"
     ],
     // Optionally specify minification options
     "minify": {

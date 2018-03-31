@@ -66,11 +66,5 @@ namespace MoatGate.Pages.Account
 
             return Page();
         }
-
-        public async Task<IActionResult> OnPostLogoutAsync(string returnUrl)
-        {
-            await _signInManager.SignOutAsync();
-            return RedirectToPage("/Account/Login");
-        }
     }
 }
