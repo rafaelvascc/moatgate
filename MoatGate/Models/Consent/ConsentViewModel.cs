@@ -7,7 +7,6 @@ namespace MoatGate.Models.Consent
 {
     public class ConsentViewModel
     {
-        public string Allow { get; set; }
         public bool RememberConsent { get; set; }
         public string ReturnUrl { get; set; }
         public string ClientName { get; set; }
@@ -17,6 +16,5 @@ namespace MoatGate.Models.Consent
 
         public IEnumerable<ScopeViewModel> IdentityScopes { get; set; } = new List<ScopeViewModel>();
         public IEnumerable<ScopeViewModel> ResourceScopes { get; set; } = new List<ScopeViewModel>();
-        public IEnumerable<string> ScopesConsented { get; set; }
     }
 }

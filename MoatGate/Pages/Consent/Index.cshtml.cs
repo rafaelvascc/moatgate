@@ -32,45 +32,24 @@ namespace MoatGate.Pages.Consent
 
         public async Task OnGetAsync(string returnUrl)
         {
-            ConsentData = await BuildViewModelAsync(returnUrl);
+            await BuildViewModelAsync(returnUrl);
         }
 
         public async Task<IActionResult> OnPostAllowAsync()
         {
-            ConsentData.Allow = "yes";
-            if (ConsentData.IdentityScopes.Union(ConsentData.ResourceScopes).Where(c => c.Checked).Any())
-                ConsentData.ScopesConsented
-                    = ConsentData.IdentityScopes.Union(ConsentData.ResourceScopes).Where(c => c.Checked).Select(c => c.Name).ToList();
-
-            var result = await ProcessConsent(ConsentData);
-
-            if (result.IsRedirect)
-            {
-                return Redirect(result.RedirectUri);
-            }
-
-            if (result.HasValidationError)
-            {
-                ModelState.AddModelError("", result.ValidationError);
-            }
-
-            if (result.ShowView)
-            {
-                ConsentData = result.ViewModel;
-                return Page();
-            }
-
-            return Page();
+            return await ProcessPostRequest(true);
         }
 
         public async Task<IActionResult> OnPostDenyAsync()
         {
-            ConsentData.Allow = "no";
-            if (ConsentData.IdentityScopes.Union(ConsentData.ResourceScopes).Where(c => c.Checked).Any())
-                ConsentData.ScopesConsented
-                    = ConsentData.IdentityScopes.Union(ConsentData.ResourceScopes).Where(c => c.Checked).Select(c => c.Name).ToList();
+            return await ProcessPostRequest(false);
+        }
 
-            var result = await ProcessConsent(ConsentData);
+        private async Task<IActionResult> ProcessPostRequest(bool consetAllowed)
+        {
+            var scopesConsented = ConsentData.IdentityScopes.Union(ConsentData.ResourceScopes).Where(c => c.Checked).Select(c => c.Name).ToList();
+
+            var result = await ProcessConsent(consetAllowed, scopesConsented);
 
             if (result.IsRedirect)
             {
@@ -82,45 +61,28 @@ namespace MoatGate.Pages.Consent
                 ModelState.AddModelError("", result.ValidationError);
             }
 
-            if (result.ShowView)
-            {
-                ConsentData = result.ViewModel;
-                return Page();
-            }
-
             return Page();
         }
 
-        /*****************************************/
-        /* helper APIs for the ConsentController */
-        /*****************************************/
-        private async Task<ProcessConsentResult> ProcessConsent(ConsentViewModel model)
+        private async Task<ProcessConsentResult> ProcessConsent(bool consetAllowed, IList<string> consentedScopes)
         {
             var result = new ProcessConsentResult();
 
             ConsentResponse grantedConsent = null;
 
-            // user clicked 'no' - send back the standard 'access_denied' response
-            if (model.Allow == "no")
+            if (consetAllowed)
             {
-                grantedConsent = ConsentResponse.Denied;
-            }
-            // user clicked 'yes' - validate the data
-            else if (model.Allow == "yes" && model != null)
-            {
-                // if the user consented to some scope, build the response model
-                if (model.ScopesConsented != null && model.ScopesConsented.Any())
+                if (consentedScopes?.Count > 0)
                 {
-                    var scopes = model.ScopesConsented;
                     if (ConsentOptions.EnableOfflineAccess == false)
                     {
-                        scopes = scopes.Where(x => x != IdentityServer4.IdentityServerConstants.StandardScopes.OfflineAccess);
+                        consentedScopes = consentedScopes.Where(s => s != IdentityServer4.IdentityServerConstants.StandardScopes.OfflineAccess).ToList();
                     }
 
                     grantedConsent = new ConsentResponse
                     {
-                        RememberConsent = model.RememberConsent,
-                        ScopesConsented = scopes.ToArray()
+                        RememberConsent = ConsentData.RememberConsent,
+                        ScopesConsented = consentedScopes
                     };
                 }
                 else
@@ -130,31 +92,31 @@ namespace MoatGate.Pages.Consent
             }
             else
             {
-                result.ValidationError = ConsentOptions.InvalidSelectionErrorMessage;
+                grantedConsent = ConsentResponse.Denied;
             }
 
             if (grantedConsent != null)
             {
                 // validate return url is still valid
-                var request = await _interaction.GetAuthorizationContextAsync(model.ReturnUrl);
+                var request = await _interaction.GetAuthorizationContextAsync(ConsentData.ReturnUrl);
                 if (request == null) return result;
 
                 // communicate outcome of consent back to identityserver
                 await _interaction.GrantConsentAsync(request, grantedConsent);
 
                 // indicate that's it ok to redirect back to authorization endpoint
-                result.RedirectUri = model.ReturnUrl;
+                result.RedirectUri = ConsentData.ReturnUrl;
             }
             else
             {
                 // we need to redisplay the consent UI
-                result.ViewModel = await BuildViewModelAsync(model.ReturnUrl, model);
+                await BuildViewModelAsync(ConsentData.ReturnUrl, consentedScopes);
             }
 
             return result;
         }
 
-        private async Task<ConsentViewModel> BuildViewModelAsync(string returnUrl, ConsentViewModel model = null)
+        private async Task BuildViewModelAsync(string returnUrl, IList<string> consentedScopes = null)
         {
             var request = await _interaction.GetAuthorizationContextAsync(returnUrl);
             if (request != null)
@@ -165,7 +127,7 @@ namespace MoatGate.Pages.Consent
                     var resources = await _resourceStore.FindEnabledResourcesByScopeAsync(request.ScopesRequested);
                     if (resources != null && (resources.IdentityResources.Any() || resources.ApiResources.Any()))
                     {
-                        return CreateConsentViewModel(model, returnUrl, request, client, resources);
+                        CreateConsentViewModel(returnUrl, request, client, resources, consentedScopes);
                     }
                     else
                     {
@@ -181,36 +143,25 @@ namespace MoatGate.Pages.Consent
             {
                 _logger.LogError("No consent request matching request: {0}", returnUrl);
             }
-
-            return null;
         }
 
-        private ConsentViewModel CreateConsentViewModel(
-            ConsentViewModel model, string returnUrl,
-            AuthorizationRequest request,
-            IdentityServer4.Models.Client client, IdentityServer4.Models.Resources resources)
+        private void CreateConsentViewModel(string returnUrl, AuthorizationRequest request, IdentityServer4.Models.Client client, 
+            IdentityServer4.Models.Resources resources, IList<string> consentedScopes)
         {
-            var vm = new ConsentViewModel();
-            vm.RememberConsent = model?.RememberConsent ?? true;
-            vm.ScopesConsented = model?.ScopesConsented ?? Enumerable.Empty<string>();
+            ConsentData.ReturnUrl = returnUrl;
+            ConsentData.ClientName = client.ClientName ?? client.ClientId;
+            ConsentData.ClientUrl = client.ClientUri;
+            ConsentData.ClientLogoUrl = client.LogoUri;
+            ConsentData.AllowRememberConsent = client.AllowRememberConsent;
 
-            vm.ReturnUrl = returnUrl;
-
-            vm.ClientName = client.ClientName ?? client.ClientId;
-            vm.ClientUrl = client.ClientUri;
-            vm.ClientLogoUrl = client.LogoUri;
-            vm.AllowRememberConsent = client.AllowRememberConsent;
-
-            vm.IdentityScopes = resources.IdentityResources.Select(x => CreateScopeViewModel(x, vm.ScopesConsented.Contains(x.Name) || model == null)).ToArray();
-            vm.ResourceScopes = resources.ApiResources.SelectMany(x => x.Scopes).Select(x => CreateScopeViewModel(x, vm.ScopesConsented.Contains(x.Name) || model == null)).ToArray();
+            ConsentData.IdentityScopes = resources.IdentityResources.Select(x => CreateScopeViewModel(x, consentedScopes == null || consentedScopes.Contains(x.Name))).ToArray();
+            ConsentData.ResourceScopes = resources.ApiResources.SelectMany(x => x.Scopes).Select(x => CreateScopeViewModel(x, consentedScopes == null || consentedScopes.Contains(x.Name))).ToArray();
             if (ConsentOptions.EnableOfflineAccess && resources.OfflineAccess)
             {
-                vm.ResourceScopes = vm.ResourceScopes.Union(new ScopeViewModel[] {
-                    GetOfflineAccessScope(vm.ScopesConsented.Contains(IdentityServer4.IdentityServerConstants.StandardScopes.OfflineAccess) || model == null)
+                ConsentData.ResourceScopes = ConsentData.ResourceScopes.Union(new ScopeViewModel[] {
+                    GetOfflineAccessScope(consentedScopes == null || consentedScopes.Contains(IdentityServer4.IdentityServerConstants.StandardScopes.OfflineAccess))
                 });
             }
-
-            return vm;
         }
 
         private ScopeViewModel CreateScopeViewModel(IdentityResource identity, bool check)
