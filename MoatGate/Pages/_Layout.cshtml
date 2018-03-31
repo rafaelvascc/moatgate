@@ -20,7 +20,7 @@
     @RenderSection("Styles", required: false)
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top topnav">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -52,13 +52,16 @@
             }
         </div>
     </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2017 - MoatGate</p>
-        </footer>
+    <div class="body-content">
+        <div class="container overflowContent">
+            @RenderBody()
+        </div>
     </div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2017 - MoatGate</p>
+        </div>
+    </footer>
     <environment include="Development">
         <script src="~/js/vendor.js" asp-append-version="true"></script>
     </environment>

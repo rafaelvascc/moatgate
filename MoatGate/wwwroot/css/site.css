@@ -1,3 +1,7 @@
+html, body, .body-content {
+    height: 100%;
+}
+
 body {
     padding-top: 50px;
     padding-bottom: 20px;
@@ -44,7 +48,7 @@ body {
 }
 
 .btnGroupSave {
-    margin-top: 10px;
+    margin-top: 8px;
 }
 
 .tab-pane {
@@ -79,4 +83,27 @@ body {
     /*border is optional*/
     border-bottom: 1px solid #444;
     cursor: pointer;
+}
+
+body {
+    display: flex;
+    flex-flow: column;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.body-content {
+    width: 100%;
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.overflowContent {
+    overflow-y: visible;
+    overflow-x: auto;
+}
+
+.navbar.navbar-default.navbar-fixed-bottom {
+    height: 50px;
 }
