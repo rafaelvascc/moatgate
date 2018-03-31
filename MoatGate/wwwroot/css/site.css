@@ -101,7 +101,6 @@ body {
 
 .overflowContent {
     overflow-y: visible;
-    overflow-x: auto;
 }
 
 .navbar.navbar-default.navbar-fixed-bottom {
