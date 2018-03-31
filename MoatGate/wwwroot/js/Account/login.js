@@ -15,11 +15,26 @@
         e.preventDefault();
         $carousel.carousel("prev");
     });
-
-    if (document.location.search.indexOf("resetPasswordEmailSent=True")) {
+    
+    if (document.location.search.indexOf("resetPasswordEmailSent=True") > -1) {
         $.notify({
             icon: "fas fa-check",
             message: "Password reset email sent"
+        }, {
+                // settings
+                type: 'success',
+                delay: 5000,
+                animate: {
+                    enter: 'animated fadeInDown',
+                    exit: 'animated fadeOutUp'
+                }
+            });
+    }
+
+    if (document.location.search.indexOf("?passwordReseted=True") > -1) {
+        $.notify({
+            icon: "fas fa-check",
+            message: "Password reseted"
         }, {
                 // settings
                 type: 'success',
