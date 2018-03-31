@@ -13,8 +13,12 @@
     vertical-align: middle;
     padding-right: 10px;
     padding-left: 10px;
-    margin-right: 10px;
     border-radius: 5px;
+}
+
+.form-group > div {
+    vertical-align: middle;
+    margin-right: 10px;
 }
 
 .form-group {
