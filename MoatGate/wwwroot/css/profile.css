@@ -1,0 +1,27 @@
+﻿.profile-img-card {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 10px;
+}
+
+.form-control-static {
+    min-height: 34px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    margin-bottom: 0;
+    background-color: #E5E5E5;
+    vertical-align: middle;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.form-group {
+    margin-bottom: 0px;
+}
+
+.btn-profilePage {
+    width: auto;
+    
+}

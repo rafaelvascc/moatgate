@@ -27,8 +27,14 @@ namespace MoatGate.Pages.Account
             _userManager = userManager;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToPage("/Profile/Index");
+            }
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl)
@@ -43,7 +49,7 @@ namespace MoatGate.Pages.Account
             {
                 if (string.IsNullOrEmpty(returnUrl))
                 {
-                    return RedirectToPage("/Welcome");
+                    return RedirectToPage("/Profile/Index");
                 }
                 else
                 {

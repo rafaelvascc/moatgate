@@ -1,0 +1,127 @@
+﻿@page
+@model MoatGate.Pages.Profile.IndexModel
+@section Styles {
+    <link rel="stylesheet" href="~/lib/animatecss/animatecss.css" />
+    <link rel="stylesheet" href="~/css/profile.css" />
+}
+<div>
+    <h1>User Profile</h1>
+    <hr />
+    <form class="form-horizontal">
+        <div class="col-lg-3 text-center">
+            <div class="row">
+                <img id="profile-img" class="profile-img-card img-circle" @{if (!string.IsNullOrWhiteSpace(Model.UserProfileViewModel.ProfilePictureUrl)) { <text> src="@Model.UserProfileViewModel.ProfilePictureUrl" </text>  } else { <text> src="https://s.aficionados.com.br/imagens/king-of-asgard.jpg" </text>  } } />
+            </div>
+            <div class="row">
+                <div class="btn-group-vertical" role="group">
+                    <a asp-page="./Edit" class="btn btn-primary btn-profilePage"><i class="fas fa-edit"></i> Edit Profile</a>
+                    <a asp-page="/Account/ChangePassword" class="btn btn-success btn-profilePage"><i class="fas fa-key"></i> Change Password</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.FirstName)</label>
+                <div>
+                    <p class="form-control-static">@Model.UserProfileViewModel.FirstName</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.MiddleName)</label>
+                <div>
+                    <p class="form-control-static">@Model.UserProfileViewModel.MiddleName</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.LastName)</label>
+                <div>
+                    <p class="form-control-static">@Model.UserProfileViewModel.LastName</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.Nickname)</label>
+                <div>
+                    <p class="form-control-static">@Model.UserProfileViewModel.Nickname</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.PreferedUserName)</label>
+                <div>
+                    <p class="form-control-static">@Model.UserProfileViewModel.PreferedUserName</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.Website)</label>
+                <div>
+                    <p class="form-control-static">@Model.UserProfileViewModel.Website</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.Email)</label>
+                <div>
+                    <p class="form-control-static">@Model.UserProfileViewModel.Email</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.EmailVerified)</label>
+                <div>
+                    <p class="form-control-static">@Model.UserProfileViewModel.EmailVerified</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.Gender)</label>
+                <div>
+                    <p class="form-control-static">@Model.UserProfileViewModel.Gender</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.BirthDate)</label>
+                <div>
+                    <p class="form-control-static">@Model.UserProfileViewModel.BirthDate</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.TimeZone)</label>
+                <div>
+                    <p class="form-control-static">@Model.UserProfileViewModel.TimeZone</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.Locale)</label>
+                <div>
+                    <p class="form-control-static">@Model.UserProfileViewModel.Locale</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.PhoneNumber)</label>
+                <div>
+                    <p class="form-control-static">@Model.UserProfileViewModel.PhoneNumber</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.PhoneNumberVerified)</label>
+                <div>
+                    <p class="form-control-static">@Model.UserProfileViewModel.PhoneNumberVerified</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.Address)</label>
+                <div>
+                    <p class="form-control-static">@Model.UserProfileViewModel.Address</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.UpdatedAt)</label>
+                <div>
+                    <p class="form-control-static">@Model.UserProfileViewModel.UpdatedAt</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-1">
+
+        </div>
+    </form>
+</div>
