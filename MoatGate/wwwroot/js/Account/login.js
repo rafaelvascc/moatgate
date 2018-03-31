@@ -34,7 +34,7 @@
     if (document.location.search.indexOf("?passwordReseted=True") > -1) {
         $.notify({
             icon: "fas fa-check",
-            message: "Password reseted"
+            message: "Password successfully updated"
         }, {
                 // settings
                 type: 'success',

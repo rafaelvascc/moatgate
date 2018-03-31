@@ -103,6 +103,8 @@ namespace MoatGate
 
             services.AddMvc().AddRazorPagesOptions(options =>
             {
+                options.Conventions.AuthorizeFolder("/Profile", "IsAuthenticated");
+                options.Conventions.AuthorizePage("/Account/ChangePassword", "IsAuthenticated");
                 options.Conventions.AuthorizeFolder("/Client", "IsIdentityAdmin");
                 options.Conventions.AuthorizeFolder("/Resources", "IsIdentityAdmin");
                 options.Conventions.AuthorizeFolder("/Roles", "IsIdentityAdmin");
@@ -113,6 +115,7 @@ namespace MoatGate
 
             services.AddAuthorization(options =>
             {
+                options.AddPolicy("IsAuthenticated", policy => policy.RequireAuthenticatedUser());
                 options.AddPolicy("IsIdentityAdmin", policy => policy.RequireRole("IdentityAdmin"));
             });
             
