@@ -44,17 +44,8 @@ namespace MoatGate.Pages.Roles
             {
                 return Page();
             }
-
-            IdentityResult result = null;
-
-            if (MoatGateIdentityRole.Id == 0)
-            {
-                result = await _manager.CreateAsync(MoatGateIdentityRole);
-            }
-            else
-            {
-                result = await _manager.UpdateAsync(MoatGateIdentityRole);
-            }
+            
+            var result = await _manager.CreateAsync(MoatGateIdentityRole);
 
             if (!result.Succeeded)
             {

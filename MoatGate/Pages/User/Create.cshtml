@@ -6,37 +6,50 @@
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="MoatGateIdentityUser.Id" />
-            <div class="form-group">
-                <label asp-for="MoatGateIdentityUser.UserName" class="control-label"></label>
-                <input asp-for="MoatGateIdentityUser.UserName" class="form-control" />
-                <span asp-validation-for="MoatGateIdentityUser.UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MoatGateIdentityUser.Email" class="control-label"></label>
-                <input asp-for="MoatGateIdentityUser.Email" type="email" class="form-control" />
-                <span asp-validation-for="MoatGateIdentityUser.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MoatGateIdentityUser.Password" class="control-label"></label>
-                <input asp-for="MoatGateIdentityUser.Password" class="form-control" />
-                <span asp-validation-for="MoatGateIdentityUser.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MoatGateIdentityUser.ConfirmPassword" class="control-label"></label>
-                <input asp-for="MoatGateIdentityUser.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="MoatGateIdentityUser.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MoatGateIdentityUser.PhoneNumber" class="control-label"></label>
-                <input asp-for="MoatGateIdentityUser.PhoneNumber" class="form-control" />
-                <span asp-validation-for="MoatGateIdentityUser.PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="MoatGateIdentityUser.TwoFactorEnabled" /> @Html.DisplayNameFor(model => model.MoatGateIdentityUser.TwoFactorEnabled)
-                    </label>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label asp-for="MoatGateIdentityUser.UserName" class="control-label"></label>
+                    <input asp-for="MoatGateIdentityUser.UserName" class="form-control" />
+                    <span asp-validation-for="MoatGateIdentityUser.UserName" class="text-danger"></span>
                 </div>
+                <div class="form-group">
+                    <label asp-for="MoatGateIdentityUser.Email" class="control-label"></label>
+                    <input asp-for="MoatGateIdentityUser.Email" type="email" class="form-control" />
+                    <span asp-validation-for="MoatGateIdentityUser.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MoatGateIdentityUser.Password" class="control-label"></label>
+                    <input asp-for="MoatGateIdentityUser.Password" class="form-control" />
+                    <span asp-validation-for="MoatGateIdentityUser.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MoatGateIdentityUser.ConfirmPassword" class="control-label"></label>
+                    <input asp-for="MoatGateIdentityUser.ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="MoatGateIdentityUser.ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MoatGateIdentityUser.PhoneNumber" class="control-label"></label>
+                    <input asp-for="MoatGateIdentityUser.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="MoatGateIdentityUser.PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="MoatGateIdentityUser.TwoFactorEnabled" /> @Html.DisplayNameFor(model => model.MoatGateIdentityUser.TwoFactorEnabled)
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label asp-for="MoatGateIdentityUser.RoleChecks" class="control-label"></label>
+                </div>
+                @foreach (var role in Model.MoatGateIdentityUser.RoleChecks)
+                {
+                    <div class="form-group">
+                        <input class="checkbox checkbox-inline" asp-for="MoatGateIdentityUser.RoleChecks[role.Key]" /> <label>@role.Key</label>
+                    </div>
+                }
             </div>
             <nav class="navbar navbar-default navbar-fixed-bottom">
                 <div class="container">

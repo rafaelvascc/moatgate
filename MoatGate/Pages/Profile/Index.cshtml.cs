@@ -24,8 +24,14 @@ namespace MoatGate.Pages.Profile
         [BindProperty]
         public UserProfileViewModel UserProfileViewModel { get; set; }
 
-        public void OnGet()
+        [BindProperty]
+        public IList<string> Roles { set; get; } = new List<string>();
+
+        public async Task OnGetAsync()
         {
+            var id = _manager.GetUserId(User);
+            var user = await _manager.FindByIdAsync(id);
+            Roles = await _manager.GetRolesAsync(user);
             UserProfileViewModel = new UserProfileViewModel(User.Claims);
         }
     }

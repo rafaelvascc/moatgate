@@ -6,24 +6,29 @@ using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using MoatGate.Models.User;
 using AutoMapper;
+using System.Linq;
 
 namespace MoatGate.Pages.User
 {
     public class CreateModel : PageModel
     {
         private readonly UserManager<MoatGateIdentityUser> _userManager;
+        private readonly RoleManager<MoatGateIdentityRole> _roleManager;
 
         [BindProperty]
-        public MoatGateIdentityUserCreateViewModel MoatGateIdentityUser { get; set; } = new MoatGateIdentityUserCreateViewModel() { Id = 0 };
+        public MoatGateIdentityUserCreateViewModel MoatGateIdentityUser { get; set; } = new MoatGateIdentityUserCreateViewModel();
 
-        public CreateModel(UserManager<MoatGateIdentityUser> userManager)
+        public CreateModel(UserManager<MoatGateIdentityUser> userManager, RoleManager<MoatGateIdentityRole> roleManager)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         public IActionResult OnGet()
         {
             ViewData["Title"] = "Create User";
+
+            MoatGateIdentityUser.RoleChecks = _roleManager.Roles.ToDictionary(k => k.Name, v => false);
 
             return Page();
         }
@@ -50,14 +55,17 @@ namespace MoatGate.Pages.User
                 return Page();
             }
 
-            if (!result.Succeeded)
+            var roleResult = await _userManager.AddToRolesAsync(newUser, MoatGateIdentityUser.RoleChecks.Where(r => r.Value).Select(r => r.Key));
+
+            if (!roleResult.Succeeded)
             {
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(error.Code, error.Description);
                 }
-                return Page();
+                return RedirectToPage("Edit", new { errors = "roles" });
             }
+
 
             return RedirectToPage("./List");
         }
