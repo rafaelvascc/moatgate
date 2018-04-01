@@ -66,6 +66,7 @@ namespace MoatGate.Models.Profile
         [DataType(DataType.EmailAddress)]
         public string Email { set; get; }
 
+        [DisplayName("Email verified")]
         [JwtClaimName("email_verified")]
         public bool EmailVerified { set; get; }
 
@@ -91,6 +92,7 @@ namespace MoatGate.Models.Profile
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { set; get; }
 
+        [DisplayName("Phone Number verified")]
         [JwtClaimName("phone_number_verified")]
         public bool PhoneNumberVerified { set; get; }
 

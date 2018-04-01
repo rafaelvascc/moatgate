@@ -43,6 +43,12 @@ namespace MoatGate.Models.Profile
         [DataType(DataType.Url)]
         public string Website { set; get; }
 
+        [Required]
+        [DisplayName("Email")]
+        [JwtClaimName("email")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { set; get; }
+
         [DisplayName("Gender")]
         [JwtClaimName("gender")]
         public string Gender { set; get; }

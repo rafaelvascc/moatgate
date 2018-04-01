@@ -22,14 +22,19 @@ namespace MoatGate.Pages.Account
             _userManager = userManager;
         }
 
-        public IActionResult OnGet(string code = null)
+        public IActionResult OnGet(int? userId = null, string code = null)
         {
+            if (userId == null)
+            {
+                throw new ApplicationException("An user id must be supplied for password reset.");
+            }
             if (code == null)
             {
                 throw new ApplicationException("A code must be supplied for password reset.");
             }
             else
             {
+                ResetPasswordViewModel.UserId = userId.Value;
                 ResetPasswordViewModel.Code = code;
                 return Page();
             }
@@ -42,7 +47,7 @@ namespace MoatGate.Pages.Account
                 return Page();
             }
 
-            var user = await _userManager.FindByEmailAsync(ResetPasswordViewModel.Email);
+            var user = await _userManager.FindByIdAsync(ResetPasswordViewModel.UserId.ToString());
             if (user == null)
             {
                 return RedirectToPage("Login", new { passwordReseted = true });

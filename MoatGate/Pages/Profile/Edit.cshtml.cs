@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using MoatGate.Helpers;
 using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 using MoatGate.Models.Profile;
 
@@ -14,14 +17,26 @@ namespace MoatGate.Pages.Profile
     {
         private readonly UserManager<MoatGateIdentityUser> _manager;
         private readonly SignInManager<MoatGateIdentityUser> _signInManager;
+        private readonly IEmailSender _emailSender;
 
         [BindProperty]
         public EdiProfileViewModel EditProfileViewModel { get; set; }
 
-        public EditModel(UserManager<MoatGateIdentityUser> manager, SignInManager<MoatGateIdentityUser> signInManager)
+        [BindProperty]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [BindProperty]
+        public bool RefreshSignIn { get; set; } = true;
+
+        [BindProperty]
+        public bool RememberMe { get; set; } = false;
+
+        public EditModel(UserManager<MoatGateIdentityUser> manager, SignInManager<MoatGateIdentityUser> signInManager, IEmailSender emailSender)
         {
             _manager = manager;
             _signInManager = signInManager;
+            _emailSender = emailSender;
         }
 
         public void OnGet()
@@ -31,6 +46,28 @@ namespace MoatGate.Pages.Profile
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            bool confirmationEmailSent = false;
+
+            //TODO: wait for EF Core 2.1 :(
+            //using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            //{
+            //    try
+            //    {
+            var id = _manager.GetUserId(User);
+            var systemUser = await _manager.FindByIdAsync(id);
+
+            if (systemUser.NormalizedEmail != _manager.KeyNormalizer.Normalize(EditProfileViewModel.Email) &&
+                (string.IsNullOrWhiteSpace(Password) || !await _manager.CheckPasswordAsync(systemUser, Password)))
+            {
+                ModelState.AddModelError(nameof(Password), "Invalid password when changing email");
+                return Page();
+            }
+
             EditProfileViewModel.UpdatedAt = DateTime.Now;
             var newValues = EditProfileViewModel.ToClaims();
             var currentValues = User.Claims;
@@ -40,9 +77,6 @@ namespace MoatGate.Pages.Profile
                 currentValues.Where(c => c.Type == nv.Type).Single().Value != newValues.Where(c => c.Type == nv.Type).Single().Value);
             var toRemove = currentValues.Where(ov => !newValues.Select(c => c.Type).Distinct().Contains(ov.Type) ||
                 string.IsNullOrWhiteSpace(newValues.Where(c => c.Type == ov.Type).Single().Value));
-
-            var id = _manager.GetUserId(User);
-            var systemUser = await _manager.FindByIdAsync(id);
 
             var resultAdd = await _manager.AddClaimsAsync(systemUser, toInsert);
             var resultRemove = await _manager.RemoveClaimsAsync(systemUser, toRemove);
@@ -67,16 +101,35 @@ namespace MoatGate.Pages.Profile
                 {
                     ModelState.AddModelError(error.Code, error.Description);
                 }
+                //scope.Dispose();
 
                 return Page();
             }
             else
             {
-                //Signin again to update claim
-                //TODO: look how ot recover current remember me
-                await _signInManager.SignInAsync(systemUser, true);
-                return RedirectToPage("Index");
+                //scope.Complete();
+
+                if (systemUser.NormalizedEmail != _manager.KeyNormalizer.Normalize(EditProfileViewModel.Email))
+                {
+                    var token = await _manager.GenerateChangeEmailTokenAsync(systemUser, EditProfileViewModel.Email);
+                    var callbackUrl = Url.Page("/Account/ConfirmEmail", pageHandler: null, values: new { userId = id, token, newEmail = EditProfileViewModel.Email }, protocol: Request.Scheme);
+                    await _emailSender.SendEmailConfirmationEmailAsync(EditProfileViewModel.Email, callbackUrl);
+                    confirmationEmailSent = true;
+                }
+
+                if (RefreshSignIn)
+                    await _signInManager.SignInAsync(systemUser, RememberMe);
+
+                return RedirectToPage("Index", new { profileUpdated = true, confirmationEmailSent });
             }
+            //}
+            //catch (Exception ex)
+            //{
+            //    scope.Dispose();
+            //    throw;
+            //}
+            //}
+
         }
     }
 }

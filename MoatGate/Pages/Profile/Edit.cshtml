@@ -9,92 +9,118 @@
     <hr />
     <form class="form-horizontal" method="post">
         <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="col-lg-3 text-center">
+        <div class="col-lg-3 text-center profileEditOptions">
             <div class="row">
                 <img id="profile-img" class="profile-img-card img-circle" @{if (!string.IsNullOrWhiteSpace(Model.EditProfileViewModel.ProfilePictureUrl)) { <text> src="@Model.EditProfileViewModel.ProfilePictureUrl" </text>  } else { <text> src="https://s.aficionados.com.br/imagens/king-of-asgard.jpg" </text>  } } />
             </div>
             <div class="row">
+                <div class="form-group">
+                    <div>
+                        <input class="checkbox-inline" asp-for="@Model.RefreshSignIn" /> <label>Refresh SignIn</label>
+                    </div>
+                    <small class="text-justify"><i class="fas fa-exclamation-triangle"></i> For the profile update to be visible,<br /> the user sign in needs to be refreshed</small>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <input class="checkbox-inline" asp-for="@Model.RememberMe" /> <label>Remember Me</label>
+                    </div>
+                    <small class="text-justify"><i class="fas fa-exclamation-triangle"></i> In the case of sign in refresh, keeps <br /> authentication session even after <br /> the browser is closed</small>
+                </div>
+            </div>
+            <div class="row">
                 <div class="btn-group-vertical" role="group">
-                    <button type="submit" class="btn btn-primary btn-primary"><i class="fas fa-save"></i> Save Edit</button>
+                    <button type="submit" class="btn btn-primary btn-success"><i class="fas fa-save"></i> Save Edit</button>
                     <a asp-page="./Index" class="btn btn-primary btn-danger"><i class="fas fa-times"></i> Cancel Edit</a>
                 </div>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.FirstName)</label>
+                <label class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.FirstName)</label>
                 <div>
                     <input class="form-control" asp-for="@Model.EditProfileViewModel.FirstName" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.MiddleName)</label>
+                <label class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.MiddleName)</label>
                 <div>
                     <input class="form-control" asp-for="@Model.EditProfileViewModel.MiddleName" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.LastName)</label>
+                <label class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.LastName)</label>
                 <div>
                     <input class="form-control" asp-for="@Model.EditProfileViewModel.LastName" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.Nickname)</label>
+                <label class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.Nickname)</label>
                 <div>
                     <input class="form-control" asp-for="@Model.EditProfileViewModel.Nickname" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.PreferedUserName)</label>
+                <label class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.PreferedUserName)</label>
                 <div>
                     <input class="form-control" asp-for="@Model.EditProfileViewModel.PreferedUserName" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.Website)</label>
+                <label class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.Website)</label>
                 <div>
                     <input class="form-control" asp-for="@Model.EditProfileViewModel.Website" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.Email)</label>
+                <div>
+                    <input class="form-control" asp-for="@Model.EditProfileViewModel.Email" />
                 </div>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.Gender)</label>
+                <label class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.Gender)</label>
                 <div>
                     <input class="form-control" asp-for="@Model.EditProfileViewModel.Gender" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.BirthDate)</label>
+                <label class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.BirthDate)</label>
                 <div>
                     <input class="form-control" asp-for="@Model.EditProfileViewModel.BirthDate" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.TimeZone)</label>
+                <label class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.TimeZone)</label>
                 <div>
                     <input class="form-control" asp-for="@Model.EditProfileViewModel.TimeZone" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.Locale)</label>
+                <label class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.Locale)</label>
                 <div>
                     <input class="form-control" asp-for="@Model.EditProfileViewModel.Locale" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.PhoneNumber)</label>
+                <label class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.PhoneNumber)</label>
                 <div>
                     <input class="form-control" asp-for="@Model.EditProfileViewModel.PhoneNumber" />
                 </div>
             </div>
-
             <div class="form-group">
-                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.Address)</label>
+                <label class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.Address)</label>
                 <div>
                     <input class="form-control" asp-for="@Model.EditProfileViewModel.Address" />
                 </div>
+            </div>
+            <div class="form-group">
+                <label class=" control-label">@Html.DisplayNameFor(model => model.Password)</label>
+                <div>
+                    <input class="form-control" placeholder="Password" asp-for="@Model.Password" />
+                </div>
+                <small><i class="fas fa-exclamation-triangle"></i> For Security Reasons, updating the Email address requires the user password</small>
             </div>
         </div>
         <div class="col-lg-1">
