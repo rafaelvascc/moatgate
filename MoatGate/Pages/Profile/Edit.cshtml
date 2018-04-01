@@ -1,7 +1,6 @@
 ﻿@page
 @model MoatGate.Pages.Profile.EditModel
 @section Styles {
-    <link rel="stylesheet" href="~/lib/animatecss/animatecss.css" />
     <link rel="stylesheet" href="~/css/profile.css" />
 }
 <div>
@@ -17,14 +16,16 @@
                 <div class="form-group">
                     <div>
                         <input class="checkbox-inline" asp-for="@Model.RefreshSignIn" /> <label>Refresh SignIn</label>
+                        <i class="fas fa-info-circle" id="infoRefreshSignin"
+                           data-toggle="tooltip" data-placement="right" data-html="true" title="For the profile update to be visible, the user sign in needs to be refreshed"></i>
                     </div>
-                    <small class="text-justify"><i class="fas fa-exclamation-triangle"></i> For the profile update to be visible, the user sign in needs to be refreshed</small>
                 </div>
                 <div class="form-group">
                     <div>
                         <input class="checkbox-inline" asp-for="@Model.RememberMe" /> <label>Remember Me</label>
+                        <i class="fas fa-info-circle" id="infoRefreshSignin"
+                           data-toggle="tooltip" data-placement="right" data-html="true" title="In the case of sign in refresh, keeps authentication session even after the browser is closed"></i>
                     </div>
-                    <small class="text-justify"><i class="fas fa-exclamation-triangle"></i> In the case of sign in refresh, keeps authentication session even after the browser is closed</small>
                 </div>
             </div>
             <div class="row">
@@ -127,4 +128,8 @@
         </div>
     </form>
 </div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript" src="~/js/Profile/edit.js" asp-append-version="true"></script>
+}
 

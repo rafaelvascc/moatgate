@@ -1,4 +1,4 @@
-@page "{id:int?}"
+@page
 @model MoatGate.Pages.User.ListModel
 @{
     ViewData["Title"] = "Users";
@@ -7,32 +7,31 @@
 <p>
     <a asp-page="Create" class="btn btn-primary"><i class="fas fa-plus"></i> Create New</a>
 </p>
-<form method="post">
-    <table class="table table-condensed table-responsive table-striped table-hover">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.MoatGateIdentityUsers[0].UserName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MoatGateIdentityUsers[0].Email)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MoatGateIdentityUsers[0].LockoutEnd)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MoatGateIdentityUsers[0].LockoutEnabled)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MoatGateIdentityUsers[0].AccessFailedCount)
-                </th>
-                <th>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.MoatGateIdentityUsers)
-            {
+<table>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MoatGateIdentityUsers[0].UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MoatGateIdentityUsers[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MoatGateIdentityUsers[0].LockoutEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MoatGateIdentityUsers[0].LockoutEnabled)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MoatGateIdentityUsers[0].AccessFailedCount)
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.MoatGateIdentityUsers)
+        {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.UserName)
@@ -55,14 +54,18 @@
                         <button type="button" class="btn btn-sm btn-danger deletePopOver"><i class="fas fa-trash"></i></button>
                     </div>
                     <div class="confirmDeletePopover">
-                        <div class="btn-group btn-group-sm pull-right confirmDeletePopoverBtnGroup">
-                            <button type="submit" asp-page-handler="delete" asp-route-id="@item.Id" class="btn btn-sm btn-success" title="Delete"><i class="fas fa-check"></i> Confirm</button>
-                            <button type="button" class="btn btn-sm btn-danger btnCancelDelete"><i class="fas fa-times"></i> Cancel</button>
-                        </div>
+                        <form method="post">
+                            <div class="btn-group btn-group-sm pull-right confirmDeletePopoverBtnGroup">
+                                <button type="submit" asp-page-handler="delete" asp-route-id="@item.Id" class="btn btn-sm btn-success" title="Delete"><i class="fas fa-check"></i> Confirm</button>
+                                <button type="button" class="btn btn-sm btn-danger btnCancelDelete"><i class="fas fa-times"></i> Cancel</button>
+                            </div>
+                        </form>
                     </div>
                 </td>
             </tr>
-            }
-        </tbody>
-    </table>
-</form>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script type="text/javascript" src="~/js/Users/list.js" asp-append-version="true"></script>
+}

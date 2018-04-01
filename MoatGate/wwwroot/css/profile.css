@@ -33,3 +33,7 @@
 .profileEditOptions .row, .profileEditOptions .form-group {
     margin-bottom:10px;
 }
+
+.tooltip {
+    width: 200px;
+}
