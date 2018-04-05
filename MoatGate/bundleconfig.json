@@ -5,6 +5,7 @@
     // An array of relative input file paths. Globbing patterns supported
     "inputFiles": [
       "wwwroot/lib/bootstrap-table/dist/bootstrap-table.css",
+      "wwwroot/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css",
       "wwwroot/lib/animatecss/animatecss.css",
       "wwwroot/css/site.css"
     ],
@@ -33,7 +34,8 @@
       "wwwroot/lib/jsrender/jsrender.js",
       "wwwroot/lib/font-awesome/svg-with-js/js/fontawesome-all.js",
       "wwwroot/lib/remarkable-bootstrap-notify/dist/bootstrap-notify.js",
-      "wwwroot/lib/bootstrap-table/dist/bootstrap-table.js"
+      "wwwroot/lib/bootstrap-table/dist/bootstrap-table.js",
+      "wwwroot/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"
     ],
     // Optionally specify minification options
     "minify": {
@@ -54,7 +56,8 @@
       "wwwroot/lib/jsrender/jsrender.js",
       "wwwroot/lib/font-awesome/svg-with-js/js/fontawesome-all.js",
       "wwwroot/lib/remarkable-bootstrap-notify/dist/bootstrap-notify.js",
-      "wwwroot/lib/bootstrap-table/dist/bootstrap-table.js"
+      "wwwroot/lib/bootstrap-table/dist/bootstrap-table.js",
+      "wwwroot/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"
     ],
     // Optionally specify minification options
     "minify": {

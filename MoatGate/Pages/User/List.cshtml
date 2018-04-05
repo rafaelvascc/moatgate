@@ -17,6 +17,9 @@
                 @Html.DisplayNameFor(model => model.MoatGateIdentityUsers[0].Email)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.MoatGateIdentityUsers[0].PhoneNumber)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.MoatGateIdentityUsers[0].LockoutEnd)
             </th>
             <th>
@@ -32,37 +35,40 @@
     <tbody>
         @foreach (var item in Model.MoatGateIdentityUsers)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LockoutEnd)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LockoutEnabled)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AccessFailedCount)
-                </td>
-                <td>
-                    <div class="btn-group btn-group-sm pull-right">
-                        <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-sm btn-danger deletePopOver"><i class="fas fa-trash"></i></button>
-                    </div>
-                    <div class="confirmDeletePopover">
-                        <form method="post">
-                            <div class="btn-group btn-group-sm pull-right confirmDeletePopoverBtnGroup">
-                                <button type="submit" asp-page-handler="delete" asp-route-id="@item.Id" class="btn btn-sm btn-success" title="Delete"><i class="fas fa-check"></i> Confirm</button>
-                                <button type="button" class="btn btn-sm btn-danger btnCancelDelete"><i class="fas fa-times"></i> Cancel</button>
-                            </div>
-                        </form>
-                    </div>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LockoutEnd)
+            </td>
+            <td>
+                @(item.LockoutEnabled ? "Yes" : "No" )
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccessFailedCount)
+            </td>
+            <td>
+                <div class="btn-group btn-group-sm pull-right">
+                    <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
+                    <button type="button" class="btn btn-sm btn-danger deletePopOver"><i class="fas fa-trash"></i></button>
+                </div>
+                <div class="confirmDeletePopover">
+                    <form method="post">
+                        <div class="btn-group btn-group-sm pull-right confirmDeletePopoverBtnGroup">
+                            <button type="submit" asp-page-handler="delete" asp-route-id="@item.Id" class="btn btn-sm btn-success" title="Delete"><i class="fas fa-check"></i> Confirm</button>
+                            <button type="button" class="btn btn-sm btn-danger btnCancelDelete"><i class="fas fa-times"></i> Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

@@ -2,9 +2,6 @@
     $("table").bootstrapTable({
         striped: true,
         pagination: true,
-        search: true,
-        searchOnEnterKey: true,
-        searchTimeOut: 200,
         columns: [
             {
                 field: "UserName",
@@ -13,7 +10,6 @@
                 halign: "left",
                 valign: "middle",
                 sortable: true,
-                searchable: true,
             },{
                 field: "Email",
                 title: "Email",
@@ -21,7 +17,13 @@
                 halign: "left",
                 valign: "middle",
                 sortable: true,
-                searchable: true,
+            }, {
+                field: "PhoneNumber",
+                title: "Phone Number",
+                align: "left",
+                halign: "left",
+                valign: "middle",
+                sortable: true,
             },{
                 field: "LocakoutEnd",
                 title: "Lockout End",
@@ -29,15 +31,13 @@
                 halign: "left",
                 valign: "middle",
                 sortable: true,
-                searchable: true,
             },{
                 field: "LockoutEnabled",
-                title: "LockoutEnabled",
+                title: "Lockout Enabled",
                 align: "left",
                 halign: "left",
                 valign: "middle",
                 sortable: false,
-                searchable: false,
             }, {
                 field: "AccessFailedCount",
                 title: "Access Failed Count",
@@ -45,7 +45,6 @@
                 halign: "left",
                 valign: "middle",
                 sortable: true,
-                searchable: true,
             }, {
                 field: "",
                 title: "Actions",

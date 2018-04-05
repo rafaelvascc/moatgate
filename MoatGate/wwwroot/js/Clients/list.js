@@ -2,9 +2,11 @@
     $("table").bootstrapTable({
         striped: true,
         pagination: true,
-        search: true,
         searchOnEnterKey: true,
         searchTimeOut: 200,
+        filterControl: true,
+        hideUnusedSelectOptions: true,
+        searchOnEnterKey: true,
         columns: [
             {
                 field: "ClientName",
