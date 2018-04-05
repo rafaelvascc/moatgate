@@ -18,7 +18,7 @@
                 <tr>
                     <td>
                         <input type="hidden" class="form-control" name="Client.RedirectUris[@i.ToString()].Id" value="@item.Id" />
-                        <input type="url" class="form-control" name="Client.RedirectUris[@i.ToString()].RedirectUri" value="@item.RedirectUri" />
+                        <input type="url" class="form-control" placeholder="/signin-oidc" name="Client.RedirectUris[@i.ToString()].RedirectUri" value="@item.RedirectUri" />
                     </td>
                     <td>
                         <div class="btn-group btn-group-sm pull-right">
@@ -34,7 +34,7 @@
         <tr>
             <td>
                 <input type="hidden" class="form-control" name="Client.RedirectUris[{{:index}}].Id" value="{{:id}}" />
-                <input type="url" class="form-control" name="Client.RedirectUris[{{:index}}].RedirectUri" value="{{:value}}" />
+                <input type="url" placeholder="/signin-oidc" class="form-control" name="Client.RedirectUris[{{:index}}].RedirectUri" value="https://somedomain.com/signin-oidc" />
             </td>
             <td>
                 <div class="btn-group btn-group-sm pull-right">

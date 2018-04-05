@@ -15,17 +15,17 @@
             @{ int i = 0; }
             @foreach (var item in Model)
             {
-            <tr>
-                <td>
-                    <input type="hidden" class="form-control" name="Client.PostLogoutRedirectUris[@i.ToString()].Id" value="@item.Id" />
-                    <input type="url" class="form-control" name="Client.PostLogoutRedirectUris[@i.ToString()].PostLogoutRedirectUri" value="@item.PostLogoutRedirectUri" />
-                </td>
-                <td>
-                    <div class="btn-group btn-group-sm pull-right">
-                        <button type="button" class="btn btn-sm btn-danger  btn-delete-logout-redirect-uri" title="Delete"><i class="fas fa-trash-alt"></i></button>
-                    </div>
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        <input type="hidden" class="form-control" name="Client.PostLogoutRedirectUris[@i.ToString()].Id" value="@item.Id" />
+                        <input type="url" class="form-control" placeholder="/signout-callback-oidc" name="Client.PostLogoutRedirectUris[@i.ToString()].PostLogoutRedirectUri" value="@item.PostLogoutRedirectUri" />
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm pull-right">
+                            <button type="button" class="btn btn-sm btn-danger  btn-delete-logout-redirect-uri" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </td>
+                </tr>
                 i++;
             }
         </tbody>
@@ -34,7 +34,7 @@
         <tr>
             <td>
                 <input type="hidden" class="form-control" name="Client.PostLogoutRedirectUris[{{:index}}].Id" value="{{:id}}" />
-                <input type="url" class="form-control" name="Client.PostLogoutRedirectUris[{{:index}}].PostLogoutRedirectUri" value="{{:value}}" />
+                <input type="url" placeholder="/signout-callback-oidc" class="form-control" name="Client.PostLogoutRedirectUris[{{:index}}].PostLogoutRedirectUri" value="https://somedomain.com/signout-callback-oidc" />
             </td>
             <td>
                 <div class="btn-group btn-group-sm pull-right">
