@@ -8,6 +8,56 @@
             return false;
         }
     });
+
+
+    $("#deleteModal").on('shown.bs.modal', function (e) {
+        var idToDelete = e.relatedTarget.attributes["data-id"].value
+        var deleteUrl = e.relatedTarget.attributes["data-url"].value
+        $("#deleteModal #btnConfirmDelete").off("click").on("click", function (event) {
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: deleteUrl,
+                data: JSON.stringify({ Id: idToDelete }),
+                success: function (response) {
+                    $.notify({
+                        icon: "fas fa-check",
+                        message: "Record successfully deleted",
+                    }, {
+                            // settings
+                            type: 'success',
+                            delay: 5000,
+                            animate: {
+                                enter: 'animated fadeInDown',
+                                exit: 'animated fadeOutUp'
+                            }
+                        });
+
+                    var $table = $(e.relatedTarget).parents("table:first");
+
+                    if ($.fn.DataTable.isDataTable($table))
+                        $table.dataTable().api().draw();
+                },
+                error: function (response) {
+                    $.notify({
+                        icon: "fas fa-times",
+                        message: "Failed to delete record",
+                    }, {
+                            // settings
+                            type: 'danger',
+                            delay: 5000,
+                            animate: {
+                                enter: 'animated fadeInDown',
+                                exit: 'animated fadeOutUp'
+                            }
+                        });
+                },
+                complete: function (response) {
+                    $("#deleteModal").modal("hide");
+                }
+            });
+        });
+    });
 });
 
 function appyConfirmPopoverToDeleteButtons() {
@@ -16,7 +66,7 @@ function appyConfirmPopoverToDeleteButtons() {
         selector: ".deletePopOver",
         title: "Confirm Delete?",
         trigger: "click",
-        container: ".table-hover", //Fix for bootstrap table
+        //container: ".table-hover", //Fix for bootstrap table
         html: true,
         content: function (event) {
             var $content = $(this).parents(".btn-group:first").siblings(".confirmDeletePopover").find("> form").clone();

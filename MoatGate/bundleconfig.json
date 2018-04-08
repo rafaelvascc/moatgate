@@ -4,9 +4,11 @@
   {
     // An array of relative input file paths. Globbing patterns supported
     "inputFiles": [
-      "wwwroot/lib/bootstrap-table/dist/bootstrap-table.css",
       "wwwroot/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css",
+      "wwwroot/lib/font-awesome/web-fonts-with-css/fontawesome-all.css",
       "wwwroot/lib/animatecss/animatecss.css",
+      "wwwroot/lib/chosen/chosen.css",
+      "wwwroot/lib/bootstrap-chosen/bootstrap-chosen.css",
       "wwwroot/css/site.css"
     ],
     "outputFileName": "wwwroot/css/site.min.css"
@@ -32,10 +34,9 @@
       "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
       "wwwroot/lib/bootstrap/dist/js/bootstrap.js",
       "wwwroot/lib/jsrender/jsrender.js",
-      "wwwroot/lib/font-awesome/svg-with-js/js/fontawesome-all.js",
       "wwwroot/lib/remarkable-bootstrap-notify/dist/bootstrap-notify.js",
-      "wwwroot/lib/bootstrap-table/dist/bootstrap-table.js",
-      "wwwroot/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"
+      "wwwroot/lib/bootstrap-datepicker/js/bootstrap-datepicker.js",
+      "wwwroot/lib/chosen/chosen.jquery.js"
     ],
     // Optionally specify minification options
     "minify": {
@@ -54,10 +55,9 @@
       "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
       "wwwroot/lib/bootstrap/dist/js/bootstrap.js",
       "wwwroot/lib/jsrender/jsrender.js",
-      "wwwroot/lib/font-awesome/svg-with-js/js/fontawesome-all.js",
       "wwwroot/lib/remarkable-bootstrap-notify/dist/bootstrap-notify.js",
-      "wwwroot/lib/bootstrap-table/dist/bootstrap-table.js",
-      "wwwroot/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"
+      "wwwroot/lib/bootstrap-datepicker/js/bootstrap-datepicker.js",
+      "wwwroot/lib/chosen/chosen.jquery.js"
     ],
     // Optionally specify minification options
     "minify": {

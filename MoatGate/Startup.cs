@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using IdentityServer4.EntityFramework.Entities;
 using System.Linq;
 using MoatGate.Helpers;
+using IdentityServer4.AccessTokenValidation;
 
 namespace MoatGate
 {
@@ -118,7 +119,7 @@ namespace MoatGate
                 options.AddPolicy("IsAuthenticated", policy => policy.RequireAuthenticatedUser());
                 options.AddPolicy("IsIdentityAdmin", policy => policy.RequireRole("IdentityAdmin"));
             });
-            
+
             services.AddSingleton<IEmailSender, SendGridEmailSender>();
 
             services.Configure<AuthMessageSenderOptions>(Configuration);
@@ -207,15 +208,15 @@ namespace MoatGate
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //if (env.IsDevelopment())
-            //{
-            app.UseDeveloperExceptionPage();
-            app.UseBrowserLink();
-            //}
-            //else
-            //{
-            //    app.UseExceptionHandler("/Error");
-            //}
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseBrowserLink();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+            }
 
             app.UseIdentityServer();
 

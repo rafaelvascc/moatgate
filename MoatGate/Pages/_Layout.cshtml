@@ -8,14 +8,16 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.min.css" />
-        <link rel="stylesheet" href="~/lib/font-awesome/svg-with-js/css/fa-svg-with-js.css" />
+        <link rel="stylesheet" href="~/lib/font-awesome/web-fonts-with-css/css/fontawesome-all.min.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/lib/font-awesome/svg-with-js/css/fa-svg-with-js.css" />
+        <link rel="stylesheet" href="~/lib/font-awesome/web-fonts-with-css/css/fontawesome-all.min.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     </environment>
     @RenderSection("Styles", required: false)
 </head>
@@ -62,6 +64,26 @@
             <p>&copy; 2017 - MoatGate</p>
         </div>
     </footer>
+    <div id="deleteModal" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="icon-box">
+                        <i class="material-icons">&#xE5CD;</i>
+                    </div>
+                    <h4 class="modal-title">Are you sure?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Do you really want to delete this record? This process cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="btnConfirmDelete">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <environment include="Development">
         <script src="~/js/vendor.js" asp-append-version="true"></script>
     </environment>
