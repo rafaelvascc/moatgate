@@ -1,4 +1,6 @@
-﻿select.form-control + .chosen-container.chosen-container-single .chosen-single {
+﻿/*bootstrap-chosen*/
+
+select.form-control + .chosen-container.chosen-container-single .chosen-single {
     display: block;
     width: 100%;
     height: 34px;

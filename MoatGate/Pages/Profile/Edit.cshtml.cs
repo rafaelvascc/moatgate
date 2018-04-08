@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.AspNetCore.Identity;
@@ -21,6 +23,10 @@ namespace MoatGate.Pages.Profile
 
         [BindProperty]
         public EdiProfileViewModel EditProfileViewModel { get; set; }
+
+        public IDictionary<string, string> Cultures { set; get; } = new Dictionary<string, string>();
+        
+        public IList<string> TimeZones { set; get; } = new List<string>();
 
         [BindProperty]
         [DataType(DataType.Password)]
@@ -42,6 +48,8 @@ namespace MoatGate.Pages.Profile
         public void OnGet()
         {
             EditProfileViewModel = new EdiProfileViewModel(User.Claims);
+            Cultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures).OrderBy(c => c.Name).ToDictionary(c => c.Name, c => $"{c.Name } - {c.NativeName}");
+            TimeZones = TimeZoneInfo.GetSystemTimeZones().Select(t => t.DisplayName).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync()

@@ -11,11 +11,11 @@
       "wwwroot/lib/bootstrap-chosen/bootstrap-chosen.css",
       "wwwroot/css/site.css"
     ],
-    "outputFileName": "wwwroot/css/site.min.css"
+    "outputFileName": "wwwroot/css/site.normal.css"
   },
   {
     "inputFiles": [
-      "wwwroot/js/site.js"
+      "wwwroot/js/site.normal.js"
     ],
     // Optionally specify minification options
     "minify": {

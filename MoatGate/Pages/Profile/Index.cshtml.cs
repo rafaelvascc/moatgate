@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 using MoatGate.Models.Profile;
 using System.Security.Principal;
+using System.Globalization;
 
 namespace MoatGate.Pages.Profile
 {
