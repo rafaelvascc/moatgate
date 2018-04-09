@@ -95,7 +95,7 @@
             <div class="form-group">
                 <label class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.TimeZone)</label>
                 <div>
-                    <select class="form-control applyChosen" data-placeholder="Select Timezone" id="ddlTimezone" asp-for="EditProfileViewModel.TimeZone" asp-items="@(new SelectList(Model.TimeZones))">
+                    <select class="form-control applyChosen" data-placeholder="Select Timezone" id="ddlTimezone" asp-for="EditProfileViewModel.TimeZone" asp-items="@(new SelectList(Model.TimeZones, "Key", "Value"))">
                         <option value=""></option>
                     </select>
                 </div>

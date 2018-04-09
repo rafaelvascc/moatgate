@@ -1,4 +1,5 @@
 ﻿@page
+@using System.Globalization
 @model MoatGate.Pages.Profile.IndexModel
 @section Styles {
     <link rel="stylesheet" href="~/css/profile.css" />
@@ -78,19 +79,19 @@
             <div class="form-group">
                 <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.BirthDate)</label>
                 <div>
-                    <p class="form-control-static truncate">@Model.UserProfileViewModel.BirthDate</p>
+                    <p class="form-control-static truncate">@Model.UserProfileViewModel.BirthDate?.ToString(new CultureInfo(Model.UserProfileViewModel.Locale).DateTimeFormat.ShortDatePattern)</p>
                 </div>
             </div>
             <div class="form-group">
                 <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.TimeZone)</label>
                 <div>
-                    <p class="form-control-static truncate">@Model.UserProfileViewModel.TimeZone</p>
+                    <p class="form-control-static truncate">@(TimeZoneInfo.GetSystemTimeZones().SingleOrDefault(t => t.Id == Model.UserProfileViewModel.TimeZone)?.DisplayName)</p>
                 </div>
             </div>
             <div class="form-group">
                 <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.Locale)</label>
                 <div>
-                    <p class="form-control-static truncate">@Model.UserProfileViewModel.Locale</p>
+                    <p class="form-control-static truncate">@(CultureInfo.GetCultures(CultureTypes.SpecificCultures).Where(c => c.Name == Model.UserProfileViewModel.Locale).Select(c => $"{c.Name } - {c.NativeName}").First())</p>
                 </div>
             </div>
             <div class="form-group">

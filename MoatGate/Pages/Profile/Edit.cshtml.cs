@@ -26,7 +26,7 @@ namespace MoatGate.Pages.Profile
 
         public IDictionary<string, string> Cultures { set; get; } = new Dictionary<string, string>();
         
-        public IList<string> TimeZones { set; get; } = new List<string>();
+        public IDictionary<string, string> TimeZones { set; get; } = new Dictionary<string, string>();
 
         [BindProperty]
         [DataType(DataType.Password)]
@@ -49,7 +49,7 @@ namespace MoatGate.Pages.Profile
         {
             EditProfileViewModel = new EdiProfileViewModel(User.Claims);
             Cultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures).OrderBy(c => c.Name).ToDictionary(c => c.Name, c => $"{c.Name } - {c.NativeName}");
-            TimeZones = TimeZoneInfo.GetSystemTimeZones().Select(t => t.DisplayName).ToList();
+            TimeZones = TimeZoneInfo.GetSystemTimeZones().ToDictionary(t => t.Id, t => t.DisplayName);
         }
 
         public async Task<IActionResult> OnPostAsync()
