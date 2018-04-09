@@ -62,8 +62,8 @@ namespace MoatGate.Pages.User
 
             var userRoles = await _userManager.GetRolesAsync(currentUser);
 
-            var rolesToAdd = MoatGateIdentityUser.RoleChecks.Where(r => r.Value).Where(r => !userRoles.Contains(r.Key)).Select(r => r.Key).ToList();
-            var rolesToRemove = MoatGateIdentityUser.RoleChecks.Where(r => !r.Value).Where(r => userRoles.Contains(r.Key)).Select(r => r.Key).ToList();
+            var rolesToAdd = MoatGateIdentityUser.RoleChecks.Where(r => r.Value && !userRoles.Contains(r.Key)).Select(r => r.Key).ToList();
+            var rolesToRemove = MoatGateIdentityUser.RoleChecks.Where(r => !r.Value && userRoles.Contains(r.Key)).Select(r => r.Key).ToList();
 
             await _userManager.AddToRolesAsync(currentUser, rolesToAdd);
             await _userManager.RemoveFromRolesAsync(currentUser, rolesToRemove);

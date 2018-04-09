@@ -22,16 +22,20 @@ namespace MoatGate.Pages.Profile
             _manager = manager;
         }
 
-        [BindProperty]
+        public string Id { set; get; }
+
+        public string Username { set; get; }
+
         public UserProfileViewModel UserProfileViewModel { get; set; }
 
-        [BindProperty]
         public IList<string> Roles { set; get; } = new List<string>();
 
         public async Task OnGetAsync()
         {
             var id = _manager.GetUserId(User);
             var user = await _manager.FindByIdAsync(id);
+            Id = id.ToString();
+            Username = user.UserName;
             Roles = await _manager.GetRolesAsync(user);
             UserProfileViewModel = new UserProfileViewModel(User.Claims);
         }

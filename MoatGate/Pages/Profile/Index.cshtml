@@ -12,6 +12,12 @@
             <div class="row">
                 <img id="profile-img" class="profile-img-card img-circle" @{if (!string.IsNullOrWhiteSpace(Model.UserProfileViewModel.ProfilePictureUrl)) { <text> src="@Model.UserProfileViewModel.ProfilePictureUrl" </text>  } else { <text> src="https://s.aficionados.com.br/imagens/king-of-asgard.jpg" </text>  } } />
             </div>
+            <div class="form-group">
+                <label class="control-label">User ID</label>: @Model.Id
+            </div>
+            <div class="form-group">
+                <label class="control-label">Username</label>: @Model.Username
+            </div>
             <div class="row">
                 <div class="btn-group-vertical" role="group">
                     <a asp-page="./Edit" class="btn btn-primary btn-profilePage"><i class="fas fa-edit"></i> Edit Profile</a>
@@ -120,16 +126,17 @@
             </div>
         </div>
         <div class="col-lg-2">
-
-            <div class="form-group">
-                <label asp-for="Roles" class="control-label"></label>
-            </div>
-            <ul>
-                @foreach (var role in Model.Roles)
-                {
-                    <li>@role</li>
-                }
-            </ul>
+            <fieldset>
+                <legend>
+                    Roles
+                </legend>
+                <ul>
+                    @foreach (var role in Model.Roles)
+                    {
+                        <li>@role</li>
+                    }
+                </ul>
+            </fieldset>
         </div>
     </form>
 </div>

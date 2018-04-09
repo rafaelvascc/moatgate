@@ -78,7 +78,7 @@ namespace MoatGate.Pages.Profile
 
             EditProfileViewModel.UpdatedAt = DateTime.Now;
             var newValues = EditProfileViewModel.ToClaims();
-            var currentValues = User.Claims;
+            var currentValues = await _manager.GetClaimsAsync(systemUser);
 
             var toInsert = newValues.Where(nv => !currentValues.Select(c => c.Type).Distinct().Contains(nv.Type));
             var toUpdate = newValues.Where(nv => currentValues.Select(c => c.Type).Distinct().Contains(nv.Type) &&
@@ -137,7 +137,6 @@ namespace MoatGate.Pages.Profile
             //    throw;
             //}
             //}
-
         }
     }
 }
