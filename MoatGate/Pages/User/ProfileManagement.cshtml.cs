@@ -48,7 +48,7 @@ namespace MoatGate.Pages.User
             var userRoles = await _userManager.GetRolesAsync(user);
             Id = id.ToString();
             Username = user.UserName;
-            EditProfileViewModel = new EdiProfileViewModel(userClaims);
+            EditProfileViewModel = new EdiProfileViewModel(user, userClaims);
             RoleChecks = _roleManager.Roles.ToDictionary(k => k.Name, v => userRoles.Contains(v.Name));
             Cultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures).OrderBy(c => c.Name).ToDictionary(c => c.Name, c => $"{c.Name } - {c.NativeName}");
             TimeZones = TimeZoneInfo.GetSystemTimeZones().ToDictionary(t => t.Id, t => t.DisplayName);
@@ -108,6 +108,18 @@ namespace MoatGate.Pages.User
                 if (resultEmailChange.Succeeded)
                 {
                     await _emailSender.SendEmailChangeAlertEmailAsync(systemUser.Email);
+                    confirmationEmailSent = true;
+                }
+            }
+
+            if (systemUser.PhoneNumber != EditProfileViewModel.PhoneNumber)
+            {
+                var token = await _userManager.GenerateChangePhoneNumberTokenAsync(systemUser, EditProfileViewModel.PhoneNumber);
+                var resultPhoneChange = await _userManager.ChangePhoneNumberAsync(systemUser, EditProfileViewModel.PhoneNumber, token);
+                resultFinal.Add(resultPhoneChange);
+                if (resultPhoneChange.Succeeded)
+                {
+                    await _emailSender.SendPhoneNumberChangeAlertEmailAsync(systemUser.Email);
                     confirmationEmailSent = true;
                 }
             }

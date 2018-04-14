@@ -20,12 +20,13 @@ namespace MoatGate.Pages.Profile
         private readonly UserManager<MoatGateIdentityUser> _manager;
         private readonly SignInManager<MoatGateIdentityUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly ISmsSender _smsSender;
 
         [BindProperty]
         public EdiProfileViewModel EditProfileViewModel { get; set; }
 
         public IDictionary<string, string> Cultures { set; get; } = new Dictionary<string, string>();
-        
+
         public IDictionary<string, string> TimeZones { set; get; } = new Dictionary<string, string>();
 
         [BindProperty]
@@ -38,16 +39,20 @@ namespace MoatGate.Pages.Profile
         [BindProperty]
         public bool RememberMe { get; set; } = false;
 
-        public EditModel(UserManager<MoatGateIdentityUser> manager, SignInManager<MoatGateIdentityUser> signInManager, IEmailSender emailSender)
+        public EditModel(UserManager<MoatGateIdentityUser> manager, SignInManager<MoatGateIdentityUser> signInManager, IEmailSender emailSender, ISmsSender smsSender)
         {
             _manager = manager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _smsSender = smsSender;
         }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-            EditProfileViewModel = new EdiProfileViewModel(User.Claims);
+            var id = _manager.GetUserId(User);
+            var systemUser = await _manager.FindByIdAsync(id);
+            var claims = await _manager.GetClaimsAsync(systemUser);
+            EditProfileViewModel = new EdiProfileViewModel(systemUser, claims);
             Cultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures).OrderBy(c => c.Name).ToDictionary(c => c.Name, c => $"{c.Name } - {c.NativeName}");
             TimeZones = TimeZoneInfo.GetSystemTimeZones().ToDictionary(t => t.Id, t => t.DisplayName);
         }
@@ -59,7 +64,10 @@ namespace MoatGate.Pages.Profile
                 return Page();
             }
 
+            IList<IdentityResult> resultFinal = new List<IdentityResult>();
+
             bool confirmationEmailSent = false;
+            bool confirmationSmsSent = false;
 
             //TODO: wait for EF Core 2.1 :(
             //using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
@@ -69,10 +77,10 @@ namespace MoatGate.Pages.Profile
             var id = _manager.GetUserId(User);
             var systemUser = await _manager.FindByIdAsync(id);
 
-            if (systemUser.NormalizedEmail != _manager.KeyNormalizer.Normalize(EditProfileViewModel.Email) &&
+            if ((systemUser.NormalizedEmail != _manager.KeyNormalizer.Normalize(EditProfileViewModel.Email) || systemUser.PhoneNumber != EditProfileViewModel.PhoneNumber) &&
                 (string.IsNullOrWhiteSpace(Password) || !await _manager.CheckPasswordAsync(systemUser, Password)))
             {
-                ModelState.AddModelError(nameof(Password), "Invalid password when changing email");
+                ModelState.AddModelError(nameof(Password), "Invalid password when changing email or phone number");
                 return Page();
             }
 
@@ -89,7 +97,9 @@ namespace MoatGate.Pages.Profile
             var resultAdd = await _manager.AddClaimsAsync(systemUser, toInsert);
             var resultRemove = await _manager.RemoveClaimsAsync(systemUser, toRemove);
 
-            IList<IdentityResult> resultFinal = new List<IdentityResult>();
+            resultFinal.Add(resultAdd);
+            resultFinal.Add(resultRemove);
+
             foreach (var newClaim in toUpdate)
             {
                 var oldClaim = User.Claims.SingleOrDefault(c => c.Type == newClaim.Type);
@@ -98,9 +108,6 @@ namespace MoatGate.Pages.Profile
                     resultFinal.Add(await _manager.ReplaceClaimAsync(systemUser, oldClaim, newClaim));
                 }
             }
-
-            resultFinal.Add(resultAdd);
-            resultFinal.Add(resultRemove);
 
             if (resultFinal.Any(r => !r.Succeeded))
             {
@@ -125,10 +132,18 @@ namespace MoatGate.Pages.Profile
                     confirmationEmailSent = true;
                 }
 
+                if (systemUser.PhoneNumber != EditProfileViewModel.PhoneNumber)
+                {
+                    var token = await _manager.GenerateChangePhoneNumberTokenAsync(systemUser, EditProfileViewModel.PhoneNumber);
+                    var callbackUrl = Url.Page("/Account/ConfirmPhoneNumber", pageHandler: null, values: new { userId = id, token, newNumber = EditProfileViewModel.PhoneNumber }, protocol: Request.Scheme);
+                    await _smsSender.SendPhoneNumberChangeConfirmationSMSAsync(EditProfileViewModel.PhoneNumber, callbackUrl);
+                    confirmationSmsSent = true;
+                }
+
                 if (RefreshSignIn)
                     await _signInManager.SignInAsync(systemUser, RememberMe);
 
-                return RedirectToPage("Index", new { profileUpdated = true, confirmationEmailSent });
+                return RedirectToPage("Index", new { profileUpdated = true, confirmationEmailSent, confirmationSmsSent });
             }
             //}
             //catch (Exception ex)

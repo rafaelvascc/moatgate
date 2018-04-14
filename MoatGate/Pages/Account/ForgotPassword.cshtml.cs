@@ -47,7 +47,7 @@ namespace MoatGate.Pages.Account
 
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Page("ResetPassword", pageHandler: null, values: new { userId = user.Id, code }, protocol: Request.Scheme);
-                await _emailSender.SendEmailPasswordResedAsync(ResetPasswordEmail, callbackUrl);
+                await _emailSender.SendEmailPasswordResetAsync(ResetPasswordEmail, callbackUrl);
                 return RedirectToPage("Login", new { resetPasswordEmailSent = true });
             }
 

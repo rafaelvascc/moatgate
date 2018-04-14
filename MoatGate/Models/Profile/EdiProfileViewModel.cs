@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -45,7 +46,7 @@ namespace MoatGate.Models.Profile
 
         [Required]
         [DisplayName("Email")]
-        [JwtClaimName("email")]
+        //[JwtClaimName("email")] Not necessary since the AspNetIdentityUser has this field mapped to a column on its table
         [DataType(DataType.EmailAddress)]
         public string Email { set; get; }
 
@@ -67,7 +68,7 @@ namespace MoatGate.Models.Profile
         public string Locale { set; get; }
 
         [DisplayName("Phone")]
-        [JwtClaimName("phone_number")]
+        //[JwtClaimName("phone_number")]  Not necessary since the AspNetIdentityUser has this field mapped to a column on its table
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { set; get; }
 
@@ -85,12 +86,15 @@ namespace MoatGate.Models.Profile
         {
         }
 
-        public EdiProfileViewModel(IEnumerable<Claim> claims)
+        public EdiProfileViewModel(MoatGateIdentityUser user, IEnumerable<Claim> claims)
         {
+            Email = user.Email;
+            PhoneNumber = user.PhoneNumber;
+
             var propertiesTypes = typeof(EdiProfileViewModel).GetProperties();
             foreach (var c in claims)
             {
-                var prop = propertiesTypes.Where(p => ((JwtClaimNameAttribute)p.GetCustomAttributes(true).Where(a => a as JwtClaimNameAttribute != null).Single()).ClaimName == c.Type).SingleOrDefault();
+                var prop = propertiesTypes.Where(p => ((JwtClaimNameAttribute)p.GetCustomAttributes(true).Where(a => a as JwtClaimNameAttribute != null).SingleOrDefault())?.ClaimName == c.Type).SingleOrDefault();
                 if (prop != null && !String.IsNullOrEmpty(c.Value))
                 {
                     if (prop.PropertyType == typeof(DateTime?))
@@ -119,8 +123,9 @@ namespace MoatGate.Models.Profile
                 var value = p.GetValue(this);
                 if (value != null && value.ToString() != string.Empty)
                 {
-                    var claimType = ((JwtClaimNameAttribute)p.GetCustomAttributes(true).Where(a => a as JwtClaimNameAttribute != null).Single()).ClaimName;
-                    result.Add(new Claim(claimType, value.ToString()));
+                    var claimType = ((JwtClaimNameAttribute)p.GetCustomAttributes(true).Where(a => a as JwtClaimNameAttribute != null).SingleOrDefault())?.ClaimName;
+                    if (claimType != null)
+                        result.Add(new Claim(claimType, value.ToString()));
                 }
             }
 

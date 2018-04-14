@@ -120,9 +120,14 @@ namespace MoatGate
                 options.AddPolicy("IsIdentityAdmin", policy => policy.RequireRole("IdentityAdmin"));
             });
 
-            services.AddSingleton<IEmailSender, SendGridEmailSender>();
+            //services.AddSingleton<IEmailSender, SendGridEmailSender>();
+            //services.AddSingleton<ISmsSender, TwilioSmsSender>();
+            
+            services.AddSingleton<IEmailSender, DummyMessagingService>();
+            services.AddSingleton<ISmsSender, DummyMessagingService>();
 
-            services.Configure<AuthMessageSenderOptions>(Configuration);
+            services.Configure<SendGridOptions>(Configuration);
+            services.Configure<TwilioOptions>(Configuration);
 
             Mapper.Initialize(c =>
             {
