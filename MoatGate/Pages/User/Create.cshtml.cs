@@ -16,7 +16,7 @@ namespace MoatGate.Pages.User
         private readonly RoleManager<MoatGateIdentityRole> _roleManager;
 
         [BindProperty]
-        public MoatGateIdentityUserCreateViewModel MoatGateIdentityUser { get; set; } = new MoatGateIdentityUserCreateViewModel();
+        public UserCreateViewModel MoatGateIdentityUser { get; set; } = new UserCreateViewModel();
 
         public CreateModel(UserManager<MoatGateIdentityUser> userManager, RoleManager<MoatGateIdentityRole> roleManager)
         {

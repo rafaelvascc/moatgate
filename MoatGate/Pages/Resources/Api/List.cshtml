@@ -1,65 +1,85 @@
-@page "{id:int?}"
+@page
 @model MoatGate.Pages.Resources.Api.ListModel
 @{
     ViewData["Title"] = "Api Resources";
 }
-<h2>@ViewData["Title"]</h2>
-<p>
-    <a asp-page="CreateEdit" class="btn btn-primary"><i class="fas fa-plus"></i> Create New</a>
-</p>
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.min.css" asp-append-version="true" />
+}
+<div class="col-lg-12">
+    <div class="col-lg-6">
+        <h2>@ViewData["Title"]</h2>
+    </div>
+    <div class="col-lg-6">
+        <div class="btn-group btn-group pull-right pull-right btnsListActions">
+            <a asp-page="CreateEdit" class="btn btn-primary"><i class="fas fa-plus"></i> Create New</a>
+            <button class="btn btn-success" data-toggle="collapse" href="#resourceSearchForm" aria-expanded="false" aria-controls="resourceSearchForm"><i class="fas fa-filter"></i> Toggle Filters</button>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 container-fluid collapse" id="resourceSearchForm">
+    <form class="form-horizontal">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="control-label col-sm-4">Name</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="txtName" placeholder="Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4">Display Name</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="txtDisplayName" placeholder="Display Name">
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="control-label col-sm-4">Description</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="txtDescription" placeholder="Description">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4">Enabled</label>
+                <div class="col-sm-8">
+                    <select class="form-control" id="ddlEnabled" placeholder="Enabled">
+                        <!option value=""></!option>
+                        <!option value="true">Yes</!option>
+                        <!option value="false">No</!option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <button type="button" id="btnSearch" class="btn btn-primary pull-right"><i class="fas fa-search"></i> Search</button>
+        </div>
+    </form>
+</div>
 <table class="table table-condensed table-responsive table-striped table-hover table-bordered">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ApiResources[0].Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApiResources[0].DisplayName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApiResources[0].Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApiResources[0].Enabled)
             </th>
             <th>
             </th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (var item in Model.ApiResources)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DisplayName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Enabled)
-                </td>
-                <td>
-                    <div class="btn-group btn-group-sm pull-right">
-                        <a asp-page="./CreateEdit" asp-route-id="@item.Id" class="btn btn-sm btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-sm btn-danger deletePopOver"><i class="fas fa-trash"></i></button>
-                    </div>
-                    <div class="confirmDeletePopover">
-                        <form method="post">
-                            <div class="btn-group btn-group-sm pull-right confirmDeletePopoverBtnGroup">
-                                <button type="submit" asp-page-handler="delete" asp-route-id="@item.Id" class="btn btn-sm btn-success" title="Delete"><i class="fas fa-check"></i> Confirm</button>
-                                <button type="button" class="btn btn-sm btn-danger btnCancelDelete"><i class="fas fa-times"></i> Cancel</button>
-                            </div>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
+    <tbody></tbody>
 </table>
+<script id="resource-actions-template" type="text/x-jsrender">
+    <div class="btn-group btn-group-sm pull-right clientActionBtns">
+        <a href="./CreateEdit/{{:id}}" class="btn btn-sm btn-primary" title="Edit Client"><i class="fas fa-edit"></i></a>
+        <button type="button" data-id="{{:id}}" data-url="../../api/resources/api/delete" class="btn btn-sm btn-danger" title="Delete" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash"></i></button>
+    </div>
+</script>
 @section Scripts {
+    <script type="text/javascript" src="~/lib/datatables/datatables.min.js" asp-append-version="true"></script>
     <script type="text/javascript" src="~/js/Resources/Api/list.js" asp-append-version="true"></script>
 }

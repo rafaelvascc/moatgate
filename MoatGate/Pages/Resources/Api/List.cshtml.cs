@@ -13,26 +13,12 @@ namespace MoatGate.Pages.Resources.Api
 {
     public class ListModel : PageModel
     {
-        private readonly ConfigurationDbContext _context;
-
-        public ListModel(ConfigurationDbContext context)
+        public ListModel()
         {
-            _context = context;
         }
 
-        public IList<ApiResource> ApiResources { get;set; }
-
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-            ApiResources = await _context.ApiResources.ToListAsync();
-        }
-
-        public async Task<IActionResult> OnPostDeleteAsync(int id)
-        {
-            _context.ApiResources.Remove(await _context.ApiResources.SingleOrDefaultAsync(c => c.Id == id));
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage();
         }
     }
 }

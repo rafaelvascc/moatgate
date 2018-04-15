@@ -12,35 +12,6 @@ using MoatGate.Models.User;
 
 namespace MoatGate.Controllers
 {
-    public class DeleteViewModel
-    {
-        public int Id { get; set; }
-    }
-
-    public class UserViewModel
-    {
-        public int Id { get; set; }
-        public string UserName { get; set; }
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public bool EmailConfirmed { get; set; }
-        public bool PhoneNumberConfirmed { get; set; }
-        public bool TwoFactorEnabled { get; set; }
-        public bool LockoutEnabled { get; set; }
-        public int AccessFailedCount { get; set; }
-        public DateTimeOffset? LockoutEnd { get; set; }
-    }
-
-    public class UserListItemViewModel
-    {
-        public string Name => $"{(Claims.Any(c => c.Key == "given_name") ? Claims.Single(c => c.Key == "given_name").Value + " " : string.Empty)}" +
-                              $"{(Claims.Any(c => c.Key == "middle_name") ? Claims.Single(c => c.Key == "middle_name").Value + " " : string.Empty)}" +
-                              $"{(Claims.Any(c => c.Key == "family_name") ? Claims.Single(c => c.Key == "family_name").Value : string.Empty)}";
-        public UserViewModel User { set; get; }
-        public Dictionary<string, string> Claims { set; get; }
-        public List<string> Roles { set; get; }
-    }
-
     [Authorize(Roles = "IdentityAdmin")]
     [Produces("application/json")]
     [Route("api/users")]

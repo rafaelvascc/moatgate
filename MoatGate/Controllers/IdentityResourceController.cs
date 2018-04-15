@@ -3,35 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.DbContexts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MoatGate.Models.Client;
 using MoatGate.Models.Shared;
 
 namespace MoatGate.Controllers
 {
     [Produces("application/json")]
-    [Route("api/clients")]
-    public class ClientController : Controller
+    [Route("api/resources/identity")]
+    public class IdentityResourceController : Controller
     {
         private readonly ConfigurationDbContext _context;
 
-        public ClientController(ConfigurationDbContext context)
+        public IdentityResourceController(ConfigurationDbContext context)
         {
             _context = context;
         }
 
         [HttpPost("search")]
-        public DataTableResponse<ClientListItemViewModel> SearchByDatatables(DataTableRequest datatableRequest)
+        public DataTableResponse<ResourceListItemViewModel> SearchByDatatables(DataTableRequest datatableRequest)
         {
-            var baseQuery = from c in _context.Clients.AsNoTracking()
-                            select new ClientListItemViewModel
+            var baseQuery = from r in _context.IdentityResources.AsNoTracking()
+                            select new ResourceListItemViewModel
                             {
-                                Id = c.Id,
-                                ClientId = c.ClientId,
-                                ClientName = c.ClientName,
-                                Description = c.Description,
-                                Enabled = c.Enabled
+                                Id = r.Id,
+                                Name = r.Name,
+                                DisplayName = r.DisplayName,
+                                Description = r.Description,
+                                Enabled = r.Enabled
                             };
 
             baseQuery = ApplyFilterToQuery(baseQuery, datatableRequest);
@@ -44,10 +44,10 @@ namespace MoatGate.Controllers
                             .Take(datatableRequest.Length)
                             .ToList();
 
-            return new DataTableResponse<ClientListItemViewModel>
+            return new DataTableResponse<ResourceListItemViewModel>
             {
                 Draw = datatableRequest.Draw,
-                RecordsTotal = _context.Clients.Count(),
+                RecordsTotal = _context.IdentityResources.Count(),
                 RecordsFiltered = filterTotal,
                 Data = queryResult
             };
@@ -61,14 +61,14 @@ namespace MoatGate.Controllers
         [HttpPost("delete")]
         public async Task<IActionResult> DeleteUser([FromBody] DeleteViewModel model)
         {
-            _context.Clients.Remove(await _context.Clients.SingleOrDefaultAsync(c => c.Id == model.Id));
+            _context.IdentityResources.Remove(await _context.IdentityResources.SingleOrDefaultAsync(c => c.Id == model.Id));
             await _context.SaveChangesAsync();
 
             return Ok();
         }
 
         #region Helper Methods
-        private IQueryable<ClientListItemViewModel> ApplyFilterToQuery(IQueryable<ClientListItemViewModel> baseQuery, DataTableRequest queryParams)
+        private IQueryable<ResourceListItemViewModel> ApplyFilterToQuery(IQueryable<ResourceListItemViewModel> baseQuery, DataTableRequest queryParams)
         {
             foreach (var f in queryParams.Columns)
             {
@@ -79,14 +79,14 @@ namespace MoatGate.Controllers
 
                 switch (f.Name)
                 {
-                    case "ClientName":
+                    case "Name":
                         {
-                            baseQuery = baseQuery.Where(o => o.ClientId.Contains(f.Search.Value));
+                            baseQuery = baseQuery.Where(o => o.Name.Contains(f.Search.Value));
                             break;
                         }
-                    case "ClientId":
+                    case "DisplayName":
                         {
-                            baseQuery = baseQuery.Where(o => o.ClientName.Contains(f.Search.Value));
+                            baseQuery = baseQuery.Where(o => o.DisplayName.Contains(f.Search.Value));
                             break;
                         }
                     case "Description":
@@ -105,7 +105,7 @@ namespace MoatGate.Controllers
             return baseQuery;
         }
 
-        private IQueryable<ClientListItemViewModel> ApplySortToQuery(IQueryable<ClientListItemViewModel> baseQuery, List<DatatableOrder> orders)
+        private IQueryable<ResourceListItemViewModel> ApplySortToQuery(IQueryable<ResourceListItemViewModel> baseQuery, List<DatatableOrder> orders)
         {
             foreach (var f in orders)
             {
@@ -115,11 +115,11 @@ namespace MoatGate.Controllers
                         {
                             if (f.Dir.Equals("asc", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                baseQuery = baseQuery.OrderBy(o => o.ClientName);
+                                baseQuery = baseQuery.OrderBy(o => o.Name);
                             }
                             if (f.Dir.Equals("desc", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                baseQuery = baseQuery.OrderByDescending(o => o.ClientName);
+                                baseQuery = baseQuery.OrderByDescending(o => o.Name);
                             }
                             break;
                         }
@@ -127,11 +127,11 @@ namespace MoatGate.Controllers
                         {
                             if (f.Dir.Equals("asc", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                baseQuery = baseQuery.OrderBy(o => o.ClientId);
+                                baseQuery = baseQuery.OrderBy(o => o.DisplayName);
                             }
                             if (f.Dir.Equals("desc", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                baseQuery = baseQuery.OrderByDescending(o => o.ClientId);
+                                baseQuery = baseQuery.OrderByDescending(o => o.DisplayName);
                             }
                             break;
                         }

@@ -10,26 +10,12 @@ namespace MoatGate.Pages.Resources.Identity
 {
     public class ListModel : PageModel
     {
-        private readonly ConfigurationDbContext _context;
-
-        public ListModel(ConfigurationDbContext context)
+        public ListModel()
         {
-            _context = context;
         }
 
-        public IList<IdentityResource> IdentityResources { get; set; }
-
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-            IdentityResources = await _context.IdentityResources.ToListAsync();
-        }
-        
-        public async Task<IActionResult> OnPostDeleteAsync(int id)
-        {
-            _context.IdentityResources.Remove(await _context.IdentityResources.SingleOrDefaultAsync(c => c.Id == id));
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage();
         }
     }
 }
