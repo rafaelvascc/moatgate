@@ -4971,3 +4971,11 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.column-control-1 {
+    width: 40px;
+}
+
+.column-control-2 {
+    width: 75px;
+}
