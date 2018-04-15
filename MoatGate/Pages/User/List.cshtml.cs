@@ -15,7 +15,7 @@ namespace MoatGate.Pages.User
     public class ListModel : PageModel
     {
         private readonly MoatGateIdentityDbContext _context;
-        [BindProperty]
+
         public List<string> Roles { set; get; } = new List<string>();
 
         public ListModel(MoatGateIdentityDbContext context)

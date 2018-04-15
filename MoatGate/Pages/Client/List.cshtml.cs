@@ -9,26 +9,12 @@ namespace MoatGate.Pages.Client
 {
     public class ListModel : PageModel
     {
-        private readonly ConfigurationDbContext _context;
-
-        public ListModel(ConfigurationDbContext context)
+        public ListModel()
         {
-            _context = context;
         }
 
-        public IList<IdentityServer4.EntityFramework.Entities.Client> Clients { set; get; }
-
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-            Clients = await _context.Clients.ToListAsync();
-        }
-
-        public async Task<IActionResult> OnPostDeleteAsync(int id)
-        {
-            _context.Clients.Remove(await _context.Clients.SingleOrDefaultAsync(c => c.Id == id));
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage();
         }
     }
 }

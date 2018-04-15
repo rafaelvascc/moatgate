@@ -31,7 +31,7 @@ namespace MoatGate.Controllers
         public DateTimeOffset? LockoutEnd { get; set; }
     }
 
-    public class UserListModel
+    public class UserListItemViewModel
     {
         public string Name => $"{(Claims.Any(c => c.Key == "given_name") ? Claims.Single(c => c.Key == "given_name").Value + " " : string.Empty)}" +
                               $"{(Claims.Any(c => c.Key == "middle_name") ? Claims.Single(c => c.Key == "middle_name").Value + " " : string.Empty)}" +
@@ -56,10 +56,10 @@ namespace MoatGate.Controllers
         }
 
         [HttpPost("search")]
-        public DataTableResponse<UserListModel> SearchByDatatables(UserListDataTableRequest datatableRequest)
+        public DataTableResponse<UserListItemViewModel> SearchByDatatables(UserListDataTableRequest datatableRequest)
         {
             var baseQuery = from u in _context.Users.AsNoTracking()
-                            select new UserListModel
+                            select new UserListItemViewModel
                             {
                                 User = new UserViewModel
                                 {
@@ -93,7 +93,7 @@ namespace MoatGate.Controllers
                             .Take(datatableRequest.Length)
                             .ToList();
 
-            return new DataTableResponse<UserListModel>
+            return new DataTableResponse<UserListItemViewModel>
             {
                 Draw = datatableRequest.Draw,
                 RecordsTotal = _context.Users.Count(),
@@ -103,7 +103,7 @@ namespace MoatGate.Controllers
         }
 
         /// <summary>
-        /// Deletes user. Using POST emthod and puting the user id in the bosy to prevent accidental user deletion
+        /// Deletes user. Using POST method and puting the user id in the body to prevent accidental deletion
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -126,7 +126,7 @@ namespace MoatGate.Controllers
         }
 
         #region Helper Methods
-        private IQueryable<UserListModel> ApplyFilterToQuery(IQueryable<UserListModel> baseQuery, UserListDataTableRequest queryParams)
+        private IQueryable<UserListItemViewModel> ApplyFilterToQuery(IQueryable<UserListItemViewModel> baseQuery, UserListDataTableRequest queryParams)
         {
             if (queryParams.Id.HasValue)
             {
@@ -193,7 +193,7 @@ namespace MoatGate.Controllers
             return baseQuery;
         }
 
-        private IQueryable<UserListModel> ApplySortToQuery(IQueryable<UserListModel> baseQuery, List<DatatableOrder> orders)
+        private IQueryable<UserListItemViewModel> ApplySortToQuery(IQueryable<UserListItemViewModel> baseQuery, List<DatatableOrder> orders)
         {
             foreach (var f in orders)
             {
