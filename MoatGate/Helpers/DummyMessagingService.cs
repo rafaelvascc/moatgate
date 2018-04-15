@@ -89,7 +89,7 @@ namespace MoatGate.Helpers
 
         private string ComposePhoneNumberConfirmationSms(string callbackUrl)
         {
-            return $"Please confirm your phone number <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.";
+            return $"Phone confirmation Url: {HtmlEncoder.Default.Encode(callbackUrl)}";
         }
     }
 }

@@ -42,7 +42,7 @@ namespace MoatGate.Helpers
                 
         private string ComposePhoneNumberConfirmationSms(string callbackUrl)
         {
-            return $"Please confirm your phone number clicking here: {callbackUrl}";
+            return $"Confir phone URL {callbackUrl}";
         }
     }
 }

@@ -103,7 +103,7 @@
                 data: null,
                 searchable: false,
                 searching: false,
-                width: "85px",
+                width: "52px",
                 render: function (o) {
                     return renderUseractionButtons(o.user);
                 }

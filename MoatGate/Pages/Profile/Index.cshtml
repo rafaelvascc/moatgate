@@ -9,7 +9,7 @@
     <hr />
     <form class="form-horizontal">
         <div class="col-lg-2 text-center">
-            <div class="row">
+            <div class="form-group">
                 <img id="profile-img" class="profile-img-card img-circle" @{if (!string.IsNullOrWhiteSpace(Model.UserProfileViewModel.ProfilePictureUrl)) { <text> src="@Model.UserProfileViewModel.ProfilePictureUrl" </text>  } else { <text> src="https://s.aficionados.com.br/imagens/king-of-asgard.jpg" </text>  } } />
             </div>
             <div class="form-group">
@@ -18,12 +18,29 @@
             <div class="form-group">
                 <label class="control-label">Username</label>: @Model.Username
             </div>
-            <div class="row">
+            <div class="form-group">
                 <div class="btn-group-vertical" role="group">
                     <a asp-page="./Edit" class="btn btn-primary btn-profilePage"><i class="fas fa-edit"></i> Edit Profile</a>
                     <a asp-page="/Account/ChangePassword" class="btn btn-success btn-profilePage"><i class="fas fa-key"></i> Change Password</a>
+                    @if (!Model.UserProfileViewModel.EmailVerified)
+                    {
+                        <button type="button" class="btn btn-warning" id="btnVerityEmail"><i class="fas fa-envelope"></i> Verify Email</button>
+                    }
+
+                    @if (!Model.UserProfileViewModel.PhoneNumberVerified)
+                    {
+                        <button type="button" class="btn btn-warning phoneVerificationControl" id="btnVerityPhone"><i class="fas fa-phone"></i> Verify Phone</button>
+                    }
                 </div>
             </div>
+            @if (!Model.UserProfileViewModel.PhoneNumberVerified)
+            {
+                <div class="phoneVerificationControl form-group-sm col-lg-12">
+                    <small>Already have a phone verification code?</small>
+                    <input type="text" placeholder="Verification Code" class="form-control" id="txtPhoneVerificationCode" />
+                    <button type="button" style="margin-top:3px;" class="btn btn-xs btn-primary pull-right" id="btnConfirmPhoneVerification"><i class="fas fa-check"></i> Confirm</button>
+                </div>
+            }
         </div>
         <div class="col-lg-4">
             <div class="form-group">
@@ -65,13 +82,21 @@
             <div class="form-group">
                 <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.Email)</label>
                 <div>
-                    <p class="form-control-static truncate">@Model.UserProfileViewModel.Email</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.EmailVerified)</label>
-                <div>
-                    <p class="form-control-static truncate">@Model.UserProfileViewModel.EmailVerified</p>
+                    <p class="form-control-static truncate">
+                        @Model.UserProfileViewModel.Email
+                        @{
+                            if (Model.UserProfileViewModel.EmailVerified)
+                            {
+                                <i class="fas fa-check pull-right text-success"
+                                   data-toggle="tooltip" data-placement="bottom" data-html="true" title="Email confirmed"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-exclamation-triangle pull-right text-warning"
+                                   data-toggle="tooltip" data-placement="bottom" data-html="true" title="Email not confirmed"></i>
+                            }
+                        }
+                    </p>
                 </div>
             </div>
         </div>
@@ -103,13 +128,21 @@
             <div class="form-group">
                 <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.PhoneNumber)</label>
                 <div>
-                    <p class="form-control-static truncate">@Model.UserProfileViewModel.PhoneNumber</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="firstName" class=" control-label">@Html.DisplayNameFor(model => model.UserProfileViewModel.PhoneNumberVerified)</label>
-                <div>
-                    <p class="form-control-static truncate">@Model.UserProfileViewModel.PhoneNumberVerified</p>
+                    <p class="form-control-static truncate">
+                        @Model.UserProfileViewModel.PhoneNumber
+                        @{
+                            if (Model.UserProfileViewModel.PhoneNumberVerified)
+                            {
+                                <i class="fas fa-check pull-right text-success"
+                                   data-toggle="tooltip" data-placement="bottom" data-html="true" title="Phone number confirmed"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-exclamation-triangle pull-right text-warning" id="iconWarningPhoneConfirm"
+                                   data-toggle="tooltip" data-placement="bottom" data-html="true" title="Phone number not confirmed"></i>
+                            }
+                        }
+                    </p>
                 </div>
             </div>
             <div class="form-group">

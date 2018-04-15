@@ -40,6 +40,12 @@ namespace MoatGate.Pages.Account
                 {
                     throw new ApplicationException($"Error confirming email for user with ID '{userId}':");
                 }
+
+                if (User.Identity.IsAuthenticated)
+                {
+                    //TODO: find a way to get the current authentication if it is persitent or not
+                    await _signInManager.SignInAsync(user, false);
+                }
             }
             else
             {
