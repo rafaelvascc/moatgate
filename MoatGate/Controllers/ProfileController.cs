@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MoatGate.Helpers;
+using MoatGate.Services;
 using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 
 namespace MoatGate.Controllers

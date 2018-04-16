@@ -14,7 +14,7 @@ using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using IdentityServer4.Models;
 using AutoMapper;
-using MoatGate.Helpers;
+using MoatGate.Services;
 
 namespace MoatGate.Pages.Resources.Api
 {

@@ -7,7 +7,7 @@ using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.Models;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using MoatGate.Helpers;
+using MoatGate.Services;
 using System;
 using IdentityServer4.Stores;
 

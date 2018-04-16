@@ -1,38 +1,35 @@
-﻿using Microsoft.Extensions.Options;
-using SendGrid;
-using SendGrid.Helpers.Mail;
-using System;
-using System.Text.Encodings.Web;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Net.Mail;
+using System.Text.Encodings.Web;
 
-namespace MoatGate.Helpers
+namespace MoatGate.Services
 {
-    public class SendGridEmailSender : IEmailSender
+    public class DummyMessagingService : IEmailSender, ISmsSender
     {
-        public SendGridOptions Options { get; } //set only via Secret Manager
-
-        public SendGridEmailSender(IOptions<SendGridOptions> optionsAccessor)
+        public Task SendEmailAsync(string senderEmail, string sendName, string email, string subject, string message)
         {
-            Options = optionsAccessor.Value;
-        }
-
-        public Task SendEmailAsync(string senderEmail, string senderName, string email, string subject, string message)
-        {
-            var client = new SendGridClient(Options.SendGridKey);
-            var msg = new SendGridMessage()
+            MailMessage mail = new MailMessage(senderEmail, email)
             {
-                From = new EmailAddress(senderEmail, senderName),
                 Subject = subject,
-                PlainTextContent = message,
-                HtmlContent = message
+                Body = message, 
+                IsBodyHtml = true
             };
-            msg.AddTo(new EmailAddress(email));
-            return client.SendEmailAsync(msg);
+            SmtpClient client = new SmtpClient
+            {
+                Port = 25,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                Host = "127.0.0.1"
+            };
+            client.Send(mail);
+            return Task.CompletedTask;
         }
 
-        public async Task SendEmailPasswordResetAsync(string sendTo, string callbackUrl)
+        public async Task SendEmailChangeAlertEmailAsync(string sendTo)
         {
-            await SendEmailAsync("admin@moatgate.com", "admin", sendTo, "Moatgate Password Reset", ComposeResetPasswordEmail(callbackUrl));
+            await SendEmailAsync("admin@moatgate.com", "admin", sendTo, "Moatgate Email Change By Operator", ComposeEmailChangeAlertEmail());
         }
 
         public async Task SendEmailConfirmationEmailAsync(string sendTo, string callbackUrl)
@@ -40,9 +37,9 @@ namespace MoatGate.Helpers
             await SendEmailAsync("admin@moatgate.com", "admin", sendTo, "Moatgate Email Confirmation", ComposeEmailConfirmationEmail(callbackUrl));
         }
 
-        public async Task SendEmailChangeAlertEmailAsync(string sendTo)
+        public async Task SendEmailPasswordResetAsync(string sendTo, string callbackUrl)
         {
-            await SendEmailAsync("admin@moatgate.com", "admin", sendTo, "Moatgate Email Change By Operator", ComposeEmailChangeAlertEmail());
+            await SendEmailAsync("admin@moatgate.com", "admin", sendTo, "Moatgate Password Reset", ComposeResetPasswordEmail(callbackUrl));
         }
 
         public async Task SendPhoneNumberChangeAlertEmailAsync(string sendTo)
@@ -53,6 +50,16 @@ namespace MoatGate.Helpers
         public async Task SendProfileChangeAlertEmailAsync(string sendTo)
         {
             await SendEmailAsync("admin@moatgate.com", "admin", sendTo, "Moatgate Profile Change By Operator", ComposeProfileChangeAlertEmail());
+        }
+
+        public async Task SendSMSAsync(string number, string message)
+        {
+            await SendEmailAsync("admin@moatgate.com", "admin", "dummy@dummy.com", $"SMS {number}", message);
+        }
+
+        public async Task SendPhoneNumberChangeConfirmationSMSAsync(string number, string callbackUrl)
+        {
+            await SendSMSAsync(number, ComposePhoneNumberConfirmationSms(callbackUrl));
         }
 
         private string ComposeResetPasswordEmail(string callbackUrl)
@@ -78,6 +85,11 @@ namespace MoatGate.Helpers
         private string ComposeProfileChangeAlertEmail()
         {
             return $"A Moatgate operator changed your account profile. If this operation was not authorized by you, contact us as soon as possible.";
+        }
+
+        private string ComposePhoneNumberConfirmationSms(string callbackUrl)
+        {
+            return $"Phone confirmation Url: {HtmlEncoder.Default.Encode(callbackUrl)}";
         }
     }
 }

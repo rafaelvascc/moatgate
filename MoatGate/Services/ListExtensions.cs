@@ -9,7 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace MoatGate.Helpers
+namespace MoatGate.Services
 {
     public static class ListExtensions
     {

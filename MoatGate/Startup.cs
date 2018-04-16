@@ -12,7 +12,7 @@ using MoatGate.Models.User;
 using System.Collections.Generic;
 using IdentityServer4.EntityFramework.Entities;
 using System.Linq;
-using MoatGate.Helpers;
+using MoatGate.Services;
 using IdentityServer4.AccessTokenValidation;
 
 namespace MoatGate

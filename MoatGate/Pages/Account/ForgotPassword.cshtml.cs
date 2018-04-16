@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
-using MoatGate.Helpers;
+using MoatGate.Services;
 using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 
 namespace MoatGate.Pages.Account

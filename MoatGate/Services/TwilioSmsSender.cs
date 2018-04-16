@@ -8,7 +8,7 @@ using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
 
-namespace MoatGate.Helpers
+namespace MoatGate.Services
 {
     public class TwilioSmsSender : ISmsSender
     {
