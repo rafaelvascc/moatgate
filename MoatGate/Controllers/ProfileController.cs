@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MoatGate.Services;
 using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MoatGate.Controllers
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("api/profile")]
     public class ProfileController : Controller
@@ -25,6 +27,12 @@ namespace MoatGate.Controllers
             _emailSender = emailSender;
             _smsSender = smsSender;
             _signInManager = signInManager;
+        }
+
+        [HttpPost("avatar")]
+        public async Task<IActionResult> ChangeProfileAvatar(IFormFile avatar)
+        {
+            return await Task.FromResult(Ok());
         }
 
         [HttpGet("sendemailconfirm")]

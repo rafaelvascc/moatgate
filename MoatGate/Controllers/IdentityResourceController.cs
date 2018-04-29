@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.DbContexts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using MoatGate.Models.Shared;
 
 namespace MoatGate.Controllers
 {
+    [Authorize(Roles = "IdentityAdmin")]
     [Produces("application/json")]
     [Route("api/resources/identity")]
     public class IdentityResourceController : Controller
