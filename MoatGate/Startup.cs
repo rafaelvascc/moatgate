@@ -173,24 +173,24 @@ namespace MoatGate
                 .ForMember(e => e.IdentityResource, opt => opt.Ignore());
 
                 c.CreateMap<UserCreateViewModel, MoatGateIdentityUser>()
-                .ForSourceMember(s => s.ConfirmPassword, opt => opt.Ignore())
-                .ForSourceMember(s => s.Password, opt => opt.Ignore());
+                .ForSourceMember(s => s.ConfirmPassword, opt => opt.DoNotValidate())
+                .ForSourceMember(s => s.Password, opt => opt.DoNotValidate());
 
                 c.CreateMap<IdentityServer4.Models.IdentityResources.Address, IdentityResource>()
                 .ForMember(r => r.Id, opt => opt.Ignore())
-                .ForMember(r => r.UserClaims, opt => opt.ResolveUsing(src => src.UserClaims.Select(cl => new IdentityClaim { Type = cl }).ToList()));
+                .ForMember(r => r.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(cl => new IdentityClaim { Type = cl }).ToList()));
                 c.CreateMap<IdentityServer4.Models.IdentityResources.Email, IdentityResource>()
                 .ForMember(r => r.Id, opt => opt.Ignore())
-                .ForMember(r => r.UserClaims, opt => opt.ResolveUsing(src => src.UserClaims.Select(cl => new IdentityClaim { Type = cl }).ToList()));
+                .ForMember(r => r.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(cl => new IdentityClaim { Type = cl }).ToList()));
                 c.CreateMap<IdentityServer4.Models.IdentityResources.OpenId, IdentityResource>()
                 .ForMember(r => r.Id, opt => opt.Ignore())
-                .ForMember(r => r.UserClaims, opt => opt.ResolveUsing(src => src.UserClaims.Select(cl => new IdentityClaim { Type = cl }).ToList()));
+                .ForMember(r => r.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(cl => new IdentityClaim { Type = cl }).ToList()));
                 c.CreateMap<IdentityServer4.Models.IdentityResources.Phone, IdentityResource>()
                 .ForMember(r => r.Id, opt => opt.Ignore())
-                .ForMember(r => r.UserClaims, opt => opt.ResolveUsing(src => src.UserClaims.Select(cl => new IdentityClaim { Type = cl }).ToList()));
+                .ForMember(r => r.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(cl => new IdentityClaim { Type = cl }).ToList()));
                 c.CreateMap<IdentityServer4.Models.IdentityResources.Profile, IdentityResource>()
                 .ForMember(r => r.Id, opt => opt.Ignore())
-                .ForMember(r => r.UserClaims, opt => opt.ResolveUsing(src => src.UserClaims.Select(cl => new IdentityClaim { Type = cl }).ToList()));
+                .ForMember(r => r.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(cl => new IdentityClaim { Type = cl }).ToList()));
             });
         }
 
