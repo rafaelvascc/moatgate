@@ -56,10 +56,12 @@ namespace MoatGate
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .ConfigureLogging(builder =>
+                .ConfigureLogging((hostingContext, logging) =>
                 {
-                    builder.ClearProviders();
-                    builder.AddSerilog();
+                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                    logging.AddConsole();
+                    logging.AddDebug();
+                    logging.AddEventSourceLogger();
                 })
                 .Build();
 

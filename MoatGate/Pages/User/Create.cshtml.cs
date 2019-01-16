@@ -66,7 +66,6 @@ namespace MoatGate.Pages.User
                 return RedirectToPage("Edit", new { errors = "roles" });
             }
 
-
             return RedirectToPage("./List");
         }
     }

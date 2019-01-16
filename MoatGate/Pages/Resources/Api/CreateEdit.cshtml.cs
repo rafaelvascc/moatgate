@@ -86,12 +86,22 @@ namespace MoatGate.Pages.Resources.Api
                        .Include(c => c.UserClaims)
                        .SingleOrDefault(c => c.Id == ApiResource.Id);
 
+                if (CurrentApiResource.Scopes == null)
+                {
+                    CurrentApiResource.Scopes = new List<ApiScope>();
+                }
+
                 foreach (var scope in CurrentApiResource.Scopes)
                 {
                     if (scope.UserClaims == null)
                     {
                         scope.UserClaims = new List<ApiScopeClaim>();
                     }
+                }
+
+                if (ApiResource.Scopes == null)
+                {
+                    ApiResource.Scopes = new List<ApiScope>();
                 }
 
                 foreach (var scope in ApiResource.Scopes)

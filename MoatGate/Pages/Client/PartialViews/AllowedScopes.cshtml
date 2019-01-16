@@ -15,6 +15,7 @@
             {
                 <tr>
                     <td>
+                        <input type="hidden" class="form-control" name="Client.AllowedScopes[@i.ToString()].ClientId" value="@item.ClientId" />
                         <input type="hidden" class="form-control" name="Client.AllowedScopes[@i.ToString()].Id" value="@item.Id" />
                         <input type="text" class="form-control" name="Client.AllowedScopes[@i.ToString()].Scope" value="@item.Scope" />
                     </td>

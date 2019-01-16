@@ -14,6 +14,8 @@ using IdentityServer4.EntityFramework.Entities;
 using System.Linq;
 using MoatGate.Services;
 using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace MoatGate
 {
@@ -112,6 +114,8 @@ namespace MoatGate
                 options.Conventions.AuthorizeFolder("/Users", "IsIdentityAdmin");
 
                 options.Conventions.AddPageRoute("/Account/Login", "");
+
+                options.Conventions.ConfigureFilter(new IgnoreAntiforgeryTokenAttribute());
             });
 
             services.AddAuthorization(options =>
@@ -176,6 +180,10 @@ namespace MoatGate
                 .ForSourceMember(s => s.ConfirmPassword, opt => opt.DoNotValidate())
                 .ForSourceMember(s => s.Password, opt => opt.DoNotValidate());
 
+                c.CreateMap<UserCreateApiViewModel, MoatGateIdentityUser>()
+                .ForSourceMember(s => s.ConfirmPassword, opt => opt.DoNotValidate())
+                .ForSourceMember(s => s.Password, opt => opt.DoNotValidate());
+
                 c.CreateMap<IdentityServer4.Models.IdentityResources.Address, IdentityResource>()
                 .ForMember(r => r.Id, opt => opt.Ignore())
                 .ForMember(r => r.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(cl => new IdentityClaim { Type = cl }).ToList()));
@@ -191,6 +199,11 @@ namespace MoatGate
                 c.CreateMap<IdentityServer4.Models.IdentityResources.Profile, IdentityResource>()
                 .ForMember(r => r.Id, opt => opt.Ignore())
                 .ForMember(r => r.UserClaims, opt => opt.MapFrom(src => src.UserClaims.Select(cl => new IdentityClaim { Type = cl }).ToList()));
+            });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Moat Gaet Web API", Version = "v1" });                
             });
         }
 
@@ -209,7 +222,17 @@ namespace MoatGate
 
             app.UseIdentityServer();
 
-            app.UseStaticFiles();
+            app.UseStaticFiles(); 
+            
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Moat Gaet Web API");
+            });
 
             app.UseMvc();
         }
