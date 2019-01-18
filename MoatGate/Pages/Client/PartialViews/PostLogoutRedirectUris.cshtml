@@ -17,6 +17,7 @@
             {
                 <tr>
                     <td>
+                        <input type="hidden" class="form-control" name="Client.PostLogoutRedirectUris[@i.ToString()].ClientId" value="@item.ClientId" />
                         <input type="hidden" class="form-control" name="Client.PostLogoutRedirectUris[@i.ToString()].Id" value="@item.Id" />
                         <input type="url" class="form-control" placeholder="/signout-callback-oidc" name="Client.PostLogoutRedirectUris[@i.ToString()].PostLogoutRedirectUri" value="@item.PostLogoutRedirectUri" />
                     </td>

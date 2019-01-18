@@ -17,6 +17,7 @@
             {
                 <tr>
                     <td>
+                        <input type="hidden" class="form-control" name="Client.RedirectUris[@i.ToString()].ClientId" value="@item.ClientId" />
                         <input type="hidden" class="form-control" name="Client.RedirectUris[@i.ToString()].Id" value="@item.Id" />
                         <input type="url" class="form-control" placeholder="/signin-oidc" name="Client.RedirectUris[@i.ToString()].RedirectUri" value="@item.RedirectUri" />
                     </td>

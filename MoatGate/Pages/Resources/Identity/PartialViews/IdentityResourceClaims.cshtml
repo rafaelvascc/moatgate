@@ -17,6 +17,7 @@
             {
                 <tr>
                     <td>
+                        <input type="hidden" class="form-control" name="IdentityResource.UserClaims[@i.ToString()].IdentityResourceId" value="@item.IdentityResourceId" />
                         <input type="hidden" class="form-control" name="IdentityResource.UserClaims[@i.ToString()].Id" value="@item.Id" />
                         <input type="text" class="form-control" name="IdentityResource.UserClaims[@i.ToString()].Type" value="@item.Type" />
                     </td>
