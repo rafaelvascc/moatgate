@@ -9,7 +9,7 @@ using MoatGate.Models.Profile;
 
 namespace MoatGate.Models.AspNetIIdentityCore.EntityFramework
 {
-    public class MoatGateIdentityDbContext : IdentityDbContext<MoatGateIdentityUser, MoatGateIdentityRole, int>
+    public class MoatGateIdentityDbContext : IdentityDbContext<MoatGateIdentityUser, MoatGateIdentityRole, Guid>
     {
         public MoatGateIdentityDbContext() : base()
         {

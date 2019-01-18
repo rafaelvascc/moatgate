@@ -77,7 +77,7 @@ namespace MoatGate.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost("delete")]
-        public async Task<IActionResult> Delete([FromBody] DeleteViewModel model)
+        public async Task<IActionResult> Delete([FromBody] DeleteViewModelGuid model)
         {
             var user = await _manager.FindByIdAsync(model.Id.ToString());
 

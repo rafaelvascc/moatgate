@@ -1,4 +1,4 @@
-﻿@page "{id:int}"
+﻿@page "{id:guid}"
 @using System.Globalization
 @model MoatGate.Pages.User.ProfileManagementModel
 @section Styles {
@@ -27,6 +27,7 @@
             </div>
         </div>
         <div class="col-lg-4">
+            <input type="hidden" asp-for="@Model.EditProfileViewModel.Id" />
             <div class="form-group">
                 <label class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.FirstName)</label>
                 <div>

@@ -13,6 +13,10 @@ namespace MoatGate.Models.Profile
 {
     public class EdiProfileViewModel
     {
+        [DisplayName("User Id")]
+        [Required]
+        public Guid Id { set; get; }
+
         [DisplayName("First Name")]
         [Required]
         [JwtClaimName("given_name")]
@@ -88,6 +92,7 @@ namespace MoatGate.Models.Profile
 
         public EdiProfileViewModel(MoatGateIdentityUser user, IEnumerable<Claim> claims)
         {
+            Id = user.Id;
             Email = user.Email;
             PhoneNumber = user.PhoneNumber;
 

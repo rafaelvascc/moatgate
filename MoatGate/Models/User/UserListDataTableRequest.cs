@@ -8,7 +8,7 @@ namespace MoatGate.Models.User
 {
     public class UserListDataTableRequest : DataTableRequest
     {
-        public int? Id { set; get; }
+        public Guid? Id { set; get; }
         public List<string> Roles { set; get; } = new List<string>();
     }
 }

@@ -9,7 +9,7 @@ namespace MoatGate.Models.User
 {
     public class UserCreateViewModel
     {
-        public int Id { set; get; } = 0;
+        public Guid Id { set; get; } = Guid.Empty;
 
         [Required]
         [DisplayName("Username")]

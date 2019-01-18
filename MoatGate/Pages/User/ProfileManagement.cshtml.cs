@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using MoatGate.Services;
 using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 using MoatGate.Models.Profile;
+using System.Transactions;
 
 namespace MoatGate.Pages.User
 {
@@ -41,7 +42,7 @@ namespace MoatGate.Pages.User
             _emailSender = emailSender;
         }
 
-        public async Task OnGetAsync(int id)
+        public async Task OnGetAsync(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
             var userClaims = await _userManager.GetClaimsAsync(user);
@@ -62,109 +63,108 @@ namespace MoatGate.Pages.User
             }
 
             bool confirmationEmailSent = false;
+            //var id = _userManager.GetUserId(User);
 
-            //TODO: wait for EF Core 2.1 :(
-            //using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-            //{
-            //    try
-            //    {
-            IList<IdentityResult> resultFinal = new List<IdentityResult>();
-            var id = _userManager.GetUserId(User);
-            var systemUser = await _userManager.FindByIdAsync(id);
-            var oldEmail = systemUser.Email;
-
-            //Profile update
-            EditProfileViewModel.UpdatedAt = DateTime.Now;
-            var newValues = EditProfileViewModel.ToClaims();
-            var currentValues = await _userManager.GetClaimsAsync(systemUser);
-
-            var toInsert = newValues.Where(nv => !currentValues.Select(c => c.Type).Distinct().Contains(nv.Type));
-            var toUpdate = newValues.Where(nv => currentValues.Select(c => c.Type).Distinct().Contains(nv.Type) &&
-                currentValues.Where(c => c.Type == nv.Type).Single().Value != newValues.Where(c => c.Type == nv.Type).Single().Value);
-            var toRemove = currentValues.Where(ov => !newValues.Select(c => c.Type).Distinct().Contains(ov.Type) ||
-                string.IsNullOrWhiteSpace(newValues.Where(c => c.Type == ov.Type).Single().Value));
-
-            var resultAdd = await _userManager.AddClaimsAsync(systemUser, toInsert);
-            var resultRemove = await _userManager.RemoveClaimsAsync(systemUser, toRemove);
-
-            resultFinal.Add(resultAdd);
-            resultFinal.Add(resultRemove);
-
-            foreach (var newClaim in toUpdate)
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                var oldClaim = User.Claims.SingleOrDefault(c => c.Type == newClaim.Type);
-                if (oldClaim != null)
+                try
                 {
-                    resultFinal.Add(await _userManager.ReplaceClaimAsync(systemUser, oldClaim, newClaim));
+                    IList<IdentityResult> resultFinal = new List<IdentityResult>();
+                    var systemUser = await _userManager.FindByIdAsync(EditProfileViewModel.Id.ToString());
+                    var oldEmail = systemUser.Email;
+
+                    //Profile update
+                    EditProfileViewModel.UpdatedAt = DateTime.Now;
+                    var newValues = EditProfileViewModel.ToClaims();
+                    var currentValues = await _userManager.GetClaimsAsync(systemUser);
+
+                    var toInsert = newValues.Where(nv => !currentValues.Select(c => c.Type).Distinct().Contains(nv.Type));
+                    var toUpdate = newValues.Where(nv => currentValues.Select(c => c.Type).Distinct().Contains(nv.Type) &&
+                        currentValues.Where(c => c.Type == nv.Type).Single().Value != newValues.Where(c => c.Type == nv.Type).Single().Value);
+                    var toRemove = currentValues.Where(ov => !newValues.Select(c => c.Type).Distinct().Contains(ov.Type) ||
+                        string.IsNullOrWhiteSpace(newValues.Where(c => c.Type == ov.Type).Single().Value));
+
+                    var resultAdd = await _userManager.AddClaimsAsync(systemUser, toInsert);
+                    var resultRemove = await _userManager.RemoveClaimsAsync(systemUser, toRemove);
+
+                    resultFinal.Add(resultAdd);
+                    resultFinal.Add(resultRemove);
+
+                    foreach (var newClaim in toUpdate)
+                    {
+                        var oldClaim = User.Claims.SingleOrDefault(c => c.Type == newClaim.Type);
+                        if (oldClaim != null)
+                        {
+                            resultFinal.Add(await _userManager.ReplaceClaimAsync(systemUser, oldClaim, newClaim));
+                        }
+                    }
+
+                    //Email update
+                    if (systemUser.NormalizedEmail != _userManager.KeyNormalizer.Normalize(EditProfileViewModel.Email))
+                    {
+                        var token = await _userManager.GenerateChangeEmailTokenAsync(systemUser, EditProfileViewModel.Email);
+                        var resultEmailChange = await _userManager.ChangeEmailAsync(systemUser, EditProfileViewModel.Email, token);
+                        resultFinal.Add(resultEmailChange);
+                        if (resultEmailChange.Succeeded)
+                        {
+                            await _emailSender.SendEmailChangeAlertEmailAsync(systemUser.Email);
+                            confirmationEmailSent = true;
+                        }
+                    }
+
+                    if (systemUser.PhoneNumber != EditProfileViewModel.PhoneNumber)
+                    {
+                        var token = await _userManager.GenerateChangePhoneNumberTokenAsync(systemUser, EditProfileViewModel.PhoneNumber);
+                        var resultPhoneChange = await _userManager.ChangePhoneNumberAsync(systemUser, EditProfileViewModel.PhoneNumber, token);
+                        resultFinal.Add(resultPhoneChange);
+                        if (resultPhoneChange.Succeeded)
+                        {
+                            await _emailSender.SendPhoneNumberChangeAlertEmailAsync(systemUser.Email);
+                            confirmationEmailSent = true;
+                        }
+                    }
+
+                    //Role Update
+                    var userRoles = await _userManager.GetRolesAsync(systemUser);
+
+                    var rolesToAdd = RoleChecks.Where(r => r.Value && !userRoles.Contains(r.Key)).Select(r => r.Key).ToList();
+                    var rolesToRemove = RoleChecks.Where(r => !r.Value && userRoles.Contains(r.Key)).Select(r => r.Key).ToList();
+
+                    var roleAddResult = await _userManager.AddToRolesAsync(systemUser, rolesToAdd);
+                    var roleRemoveResult = await _userManager.RemoveFromRolesAsync(systemUser, rolesToRemove);
+
+                    resultFinal.Add(roleAddResult);
+                    resultFinal.Add(roleRemoveResult);
+
+                    //Final Check
+                    if (resultFinal.Any(r => !r.Succeeded))
+                    {
+                        var errors = resultFinal.Where(r => !r.Succeeded);
+                        foreach (var error in errors.SelectMany(e => e.Errors))
+                        {
+                            ModelState.AddModelError(error.Code, error.Description);
+                        }
+                        scope.Dispose();
+
+                        return Page();
+                    }
+                    else
+                    {
+                        if (resultFinal.Any(r => r.Succeeded))
+                        {
+                            await _emailSender.SendProfileChangeAlertEmailAsync(oldEmail);
+                        }
+
+                        scope.Complete();
+                        return RedirectToPage("List", new { profileUpdated = true, confirmationEmailSent });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    scope.Dispose();
+                    throw;
                 }
             }
-
-            //Email update
-            if (systemUser.NormalizedEmail != _userManager.KeyNormalizer.Normalize(EditProfileViewModel.Email))
-            {
-                var token = await _userManager.GenerateChangeEmailTokenAsync(systemUser, EditProfileViewModel.Email);
-                var resultEmailChange = await _userManager.ChangeEmailAsync(systemUser, EditProfileViewModel.Email, token);
-                resultFinal.Add(resultEmailChange);
-                if (resultEmailChange.Succeeded)
-                {
-                    await _emailSender.SendEmailChangeAlertEmailAsync(systemUser.Email);
-                    confirmationEmailSent = true;
-                }
-            }
-
-            if (systemUser.PhoneNumber != EditProfileViewModel.PhoneNumber)
-            {
-                var token = await _userManager.GenerateChangePhoneNumberTokenAsync(systemUser, EditProfileViewModel.PhoneNumber);
-                var resultPhoneChange = await _userManager.ChangePhoneNumberAsync(systemUser, EditProfileViewModel.PhoneNumber, token);
-                resultFinal.Add(resultPhoneChange);
-                if (resultPhoneChange.Succeeded)
-                {
-                    await _emailSender.SendPhoneNumberChangeAlertEmailAsync(systemUser.Email);
-                    confirmationEmailSent = true;
-                }
-            }
-
-            //Role Update
-            var userRoles = await _userManager.GetRolesAsync(systemUser);
-
-            var rolesToAdd = RoleChecks.Where(r => r.Value && !userRoles.Contains(r.Key)).Select(r => r.Key).ToList();
-            var rolesToRemove = RoleChecks.Where(r => !r.Value && userRoles.Contains(r.Key)).Select(r => r.Key).ToList();
-
-            var roleAddResult = await _userManager.AddToRolesAsync(systemUser, rolesToAdd);
-            var roleRemoveResult =await _userManager.RemoveFromRolesAsync(systemUser, rolesToRemove);
-            
-            resultFinal.Add(roleAddResult);
-            resultFinal.Add(roleRemoveResult);
-
-            //Final Check
-            if (resultFinal.Any(r => !r.Succeeded))
-            {
-                var errors = resultFinal.Where(r => !r.Succeeded);
-                foreach (var error in errors.SelectMany(e => e.Errors))
-                {
-                    ModelState.AddModelError(error.Code, error.Description);
-                }
-                //scope.Dispose();
-
-                return Page();
-            }
-            else
-            {
-                if (resultFinal.Any(r => r.Succeeded))
-                {
-                    await _emailSender.SendProfileChangeAlertEmailAsync(oldEmail);
-                }
-
-                //scope.Complete();
-                return RedirectToPage("List", new { profileUpdated = true, confirmationEmailSent });
-            }
-            //}
-            //catch (Exception ex)
-            //{
-            //    scope.Dispose();
-            //    throw;
-            //}
-            //}
         }
     }
 }

@@ -22,7 +22,7 @@ namespace MoatGate.Pages.Account
             _userManager = userManager;
         }
 
-        public IActionResult OnGet(int? userId = null, string code = null)
+        public IActionResult OnGet(Guid? userId = null, string code = null)
         {
             if (userId == null)
             {

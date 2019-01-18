@@ -3,7 +3,7 @@ using System;
 
 namespace MoatGate.Models.AspNetIIdentityCore.EntityFramework
 {
-    public class MoatGateIdentityUser : IdentityUser<int>
+    public class MoatGateIdentityUser : IdentityUser<Guid>
     {
     }
 }

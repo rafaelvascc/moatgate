@@ -9,7 +9,7 @@ namespace MoatGate.Models.ResetPassword
 {
     public class ResetPasswordViewModel
     {
-        public int UserId { set; get; }
+        public Guid UserId { set; get; }
 
         [DisplayName("New Password")]
         [Required]

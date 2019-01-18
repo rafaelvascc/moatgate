@@ -7,7 +7,7 @@ namespace MoatGate.Models.Role
 {
     public class RoleListItemViewModel
     {
-        public int Id { set; get; }
+        public Guid Id { set; get; }
         public string Name { set; get; }
     }
 }
