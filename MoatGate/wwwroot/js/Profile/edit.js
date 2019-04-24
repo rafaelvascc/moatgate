@@ -25,9 +25,11 @@
             contentType: false,
             type: "POST",
             success: function (r) {
+                console.log(r);
+                $("#profile-img").attr("src", r);
             },
             error: function (e) {
-                console.log(e)
+                console.log(e);
             }
         });
     });

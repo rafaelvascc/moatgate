@@ -16,6 +16,7 @@ using MoatGate.Services;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.AspNetCore.Http;
 
 namespace MoatGate
 {
@@ -205,6 +206,12 @@ namespace MoatGate
             {
                 c.SwaggerDoc("v1", new Info { Title = "Moat Gaet Web API", Version = "v1" });                
             });
+
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+                options.HttpsPort = 5000;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -220,6 +227,7 @@ namespace MoatGate
                 app.UseExceptionHandler("/Error");
             }
 
+            //app.UseHttpsRedirection();
             app.UseIdentityServer();
 
             app.UseStaticFiles(); 

@@ -10,7 +10,7 @@
     <form class="form-horizontal">
         <div class="col-lg-2 text-center">
             <div class="form-group">
-                <img id="profile-img" class="profile-img-card img-circle" @{if (!string.IsNullOrWhiteSpace(Model.UserProfileViewModel.ProfilePictureUrl)) { <text> src="@Model.UserProfileViewModel.ProfilePictureUrl" </text>  } else { <text> src="https://s.aficionados.com.br/imagens/king-of-asgard.jpg" </text>  } } />
+                <img id="profile-img" class="profile-img-card img-circle" src="~/api/profile/avatar" />
             </div>
             <div class="form-group">
                 <label class="control-label">User ID</label>: @Model.Id

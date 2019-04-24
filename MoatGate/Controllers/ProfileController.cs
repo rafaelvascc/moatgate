@@ -8,6 +8,14 @@ using Microsoft.AspNetCore.Mvc;
 using MoatGate.Services;
 using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 using Microsoft.AspNetCore.Authorization;
+using System.Numerics;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.Primitives;
+using SixLabors.Shapes;
+using SixLabors.ImageSharp.Formats.Png;
+using System.Security.Claims;
 
 namespace MoatGate.Controllers
 {
@@ -29,10 +37,101 @@ namespace MoatGate.Controllers
             _signInManager = signInManager;
         }
 
+        [HttpGet("avatar")]
+        public async Task<IActionResult> GetUserAvatar()
+        {
+            var id = _manager.GetUserId(User);
+            var systemUser = await _manager.FindByIdAsync(id);
+            var userClaims = await _manager.GetClaimsAsync(systemUser);
+
+            if (userClaims.Any(c => c.Type == "picture"))
+            {
+                var picClaim = userClaims.FirstOrDefault(c => c.Type == "picture");
+                var bytes = Convert.FromBase64String(picClaim.Value.Substring("data:image/png;base64,".Length));
+                return File(bytes, @"image/png");
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [Authorize(Roles = "IdentityAdmin")]
+        [HttpGet("avatar/{userId}")]
+        public async Task<IActionResult> GetUserAvatar(string userId)
+        {
+            var systemUser = await _manager.FindByIdAsync(userId);
+            var userClaims = await _manager.GetClaimsAsync(systemUser);
+
+            if (userClaims.Any(c => c.Type == "picture"))
+            {
+                var picClaim = userClaims.FirstOrDefault(c => c.Type == "picture");
+                var bytes = Convert.FromBase64String(picClaim.Value.Substring("data:image/png;base64,".Length));
+                return File(bytes, @"image/png");
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         [HttpPost("avatar")]
         public async Task<IActionResult> ChangeProfileAvatar(IFormFile avatar)
         {
-            return await Task.FromResult(Ok());
+            var encodedImage = string.Empty;
+            var id = _manager.GetUserId(User);
+            using (var imageStream = avatar.OpenReadStream())
+            {
+                using (Image<Rgba32> image = Image.Load(imageStream))
+                {
+                    var originalWidth = image.Width;
+                    var originalHeight = image.Height;
+                    var rec = new Rectangle(0, 0, originalWidth, originalHeight);
+
+                    //If it is not a square, make it a square
+                    if (originalWidth != originalHeight)
+                    {
+                        if (originalWidth > originalHeight)
+                        {
+                            var offsetWidth = (originalWidth - originalHeight) / 2;
+                            rec.X = offsetWidth;
+                            rec.Y = 0;
+                            rec.Width = originalHeight;
+                            rec.Height = originalHeight;
+                        }
+                        else
+                        {
+                            var offsetHeight = (originalHeight - originalWidth) / 2;
+                            rec.X = 0;
+                            rec.Y = offsetHeight;
+                            rec.Width = originalWidth;
+                            rec.Height = originalWidth;
+                        }
+
+                        image.Mutate(x => x.Crop(rec));
+                    }
+
+                    image.Mutate(x => x.AutoOrient().Resize(160, 160));
+                    encodedImage = image.ToBase64String(PngFormat.Instance);
+
+                    //image.Save($"avatar_{id}.png"); // Automatic encoder selected based on extension.
+                }
+            }
+
+            var systemUser = await _manager.FindByIdAsync(id);
+            var userClaims = await _manager.GetClaimsAsync(systemUser);
+
+            if (userClaims.Any(c => c.Type == "picture"))
+            {
+                var oldclaim = userClaims.FirstOrDefault(c => c.Type == "picture");
+                await _manager.ReplaceClaimAsync(systemUser, oldclaim, new Claim("picture", encodedImage));
+            }
+            else
+            {
+                await _manager.AddClaimAsync(systemUser, new Claim("picture", encodedImage));
+            }
+
+            return Ok(encodedImage);
         }
 
         [HttpGet("sendemailconfirm")]
@@ -79,5 +178,8 @@ namespace MoatGate.Controllers
             }
             return Ok();
         }
+
+        #region Avater processing methods
+        #endregion
     }
 }
