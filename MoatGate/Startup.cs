@@ -17,6 +17,7 @@ using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.Http;
+using MoatGate.Infrastructure;
 
 namespace MoatGate
 {
@@ -75,6 +76,7 @@ namespace MoatGate
                 options.LogoutPath = "/Account/Logout"; // If the LogoutPath is not set here, ASP.NET Core will default to /Account/Logout
                 options.AccessDeniedPath = "/Account/AccessDenied"; // If the AccessDeniedPath is not set here, ASP.NET Core will default to /Account/AccessDenied
                 options.SlidingExpiration = true;
+                options.SessionStore = new InMemoryTicketStore();
             });
 
             // configure identity server
