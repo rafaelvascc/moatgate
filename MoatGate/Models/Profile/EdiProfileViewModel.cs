@@ -40,8 +40,7 @@ namespace MoatGate.Models.Profile
         public string PreferedUserName { set; get; }
 
         [JwtClaimName("picture")]
-        [DataType(DataType.ImageUrl)]
-        public string ProfilePictureUrl { set; get; }
+        public string ProfilePicture { set; get; }
 
         [DisplayName("Website")]
         [JwtClaimName("website")]
@@ -128,7 +127,7 @@ namespace MoatGate.Models.Profile
                 var value = p.GetValue(this);
                 if (value != null && value.ToString() != string.Empty)
                 {
-                    var claimType = ((JwtClaimNameAttribute)p.GetCustomAttributes(true).Where(a => a as JwtClaimNameAttribute != null).SingleOrDefault())?.ClaimName;
+                    var claimType = ((JwtClaimNameAttribute)p.GetCustomAttributes(true).Where(a => a is JwtClaimNameAttribute).SingleOrDefault())?.ClaimName;
                     if (claimType != null)
                         result.Add(new Claim(claimType, value.ToString()));
                 }

@@ -2,11 +2,23 @@
     width: 160px;
     height: 160px;
     margin: 0 auto 10px;
+    position: relative;
 }
 
-    .profile-img-card:after {
-        display: block;
-        content: "<label>test</label>" !important;
+.editable-profile-picture {
+    cursor: pointer;
+}
+
+    .editable-profile-picture:hover::after {
+        content: "Change profile picture";
+        position: absolute;
+        left: 24px;
+        top: 94px;
+        width: 142px;
+        height: 22px;
+        background-color: rgba(80, 80, 80, 0.5);
+        color: white;
+        border-radius: 5px;
     }
 
 .form-control-static {
@@ -43,5 +55,9 @@
 }
 
 #fileProfileavatar {
+    display: none;
+}
+
+#txtEncodedAvatar {
     display: none;
 }

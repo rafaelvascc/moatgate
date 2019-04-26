@@ -53,8 +53,7 @@ namespace MoatGate.Models.Profile
         public string ProfileUrl { set; get; }
 
         [JwtClaimName("picture")]
-        [DataType(DataType.ImageUrl)]
-        public string ProfilePictureUrl { set; get; }
+        public string ProfilePicture { set; get; }
 
         [DisplayName("Website")]
         [JwtClaimName("website")]

@@ -9,9 +9,10 @@
     <form class="form-horizontal" method="post">
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="col-lg-2 text-center profileEditOptions">
-            <div class="row">
-                <img id="profile-img" class="profile-img-card img-circle" src="~/api/profile/avatar" />
+            <div class="row editable-profile-picture">
+                <img id="profile-img" class="profile-img-card img-circle" src="@(Model.EditProfileViewModel.ProfilePicture)" />
                 <input type="file" id="fileProfileavatar" accept="image/x-png,image/gif,image/jpeg" />
+                <input type="text" id="txtEncodedAvatar" asp-for="@Model.EditProfileViewModel.ProfilePicture" />
             </div>
             <div class="">
                 <div class="form-group">

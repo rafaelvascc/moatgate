@@ -27,6 +27,7 @@
             success: function (r) {
                 console.log(r);
                 $("#profile-img").attr("src", r);
+                $("#txtEncodedAvatar").val(r);
             },
             error: function (e) {
                 console.log(e);

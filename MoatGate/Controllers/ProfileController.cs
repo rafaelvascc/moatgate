@@ -48,7 +48,7 @@ namespace MoatGate.Controllers
             {
                 var picClaim = userClaims.FirstOrDefault(c => c.Type == "picture");
                 var bytes = Convert.FromBase64String(picClaim.Value.Substring("data:image/png;base64,".Length));
-                return File(bytes, @"image/png");
+                return File(bytes, @"image/png", $"avatar_{id}.png");
             }
             else
             {
@@ -56,7 +56,7 @@ namespace MoatGate.Controllers
             }
         }
 
-        [Authorize(Roles = "IdentityAdmin")]
+        [Authorize]
         [HttpGet("avatar/{userId}")]
         public async Task<IActionResult> GetUserAvatar(string userId)
         {
@@ -67,7 +67,7 @@ namespace MoatGate.Controllers
             {
                 var picClaim = userClaims.FirstOrDefault(c => c.Type == "picture");
                 var bytes = Convert.FromBase64String(picClaim.Value.Substring("data:image/png;base64,".Length));
-                return File(bytes, @"image/png");
+                return File(bytes, @"image/png", $"avatar_{userId}.png");
             }
             else
             {
@@ -76,7 +76,7 @@ namespace MoatGate.Controllers
         }
 
         [HttpPost("avatar")]
-        public async Task<IActionResult> ChangeProfileAvatar(IFormFile avatar)
+        public IActionResult ProcessProfileAvatar(IFormFile avatar)
         {
             var encodedImage = string.Empty;
             var id = _manager.GetUserId(User);
@@ -118,18 +118,18 @@ namespace MoatGate.Controllers
                 }
             }
 
-            var systemUser = await _manager.FindByIdAsync(id);
-            var userClaims = await _manager.GetClaimsAsync(systemUser);
+            //var systemUser = await _manager.FindByIdAsync(id);
+            //var userClaims = await _manager.GetClaimsAsync(systemUser);
 
-            if (userClaims.Any(c => c.Type == "picture"))
-            {
-                var oldclaim = userClaims.FirstOrDefault(c => c.Type == "picture");
-                await _manager.ReplaceClaimAsync(systemUser, oldclaim, new Claim("picture", encodedImage));
-            }
-            else
-            {
-                await _manager.AddClaimAsync(systemUser, new Claim("picture", encodedImage));
-            }
+            //if (userClaims.Any(c => c.Type == "picture"))
+            //{
+            //    var oldclaim = userClaims.FirstOrDefault(c => c.Type == "picture");
+            //    await _manager.ReplaceClaimAsync(systemUser, oldclaim, new Claim("picture", encodedImage));
+            //}
+            //else
+            //{
+            //    await _manager.AddClaimAsync(systemUser, new Claim("picture", encodedImage));
+            //}
 
             return Ok(encodedImage);
         }

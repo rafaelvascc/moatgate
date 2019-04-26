@@ -9,29 +9,36 @@ namespace MoatGate.Infrastructure
 {
     public class InMemoryTicketStore : ITicketStore
     {
-        private static Dictionary<string, AuthenticationTicket> _tickets { get; } = new Dictionary<string, AuthenticationTicket>();
+        private static Dictionary<string, AuthenticationTicket> Tickets { get; } = new Dictionary<string, AuthenticationTicket>();
 
         public Task RemoveAsync(string key)
         {
-            _tickets.Remove(key);
+            Tickets.Remove(key);
             return Task.CompletedTask;
         }
 
         public Task RenewAsync(string key, AuthenticationTicket ticket)
         {
-            _tickets[key] = ticket;
+            Tickets[key] = ticket;
             return Task.CompletedTask;
         }
 
         public Task<AuthenticationTicket> RetrieveAsync(string key)
         {
-            return Task.FromResult(_tickets[key]);
+            if (Tickets.ContainsKey(key))
+            {
+                return Task.FromResult(Tickets[key]);
+            }
+            else
+            {
+                return Task.FromResult<AuthenticationTicket>(null);
+            }
         }
 
         public Task<string> StoreAsync(AuthenticationTicket ticket)
         {
             var key = Guid.NewGuid().ToString();
-            _tickets.Add(key, ticket);
+            Tickets.Add(key, ticket);
             return Task.FromResult(key);
         }
     }
