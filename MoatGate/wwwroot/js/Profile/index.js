@@ -64,7 +64,7 @@
     $("#btnVerityEmail").off("click").on("click", function (event) {
         $.ajax({
             type: "GET",
-            url: "../api/internal/profile/sendemailconfirm",
+            url: "../internal-api/profile/sendemailconfirm",
             success: function (response) {
                 $.notify({
                     icon: "fas fa-check",
@@ -101,7 +101,7 @@
     $("#btnVerityPhone").off("click").on("click", function (event) {
         $.ajax({
             type: "GET",
-            url: "../api/internal/profile/sendphoneconfirm",
+            url: "../internal-api/profile/sendphoneconfirm",
             success: function (response) {
                 $.notify({
                     icon: "fas fa-check",
@@ -139,7 +139,7 @@
         var token = $('#txtPhoneVerificationCode').val();
         $.ajax({
             type: "POST",
-            url: `../api/internal/profile/confirmphone/${token}`,
+            url: `../internal-api/profile/confirmphone/${token}`,
             success: function (response) {
                 $.notify({
                     icon: "fas fa-check",

@@ -7,7 +7,7 @@
         searching: true,
         searchDelay: 350,
         ajax: {
-            url: "../api/internal/roles/search",
+            url: "../internal-api/roles/search",
             type: "POST"
         },
         columns: [

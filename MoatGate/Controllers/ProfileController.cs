@@ -18,7 +18,7 @@ namespace MoatGate.Controllers
     [ApiExplorerSettings(IgnoreApi = true)]
     [Authorize]
     [Produces("application/json")]
-    [Route("api/internal/profile")]
+    [Route("internal-api/profile")]
     public class ProfileController : Controller
     {
         private readonly UserManager<MoatGateIdentityUser> _manager;

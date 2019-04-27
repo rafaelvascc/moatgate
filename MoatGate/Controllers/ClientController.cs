@@ -14,7 +14,7 @@ namespace MoatGate.Controllers
     [ApiExplorerSettings(IgnoreApi = true)]
     [Authorize(Roles = "IdentityAdmin")]
     [Produces("application/json")]
-    [Route("api/internal/clients")]
+    [Route("internal-api/clients")]
     public class ClientController : Controller
     {
         private readonly ConfigurationDbContext _context;

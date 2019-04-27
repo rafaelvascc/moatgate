@@ -15,7 +15,7 @@ namespace MoatGate.Controllers
     [ApiExplorerSettings(IgnoreApi = true)]
     [Authorize(Roles = "IdentityAdmin")]
     [Produces("application/json")]
-    [Route("api/internal/users")]
+    [Route("internal-api/users")]
     public class UserController : Controller
     {
         private readonly MoatGateIdentityDbContext _context;

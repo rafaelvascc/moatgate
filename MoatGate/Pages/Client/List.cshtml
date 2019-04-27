@@ -76,7 +76,7 @@
 <script id="client-actions-template" type="text/x-jsrender">
     <div class="btn-group btn-group-sm pull-right clientActionBtns">
         <a href="./CreateEdit/{{:id}}" class="btn btn-sm btn-primary" title="Edit Client"><i class="fas fa-edit"></i></a>
-        <button type="button" data-id="{{:id}}" data-url="../api/internal/clients/delete" class="btn btn-sm btn-danger" title="Delete" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash"></i></button>
+        <button type="button" data-id="{{:id}}" data-url="../internal-api/clients/delete" class="btn btn-sm btn-danger" title="Delete" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash"></i></button>
     </div>
 </script>
 @section Scripts {

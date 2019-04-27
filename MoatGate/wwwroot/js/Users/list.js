@@ -9,7 +9,7 @@
         serverSide: true,
         searching: true,
         ajax: {
-            url: "../api/internal/users/search",
+            url: "../internal-api/users/search",
             type: "POST",
             data: function (d) {
                 var additionalSearchParams = [{

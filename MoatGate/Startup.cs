@@ -15,6 +15,7 @@ using MoatGate.Services;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.Http;
 using MoatGate.Infrastructure;
+using IdentityServer4.AccessTokenValidation;
 
 namespace MoatGate
 {
