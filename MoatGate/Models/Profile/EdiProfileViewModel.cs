@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -7,7 +6,6 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace MoatGate.Models.Profile
 {

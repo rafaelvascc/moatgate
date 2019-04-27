@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace MoatGate.Models.Logout
+﻿namespace MoatGate.Models.Logout
 {
     public class LogoutViewModel
     {

@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
-using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
-using IdentityServer4.EntityFramework.Entities;
-using MoatGate.Models.Profile;
 
 namespace MoatGate.Models.AspNetIIdentityCore.EntityFramework
 {

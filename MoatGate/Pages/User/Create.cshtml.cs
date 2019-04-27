@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
 using MoatGate.Models.User;
 using AutoMapper;
 using System.Linq;

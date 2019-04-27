@@ -1,5 +1,3 @@
-using System;
-
 namespace MoatGate.OpenId.ClientExample.Models
 {
     public class ErrorViewModel

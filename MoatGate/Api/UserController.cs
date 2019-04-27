@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
-using MoatGate.Models.Shared;
 using MoatGate.Models.User;
 
 namespace MoatGate.Api

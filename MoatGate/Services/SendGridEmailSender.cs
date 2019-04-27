@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 

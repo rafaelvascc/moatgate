@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using MoatGate.Services;
 using System;
-using IdentityServer4.Stores;
 
 namespace MoatGate.Pages.Client
 {

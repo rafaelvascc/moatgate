@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace MoatGate.Models.Consent
+﻿namespace MoatGate.Models.Consent
 {
     public class ScopeViewModel
     {

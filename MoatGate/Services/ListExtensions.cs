@@ -2,12 +2,9 @@
 using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.Models;
 using Microsoft.EntityFrameworkCore;
-using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 
 namespace MoatGate.Services
 {
