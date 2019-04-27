@@ -19,7 +19,7 @@
         formData.append('avatar', e.target.files[0]);
 
         $.ajax({
-            url: "../api/profile/avatar",
+            url: "../api/internal/profile/avatar",
             data: formData,
             processData: false,
             contentType: false,

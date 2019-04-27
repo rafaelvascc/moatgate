@@ -11,9 +11,10 @@ using MoatGate.Models.Shared;
 
 namespace MoatGate.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Authorize(Roles = "IdentityAdmin")]
     [Produces("application/json")]
-    [Route("api/resources/identity")]
+    [Route("api/internal/resources/identity")]
     public class IdentityResourceController : Controller
     {
         private readonly ConfigurationDbContext _context;

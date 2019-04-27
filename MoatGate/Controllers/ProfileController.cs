@@ -19,9 +19,10 @@ using System.Security.Claims;
 
 namespace MoatGate.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Authorize]
     [Produces("application/json")]
-    [Route("api/profile")]
+    [Route("api/internal/profile")]
     public class ProfileController : Controller
     {
         private readonly UserManager<MoatGateIdentityUser> _manager;
@@ -113,23 +114,8 @@ namespace MoatGate.Controllers
 
                     image.Mutate(x => x.AutoOrient().Resize(160, 160));
                     encodedImage = image.ToBase64String(PngFormat.Instance);
-
-                    //image.Save($"avatar_{id}.png"); // Automatic encoder selected based on extension.
                 }
             }
-
-            //var systemUser = await _manager.FindByIdAsync(id);
-            //var userClaims = await _manager.GetClaimsAsync(systemUser);
-
-            //if (userClaims.Any(c => c.Type == "picture"))
-            //{
-            //    var oldclaim = userClaims.FirstOrDefault(c => c.Type == "picture");
-            //    await _manager.ReplaceClaimAsync(systemUser, oldclaim, new Claim("picture", encodedImage));
-            //}
-            //else
-            //{
-            //    await _manager.AddClaimAsync(systemUser, new Claim("picture", encodedImage));
-            //}
 
             return Ok(encodedImage);
         }

@@ -13,9 +13,10 @@ using MoatGate.Models.User;
 
 namespace MoatGate.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Authorize(Roles = "IdentityAdmin")]
     [Produces("application/json")]
-    [Route("api/users")]
+    [Route("api/internal/users")]
     public class UserController : Controller
     {
         private readonly MoatGateIdentityDbContext _context;
@@ -25,33 +26,6 @@ namespace MoatGate.Controllers
         {
             _context = context;
             _userManager = manager;
-        }
-
-        [AllowAnonymous]
-        [HttpPost("create")]
-        public async Task<ActionResult> CreateNew([FromBody] UserCreateApiViewModel user)
-        {
-            var newUser = new MoatGateIdentityUser();
-            user.UserName = user.UserName ?? user.Email;
-            Mapper.Map(user, newUser);
-            var result = await _userManager.CreateAsync(newUser, user.Password);
-
-            if (!result.Succeeded)
-            {
-                return StatusCode(500, result.Errors.Select(e => e.Description));
-            }
-
-            if (user.Roles.Any())
-            {
-                var roleResult = await _userManager.AddToRolesAsync(newUser, user.Roles);
-
-                if (!roleResult.Succeeded)
-                {
-                    return StatusCode(500, result.Errors.Select(e => e.Description));
-                }
-            }
-
-            return Ok(new { Message = $"User {user.UserName} created successfully" });
         }
 
         [HttpPost("search")]

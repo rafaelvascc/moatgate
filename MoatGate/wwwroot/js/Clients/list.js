@@ -6,7 +6,7 @@
         serverSide: true,
         searching: true,
         ajax: {
-            url: "../api/clients/search",
+            url: "../api/internal/clients/search",
             type: "POST"
         },
         columns: [

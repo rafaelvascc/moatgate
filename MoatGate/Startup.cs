@@ -117,8 +117,6 @@ namespace MoatGate
                 options.Conventions.AuthorizeFolder("/Users", "IsIdentityAdmin");
 
                 options.Conventions.AddPageRoute("/Account/Login", "");
-
-                options.Conventions.ConfigureFilter(new IgnoreAntiforgeryTokenAttribute());
             });
 
             services.AddAuthorization(options =>
@@ -129,7 +127,7 @@ namespace MoatGate
 
             //services.AddSingleton<IEmailSender, SendGridEmailSender>();
             //services.AddSingleton<ISmsSender, TwilioSmsSender>();
-            
+
             services.AddSingleton<IEmailSender, DummyMessagingService>();
             services.AddSingleton<ISmsSender, DummyMessagingService>();
 
@@ -206,13 +204,20 @@ namespace MoatGate
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Moat Gaet Web API", Version = "v1" });                
+                c.SwaggerDoc("v1", new Info { Title = "Moat Gate Public API", Version = "v1" });
             });
 
             services.AddHttpsRedirection(options =>
             {
                 options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
-                options.HttpsPort = 5000;
+                options.HttpsPort = 5100;
+            });
+
+            services.AddHsts(options =>
+            {
+                options.Preload = true;
+                options.IncludeSubDomains = true;
+                options.MaxAge = TimeSpan.FromDays(1);
             });
         }
 
@@ -227,13 +232,14 @@ namespace MoatGate
             else
             {
                 app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseIdentityServer();
 
-            app.UseStaticFiles(); 
-            
+            app.UseStaticFiles();
+
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
@@ -241,7 +247,7 @@ namespace MoatGate
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Moat Gaet Web API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Moat Gate Public API");
             });
 
             app.UseMvc();

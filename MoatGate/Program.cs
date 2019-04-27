@@ -55,6 +55,7 @@ namespace MoatGate
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseSetting("https_port", "5100")
                 .UseStartup<Startup>()
                 .ConfigureLogging((hostingContext, logging) =>
                 {

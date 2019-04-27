@@ -27,6 +27,6 @@ namespace MoatGate.Models.User
         [DisplayName("Confirm Password")]
         public string ConfirmPassword { set; get; }
 
-        public IList<string> Roles { set; get; } = new List<string>();
+        public ISet<string> Roles { set; get; } = new HashSet<string>();
     }
 }
