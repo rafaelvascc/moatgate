@@ -1,0 +1,7 @@
+﻿version: "3"
+  services:
+    moatgate:
+      build: .
+      ports:
+        - 5000
+        - 5001
