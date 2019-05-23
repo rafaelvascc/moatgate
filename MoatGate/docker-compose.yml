@@ -1,7 +1,16 @@
 ﻿version: "3"
-  services:
-    moatgate:
-      build: .
-      ports:
-        - 5000
-        - 5001
+services:
+  moatgate:
+    build: .
+    ports:
+      - "5000:80"
+    depends_on:
+      - sql-server
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    ports:
+      - 1433
+    environment:
+      MSSQL_PID: Express
+      SA_PASSWORD: 1q2w!Q@W
+      ACCEPT_EULA: Y

@@ -2,6 +2,10 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/MoatGate",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:5000/",
       "sslPort": 44318
@@ -21,7 +25,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:5100/"
+      "applicationUrl": "https://localhost:5001"
     }
   }
 }

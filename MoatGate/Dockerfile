@@ -9,6 +9,5 @@ RUN dotnet publish "MoatGate.csproj" -c Release -o /publish
 FROM mcr.microsoft.com/dotnet/core/aspnet:2.2.4-alpine3.9 AS base
 WORKDIR /app
 EXPOSE 5000
-EXPOSE 5100
 COPY --from=build /publish .
 ENTRYPOINT ["dotnet", "MoatGate.dll"]

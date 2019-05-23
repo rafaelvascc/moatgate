@@ -21,12 +21,14 @@ namespace MoatGate
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IHostingEnvironment _env;
+        public IConfiguration Configuration { get; }
+
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -205,18 +207,29 @@ namespace MoatGate
                 c.SwaggerDoc("v1", new Info { Title = "Moat Gate Public API", Version = "v1" });
             });
 
-            services.AddHttpsRedirection(options =>
-            {
-                options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
-                options.HttpsPort = 5100;
-            });
+            //if (!_env.IsDevelopment())
+            //{
+            //    services.AddHttpsRedirection(options =>
+            //    {
+            //        options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
+            //        options.HttpsPort = 443;
+            //    });
+            //}
+            //else
+            //{
+            //    services.AddHttpsRedirection(options =>
+            //    {
+            //        options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+            //        options.HttpsPort = 5001;
+            //    });
+            //}
 
-            services.AddHsts(options =>
-            {
-                options.Preload = true;
-                options.IncludeSubDomains = true;
-                options.MaxAge = TimeSpan.FromDays(1);
-            });
+            //services.AddHsts(options =>
+            //{
+            //    options.Preload = true;
+            //    options.IncludeSubDomains = true;
+            //    options.MaxAge = TimeSpan.FromDays(1);
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -230,10 +243,10 @@ namespace MoatGate
             else
             {
                 app.UseExceptionHandler("/Error");
-                app.UseHsts();
+                //app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseIdentityServer();
 
             app.UseStaticFiles();
