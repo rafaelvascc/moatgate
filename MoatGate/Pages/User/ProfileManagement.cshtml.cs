@@ -159,7 +159,7 @@ namespace MoatGate.Pages.User
                         return RedirectToPage("List", new { profileUpdated = true, confirmationEmailSent });
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     scope.Dispose();
                     throw;

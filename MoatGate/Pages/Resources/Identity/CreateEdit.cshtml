@@ -56,9 +56,7 @@
                 </div>
             </div>
             <div class="form-group">
-                @{
-                    Html.RenderPartial("./PartialViews/IdentityResourceClaims", Model.IdentityResource.UserClaims);
-                }
+                <partial name="./PartialViews/IdentityResourceClaims" for="IdentityResource.UserClaims" />
             </div>
             <nav class="navbar navbar-default navbar-fixed-bottom">
                 <div class="container">

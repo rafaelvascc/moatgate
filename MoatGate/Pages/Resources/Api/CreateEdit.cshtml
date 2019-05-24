@@ -38,23 +38,17 @@
             <div class="tab-content">
                 <div id="apiScopesTab" class="tab-pane fade in active">
                     <div class="form-group">
-                        @{
-                            Html.RenderPartial("./PartialViews/Scopes", Model.ApiResource.Scopes);
-                        }
+                        <partial name="./PartialViews/Scopes" for="ApiResource.Scopes" />
                     </div>
                 </div>
                 <div id="apiSecretTabs" class="tab-pane fade">
                     <div class="form-group">
-                        @{
-                            Html.RenderPartial("./PartialViews/Secrets", Model.ApiResource.Secrets);
-                        }
+                        <partial name="./PartialViews/Secrets" for="ApiResource.Secrets" />
                     </div>
                 </div>
                 <div id="apiResourcesTab" class="tab-pane fade">
                     <div class="form-group">
-                        @{
-                            Html.RenderPartial("./PartialViews/ApiResourceClaims", Model.ApiResource.UserClaims);
-                        }
+                        <partial name="./PartialViews/ApiResourceClaims" for="ApiResource.UserClaims" />
                     </div>
                 </div>
             </div>

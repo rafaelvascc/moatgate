@@ -144,7 +144,7 @@ namespace MoatGate.Pages.Profile
                         return RedirectToPage("Index", new { profileUpdated = true, confirmationEmailSent, confirmationSmsSent });
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     scope.Dispose();
                     throw;

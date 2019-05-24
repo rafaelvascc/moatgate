@@ -34,30 +34,22 @@
                         <div class="tab-content">
                             <div id="clientBasicTabSecrets" class="tab-pane fade in active">
                                 <div class="form-group">
-                                    @{
-                                        Html.RenderPartial("./PartialViews/ClientSecret", Model.Client.ClientSecrets);
-                                    }
+                                    <partial name="./PartialViews/ClientSecret" for="Client.ClientSecrets" />
                                 </div>
                             </div>
                             <div id="clientBasicTabRedirects" class="tab-pane fade">
                                 <div class="form-group">
-                                    @{
-                                        Html.RenderPartial("./PartialViews/RedirectUris", Model.Client.RedirectUris);
-                                    }
+                                    <partial name="./PartialViews/RedirectUris" for="Client.RedirectUris" />
                                 </div>
                             </div>
                             <div id="clientBasicTabScopes" class="tab-pane fade">
                                 <div class="form-group">
-                                    @{
-                                        Html.RenderPartial("./PartialViews/AllowedScopes", Model.Client.AllowedScopes);
-                                    }
+                                    <partial name="./PartialViews/AllowedScopes" for="Client.AllowedScopes" />
                                 </div>
                             </div>
                             <div id="clientBasicTabProps" class="tab-pane fade">
                                 <div class="form-group">
-                                    @{
-                                        Html.RenderPartial("./PartialViews/ClientProperties", Model.Client.Properties);
-                                    }
+                                    <partial name="./PartialViews/ClientProperties" for="Client.Properties" />
                                 </div>
                             </div>
                         </div>
@@ -108,7 +100,7 @@
                         <div class="form-group">
                             <label class="control-label">Grant Types (Flows)</label>
                             @{
-                                Html.RenderPartial("./PartialViews/GrantType", Model.GrantTypes);
+                                <partial name="./PartialViews/GrantType" for="GrantTypes" />
                             }
                         </div>
                     </div>
@@ -134,17 +126,13 @@
                         <div class="tab-content">
                             <div id="clientAuthTabRedirects" class="tab-pane fade in active">
                                 <div class="form-group">
-                                    @{
-                                        Html.RenderPartial("./PartialViews/PostLogoutRedirectUris", Model.Client.PostLogoutRedirectUris);
-                                    }
+                                    <partial name="./PartialViews/PostLogoutRedirectUris" for="Client.PostLogoutRedirectUris" />
                                 </div>
                             </div>
 
                             <div id="clientAuthTabRestrictions" class="tab-pane fade">
                                 <div class="form-group">
-                                    @{
-                                        Html.RenderPartial("./PartialViews/ClientIdpRestrictions", Model.Client.IdentityProviderRestrictions);
-                                    }
+                                    <partial name="./PartialViews/ClientIdpRestrictions" for="Client.IdentityProviderRestrictions" />
                                 </div>
                             </div>
                         </div>
@@ -224,16 +212,12 @@
                         <div class="tab-content">
                             <div id="clientTokenTabCors" class="tab-pane fade in active">
                                 <div class="form-group">
-                                    @{
-                                        Html.RenderPartial("./PartialViews/AllowedCorsOrigins", Model.Client.AllowedCorsOrigins);
-                                    }
+                                    <partial name="./PartialViews/AllowedCorsOrigins" for="Client.AllowedCorsOrigins" />
                                 </div>
                             </div>
                             <div id="clientTokenTabClaim" class="tab-pane fade">
                                 <div class="form-group">
-                                    @{
-                                        Html.RenderPartial("./PartialViews/ClientClaims", Model.Client.Claims);
-                                    }
+                                    <partial name="./PartialViews/ClientClaims" for="Client.Claims" />
                                 </div>
                             </div>
                         </div>

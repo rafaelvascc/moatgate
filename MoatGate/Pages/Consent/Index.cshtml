@@ -38,7 +38,7 @@
                             Personal Information
                         </div>
                         <ul class="list-group">
-                            @Html.Partial("./PartialViews/ConsetIdentityScope", Model.ConsentData.IdentityScopes)
+                            <partial name="./PartialViews/ConsetIdentityScope" for="ConsentData.IdentityScopes" />
                         </ul>
                     </div>
                 }
@@ -51,7 +51,7 @@
                             Application Access
                         </div>
                         <ul class="list-group">
-                            @Html.Partial("./PartialViews/ConsetApiScope", Model.ConsentData.ResourceScopes)
+                            <partial name="./PartialViews/ConsetApiScope" for="ConsentData.ResourceScopes" />
                         </ul>
                     </div>
                 }

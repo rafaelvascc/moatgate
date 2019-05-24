@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoatGate", "MoatGate\MoatGate.csproj", "{88F93623-3BC6-4795-9F36-D6CC93D63577}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoatGate.OpenId.ClientExample", "MoatGate.OpenId.ClientExample\MoatGate.OpenId.ClientExample.csproj", "{5AD283F1-F16B-434B-BF4C-8600BD79E476}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{88F93623-3BC6-4795-9F36-D6CC93D63577}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88F93623-3BC6-4795-9F36-D6CC93D63577}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88F93623-3BC6-4795-9F36-D6CC93D63577}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5AD283F1-F16B-434B-BF4C-8600BD79E476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5AD283F1-F16B-434B-BF4C-8600BD79E476}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5AD283F1-F16B-434B-BF4C-8600BD79E476}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5AD283F1-F16B-434B-BF4C-8600BD79E476}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
