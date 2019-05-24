@@ -33,7 +33,16 @@ namespace MoatGate
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var identityServerConnectionString = Configuration.GetConnectionString("MoatGate.IdentityServer.ConnectionString");
+            var identityServerConnectionString = Environment.GetEnvironmentVariable("MOATGATE_DB_CONNECTIONSTRING");
+
+            if (_env.IsDevelopment() || string.IsNullOrEmpty(identityServerConnectionString))
+            {
+                identityServerConnectionString = Configuration.GetConnectionString("MoatGate.IdentityServer.ConnectionString");
+            }
+
+            if (string.IsNullOrEmpty(identityServerConnectionString))
+                throw new ApplicationException("could't find Moatgate Connection String from environment variable MOATGATE_CONNECTION_STRING or configuration MoatGate.IdentityServer.ConnectionString on the appSettings.json file");
+
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddDbContext<MoatGateIdentityDbContext>(options =>

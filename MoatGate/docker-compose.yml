@@ -3,9 +3,11 @@ services:
   moatgate:
     build: .
     ports:
-      - "5000:80"
+      - "5001:80"
     depends_on:
       - sql-server
+    environment:
+      MOATGATE_DB_CONNECTIONSTRING: "Server=sql-server;Database=MoatGate.IdentityServer;User Id=sa;Password=1q2w!Q@W;"
   sql-server:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
     ports:
