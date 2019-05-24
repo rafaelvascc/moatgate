@@ -97,13 +97,13 @@ namespace MoatGate.Models.Profile
             foreach (var c in claims)
             {
                 var prop = propertiesTypes.Where(p => ((JwtClaimNameAttribute)p.GetCustomAttributes(true).Where(a => a as JwtClaimNameAttribute != null).SingleOrDefault())?.ClaimName == c.Type).SingleOrDefault();
-                if (prop != null && !String.IsNullOrEmpty(c.Value))
+                if (prop != null && !string.IsNullOrEmpty(c.Value))
                 {
                     if (prop.PropertyType == typeof(DateTime?))
                     {
                         prop.SetValue(this, DateTime.Parse(c.Value));
                     }
-                    else if (prop.PropertyType == typeof(bool) || prop.PropertyType == typeof(Boolean))
+                    else if (prop.PropertyType == typeof(bool))
                     {
                         prop.SetValue(this, bool.Parse(c.Value));
                     }
@@ -123,11 +123,20 @@ namespace MoatGate.Models.Profile
             foreach (var p in propertiesTypes)
             {
                 var value = p.GetValue(this);
-                if (value != null && value.ToString() != string.Empty)
+                if (!string.IsNullOrEmpty(value?.ToString()))
                 {
                     var claimType = ((JwtClaimNameAttribute)p.GetCustomAttributes(true).Where(a => a is JwtClaimNameAttribute).SingleOrDefault())?.ClaimName;
                     if (claimType != null)
-                        result.Add(new Claim(claimType, value.ToString()));
+                    {
+                        if (p.PropertyType == typeof(DateTime?))
+                        {
+                            result.Add(new Claim(claimType, (value as DateTime?).Value.ToString("o")));
+                        }
+                        else
+                        {
+                            result.Add(new Claim(claimType, value.ToString()));
+                        }
+                    }
                 }
             }
 

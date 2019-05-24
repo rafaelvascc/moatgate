@@ -82,7 +82,7 @@ namespace MoatGate.Pages.Profile
                         return Page();
                     }
 
-                    EditProfileViewModel.UpdatedAt = DateTime.Now;
+                    EditProfileViewModel.UpdatedAt = DateTime.UtcNow;
                     var newValues = EditProfileViewModel.ToClaims();
                     var currentValues = await _manager.GetClaimsAsync(systemUser);
 

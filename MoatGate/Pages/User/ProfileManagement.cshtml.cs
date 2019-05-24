@@ -74,7 +74,7 @@ namespace MoatGate.Pages.User
                     var oldEmail = systemUser.Email;
 
                     //Profile update
-                    EditProfileViewModel.UpdatedAt = DateTime.Now;
+                    EditProfileViewModel.UpdatedAt = DateTime.UtcNow;
                     var newValues = EditProfileViewModel.ToClaims();
                     var currentValues = await _userManager.GetClaimsAsync(systemUser);
 
