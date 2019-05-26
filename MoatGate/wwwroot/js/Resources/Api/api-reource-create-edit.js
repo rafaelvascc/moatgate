@@ -1,4 +1,7 @@
 ﻿$(function () {
+    //https://harvesthq.github.io/chosen/
+    $("#ddlUserClaims").chosen({ width: "100%" });
+
     function newApiResourceSecretModel(index) {
         this.index = index;
         this.id = 0;
@@ -18,12 +21,6 @@
         this.emphasize = false;
         this.showInDiscoveryDocument = true;
         this.userScopes = [];
-    }
-
-    function newApiResourceClaimModel(index) {
-        this.index = index;
-        this.id = 0;
-        this.type = "";
     }
 
     function newApiScopeClaimModel(index, parentIndex) {
@@ -110,38 +107,6 @@
         }
     }
 
-    //Api Resource Claims
-    var $apiResourceClaimScope = $("section[data-scope='partials-api-resource-claim']");
-    var apiResourceClaimCreateTemplate = $.templates("#api-resource-claim-template");
-    var $tblApiResourceClaims = $("#tbl-api-resource-claim", $apiResourceClaimScope);
-    var $tblApiResourceClaimsBody = $("tbody", $tblApiResourceClaims);
-    var $btnAddApiResourceClaim = $("#btn-add-api-resource-claim", $apiResourceClaimScope);
-
-    $btnAddApiResourceClaim.off("click").on("click", function (event) {
-        var count = $("tr", $tblApiResourceClaimsBody).length;
-        var newModel = new newApiResourceClaimModel(count);
-        var newHtml = apiResourceClaimCreateTemplate.render(newModel);
-        $tblApiResourceClaimsBody.append($(newHtml));
-    });
-
-    $tblApiResourceClaimsBody.off("click").on("click", ".btn-delete-api-resource-claim", function (event) {
-        var $row = $(event.target).parents("tr:first");
-        $row.remove();
-        updateClientClaimIndexes();
-    });
-
-    function updateClientClaimIndexes() {
-        var $rows = $tblApiResourceClaimsBody.find("tr");
-        for (var i = 0; i < $rows.length; i++) {
-            var $row = $($rows[i]);
-            var $fields = $row.find("[name^='ApiResource.UserClaims[']");
-            for (var j = 0; j < $fields.length; j++) {
-                var $field = $($fields[j]);
-                $field.attr("name", $field.attr("name").replace(/\[([1-9]\d*)\]/, "[" + i + "]"));
-            }
-        }
-    }
-
     //Scopes Claims
     var allowedScopeClaimCreateTemplate = $.templates("#api-resource-scope-claim-template");
 
@@ -160,7 +125,7 @@
         }
     });
 
-    $tblAllowedScopesBody.on("click", "tr.scopeClaim button.btn-delete-api-resource-scope-claim", function (event) {       
+    $tblAllowedScopesBody.on("click", "tr.scopeClaim button.btn-delete-api-resource-scope-claim", function (event) {
         var $row = $(event.target).parents("tr.scopeClaim:first");
         var parentIndex = $row.attr("data-parent-index");
         $row.remove();

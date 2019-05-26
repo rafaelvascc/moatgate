@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using IdentityServer4.Models;
 using AutoMapper;
 using MoatGate.Services;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MoatGate.Pages.Resources.Api
 {
@@ -23,7 +24,12 @@ namespace MoatGate.Pages.Resources.Api
             Secrets = new List<ApiSecret>(),
             UserClaims = new List<ApiResourceClaim>()
         };
-        
+
+        public List<SelectListItem> UserClaimsOptions { set; get; } = new List<SelectListItem>();
+
+        [BindProperty]
+        public List<string> UserClaims { set; get; } = new List<string>();
+
         public CreateEditModel(ConfigurationDbContext context)
         {
             _context = context;
@@ -31,21 +37,46 @@ namespace MoatGate.Pages.Resources.Api
 
         public async Task<IActionResult> OnGet(int? id)
         {
+            var claimByIdentityResource = _context.IdentityResources.Include(c => c.UserClaims).AsNoTracking();
             if (id.HasValue)
             {
                 ViewData["Editing"] = true;
-                ViewData["Title"] = "Edit Api Resource";
                 ApiResource = await _context.ApiResources
                     .AsNoTracking()
                     .Include(a => a.Scopes).ThenInclude(s => s.UserClaims)
                     .Include(a => a.Secrets)
                     .Include(a => a.UserClaims)
                     .SingleOrDefaultAsync(r => r.Id == id.Value);
+                ViewData["Title"] = "New Api Resource";
             }
             else
             {
                 ViewData["Editing"] = false;
                 ViewData["Title"] = "Create Api Resource";
+            }
+
+            var userClaimsChecks = await claimByIdentityResource
+                .OrderBy(r => r.Name)
+                .ToDictionaryAsync(r => r.Name, r => r.UserClaims.OrderBy(c => c.Type).Select(c => (Selected: ApiResource.UserClaims.Any(a => a.Type == c.Type), c.Type)));
+
+            foreach (var g in userClaimsChecks)
+            {
+                var group = new SelectListGroup
+                {
+                    Name = g.Key
+                };
+                foreach (var (Selected, Type) in g.Value)
+                {
+                    var item = new SelectListItem(Type, Type, Selected, false)
+                    {
+                        Group = group
+                    };
+                    UserClaimsOptions.Add(item);
+                    if (Selected)
+                    {
+                        UserClaims.Add(Type);
+                    }
+                }
             }
 
             return Page();
@@ -74,18 +105,18 @@ namespace MoatGate.Pages.Resources.Api
             }
             else
             {
-                var CurrentApiResource = _context.ApiResources
+                var currentApiResource = _context.ApiResources
                        .Include(c => c.Scopes).ThenInclude(s => s.UserClaims)
                        .Include(c => c.Secrets)
                        .Include(c => c.UserClaims)
                        .SingleOrDefault(c => c.Id == ApiResource.Id);
 
-                if (CurrentApiResource.Scopes == null)
+                if (currentApiResource.Scopes == null)
                 {
-                    CurrentApiResource.Scopes = new List<ApiScope>();
+                    currentApiResource.Scopes = new List<ApiScope>();
                 }
 
-                foreach (var scope in CurrentApiResource.Scopes)
+                foreach (var scope in currentApiResource.Scopes)
                 {
                     if (scope.UserClaims == null)
                     {
@@ -106,10 +137,10 @@ namespace MoatGate.Pages.Resources.Api
                     }
                 }
 
-                Mapper.Map(ApiResource, CurrentApiResource);
-                CurrentApiResource.Scopes.ReflectToEntityFrameworkState(ApiResource.Scopes, _context);
-                CurrentApiResource.Secrets.ReflectToEntityFrameworkState(ApiResource.Secrets, _context);
-                CurrentApiResource.UserClaims.ReflectToEntityFrameworkState(ApiResource.UserClaims, _context);
+                Mapper.Map(ApiResource, currentApiResource);
+                currentApiResource.Scopes.ReflectToEntityFrameworkState(ApiResource.Scopes, _context);
+                currentApiResource.Secrets.ReflectToEntityFrameworkState(ApiResource.Secrets, _context);
+                currentApiResource.UserClaims.ReflectToEntityFrameworkState(UserClaims?.Select(c => new ApiResourceClaim() { Type = c }).ToList(), _context);
                 await _context.SaveChangesAsync();
             }
 

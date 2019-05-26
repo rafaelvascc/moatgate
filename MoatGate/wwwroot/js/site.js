@@ -1,9 +1,10 @@
 ﻿$(function () {
+    applyTooltips();
     appyConfirmPopoverToDeleteButtons();
     applyTabs();
 
     $(".noEnterForm").on("keydown keypress keyup", function (e) {
-        if (event.keyCode == 13) {
+        if (event.keyCode === 13) {
             event.preventDefault();
             return false;
         }
@@ -11,8 +12,8 @@
 
 
     $("#deleteModal").on('shown.bs.modal', function (e) {
-        var idToDelete = e.relatedTarget.attributes["data-id"].value
-        var deleteUrl = e.relatedTarget.attributes["data-url"].value
+        var idToDelete = e.relatedTarget.attributes["data-id"].value;
+        var deleteUrl = e.relatedTarget.attributes["data-url"].value;
         $("#deleteModal #btnConfirmDelete").off("click").on("click", function (event) {
             $.ajax({
                 type: "POST",
@@ -78,14 +79,18 @@ function appyConfirmPopoverToDeleteButtons() {
             });
             return $content;
         }
-    }
+    };
 
     $("body").popover(options);
 }
 
 function applyTabs() {
     $('.bootstrapTabs a').click(function (e) {
-        e.preventDefault()
-        $(this).tab('show')
-    })
+        e.preventDefault();
+        $(this).tab('show');
+    });
+}
+
+function applyTooltips() {
+    $('[data-toggle="tooltip"]').tooltip();
 }

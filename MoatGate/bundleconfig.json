@@ -8,7 +8,6 @@
       "wwwroot/lib/font-awesome/web-fonts-with-css/fontawesome-all.css",
       "wwwroot/lib/animatecss/animatecss.css",
       "wwwroot/lib/chosen/chosen.css",
-      "wwwroot/lib/bootstrap-chosen/bootstrap-chosen.css",
       "wwwroot/css/site.css"
     ],
     "outputFileName": "wwwroot/css/site.normal.css"
