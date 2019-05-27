@@ -251,3 +251,30 @@ body {
         margin-top: 0px !important;
         margin-bottom: 0px !important;
     }
+
+tr.scopeValues {
+    height: 110px;
+}
+
+    tr.scopeValues > td {
+        height: 100%;
+        padding: 5px;
+    }
+
+        tr.scopeValues > td > .chosen-container-multi {
+            width: 100%;
+            height: 100px;
+        }
+
+            tr.scopeValues > td > .chosen-container-multi > .chosen-choices {
+                height: 100%;
+                width: 250px;
+            }
+
+#ddl-claims-base {
+    display: none;
+}
+
+.tooltip {
+    min-width: 250px;
+}

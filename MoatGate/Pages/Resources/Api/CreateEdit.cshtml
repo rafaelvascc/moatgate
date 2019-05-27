@@ -1,5 +1,10 @@
 @page "{id:int?}"
+@addTagHelper *, MoatGate
 @model MoatGate.Pages.Resources.Api.CreateEditModel
+@{
+    var UserClaimsOptions = (List<SelectListItem>)ViewData["UserClaimsOptions"];
+    var _model = this.Model;
+}
 <h2>@ViewData["Title"]</h2>
 <div class="row">
     <div class="col-md-12">
@@ -41,21 +46,23 @@
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12">
                     <div class="form-group">
-                        <label asp-for="UserClaimsOptions" class="control-label"></label> <help text="List of associated user claim types that should be included in the access token."></help>
-                        <select class="form-control" id="ddlUserClaims" asp-for="UserClaims" asp-items="Model.UserClaimsOptions" multiple data-placeholder="Select User Claims"></select>
+                        <label class="control-label">Available User Claims</label> <help text="List of associated user claim types that should be included in the access token."></help>
+                        <select class="form-control select-user-claims" id="ddlUserClaims" asp-for="UserClaims" asp-items="UserClaimsOptions" multiple data-placeholder="Select User Claims"></select>
                     </div>
                 </div>
             </div>
 
             <ul class="nav nav-pills bootstrapTabs">
                 <li role="presentation" class="active"><a href="#apiScopesTab">Api Scopes <help text="An API must have at least one scope. Each scope can have different settings."></help></a></li>
-                <li role="presentation"><a href="#apiSecretTabs">Api Secrets <help text="The API secret is used for the introspection endpoint. The API can authenticate with introspection using the API name and secret."></help></a></li>
+                <li role="presentation"><a href="#apiSecretTabs">Api Secrets 
+                    <help text="The API secret is used for the introspection endpoint. The API can authenticate with introspection using the API name and secret."></help>
+                    <info-link src="http://docs.identityserver.io/en/latest/topics/secrets.html"></info-link></a></li>
             </ul>
 
             <div class="tab-content">
                 <div id="apiScopesTab" class="tab-pane fade in active">
                     <div class="form-group">
-                        <partial name="./PartialViews/Scopes" for="ApiResource.Scopes" />
+                        <partial name="./PartialViews/Scopes" for="@Model" />
                     </div>
                 </div>
                 <div id="apiSecretTabs" class="tab-pane fade">
@@ -64,7 +71,6 @@
                     </div>
                 </div>
             </div>
-
             <nav class="navbar navbar-default navbar-fixed-bottom">
                 <div class="container">
                     <div class="form-group btn-group pull-right btnGroupSave">

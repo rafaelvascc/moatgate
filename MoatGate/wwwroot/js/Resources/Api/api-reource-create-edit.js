@@ -1,6 +1,6 @@
 ﻿$(function () {
     //https://harvesthq.github.io/chosen/
-    $("#ddlUserClaims").chosen({ width: "100%" });
+    $(".select-user-claims").chosen({ width: "100%" });
 
     function newApiResourceSecretModel(index) {
         this.index = index;
@@ -23,12 +23,12 @@
         this.userScopes = [];
     }
 
-    function newApiScopeClaimModel(index, parentIndex) {
-        this.index = index;
-        this.parentIndex = parentIndex;
-        this.id = 0;
-        this.type = "";
-    }
+    //function newApiScopeClaimModel(index, parentIndex) {
+    //    this.index = index;
+    //    this.parentIndex = parentIndex;
+    //    this.id = 0;
+    //    this.type = "";
+    //}
 
     //Client secrets
     var $secretsScope = $("section[data-scope='partials-api-resource-secrets']");
@@ -72,8 +72,11 @@
     $btnAddAllowedScope.off("click").on("click", function (event) {
         var count = $("tr.scopeValues", $tblAllowedScopesBody).length;
         var newModel = new newApiResouceScopeModel(count);
-        var newHtml = allowedScopeCreateTemplate.render(newModel);
-        $tblAllowedScopesBody.append($(newHtml));
+        var $newHtml = $(allowedScopeCreateTemplate.render(newModel));
+        var $baseDdlClaims = $("#ddl-claims-base").clone().attr("id", "").addClass("select-user-claims").attr('name', 'ScopeUserClaims[' + (count + 1) * -1 + ']');
+        $newHtml.find('.claims-cell').append($baseDdlClaims);
+        $baseDdlClaims.chosen({ width: "100%" });
+        $tblAllowedScopesBody.append($newHtml);
     });
 
     $tblAllowedScopesBody.off("click").on("click", ".btn-delete-api-resource-scope", function (event) {
@@ -108,42 +111,42 @@
     }
 
     //Scopes Claims
-    var allowedScopeClaimCreateTemplate = $.templates("#api-resource-scope-claim-template");
+    //var allowedScopeClaimCreateTemplate = $.templates("#api-resource-scope-claim-template");
 
-    $tblAllowedScopesBody.on("click", "button.btn-add-api-resource-scope-claim", function (event) {
-        var $row = $(event.target).parents("tr:first");
-        var parentIndex = $row.attr("data-index");
-        var $siblings = $("tr[data-parent-index='" + parentIndex + "']", $tblAllowedScopesBody);
-        var count = $siblings.length;
-        var newModel = new newApiScopeClaimModel(count, parentIndex);
-        var newHtml = allowedScopeClaimCreateTemplate.render(newModel);
-        if (count === 0) {
-            $row.after($(newHtml));
-        }
-        else {
-            $siblings.last().after($(newHtml));
-        }
-    });
+    //$tblAllowedScopesBody.on("click", "button.btn-add-api-resource-scope-claim", function (event) {
+    //    var $row = $(event.target).parents("tr:first");
+    //    var parentIndex = $row.attr("data-index");
+    //    var $siblings = $("tr[data-parent-index='" + parentIndex + "']", $tblAllowedScopesBody);
+    //    var count = $siblings.length;
+    //    var newModel = new newApiScopeClaimModel(count, parentIndex);
+    //    var newHtml = allowedScopeClaimCreateTemplate.render(newModel);
+    //    if (count === 0) {
+    //        $row.after($(newHtml));
+    //    }
+    //    else {
+    //        $siblings.last().after($(newHtml));
+    //    }
+    //});
 
-    $tblAllowedScopesBody.on("click", "tr.scopeClaim button.btn-delete-api-resource-scope-claim", function (event) {
-        var $row = $(event.target).parents("tr.scopeClaim:first");
-        var parentIndex = $row.attr("data-parent-index");
-        $row.remove();
-        updateScopesClaimsIndexes(parentIndex);
-    });
+    //$tblAllowedScopesBody.on("click", "tr.scopeClaim button.btn-delete-api-resource-scope-claim", function (event) {
+    //    var $row = $(event.target).parents("tr.scopeClaim:first");
+    //    var parentIndex = $row.attr("data-parent-index");
+    //    $row.remove();
+    //    updateScopesClaimsIndexes(parentIndex);
+    //});
 
-    function updateScopesClaimsIndexes(parentIndex) {
-        var $rows = $tblAllowedScopesBody.find("tr.scopeClaim[data-parent-index='" + parentIndex + "']");
-        for (var i = 0; i < $rows.length; i++) {
-            var $row = $($rows[i]);
-            $row.attr("data-index", i);
-            var $fields = $row.find("[name^='ApiResource.Scopes[']");
-            for (var j = 0; j < $fields.length; j++) {
-                var $field = $($fields[j]);
-                $field.attr("name", $field.attr("name").replace(/UserClaims\[([1-9]\d*)\]/, "UserClaims[" + i + "]"));
-            }
-        }
-    }
+    //function updateScopesClaimsIndexes(parentIndex) {
+    //    var $rows = $tblAllowedScopesBody.find("tr.scopeClaim[data-parent-index='" + parentIndex + "']");
+    //    for (var i = 0; i < $rows.length; i++) {
+    //        var $row = $($rows[i]);
+    //        $row.attr("data-index", i);
+    //        var $fields = $row.find("[name^='ApiResource.Scopes[']");
+    //        for (var j = 0; j < $fields.length; j++) {
+    //            var $field = $($fields[j]);
+    //            $field.attr("name", $field.attr("name").replace(/UserClaims\[([1-9]\d*)\]/, "UserClaims[" + i + "]"));
+    //        }
+    //    }
+    //}
 
     //Scope checkbox binding fix
     $tblAllowedScopesBody.off("change").on("change", "input[type='checkbox'].scopeCheckbox", function (event) {
