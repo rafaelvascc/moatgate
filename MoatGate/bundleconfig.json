@@ -5,25 +5,12 @@
     // An array of relative input file paths. Globbing patterns supported
     "inputFiles": [
       "wwwroot/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css",
-      "wwwroot/lib/font-awesome/web-fonts-with-css/fontawesome-all.css",
+      "wwwroot/lib/font-awesome/web-fonts-with-css/css/fontawesome-all.css",
       "wwwroot/lib/animatecss/animatecss.css",
       "wwwroot/lib/chosen/chosen.css",
       "wwwroot/css/site.css"
     ],
     "outputFileName": "wwwroot/css/site.normal.css"
-  },
-  {
-    "inputFiles": [
-      "wwwroot/js/site.normal.js"
-    ],
-    // Optionally specify minification options
-    "minify": {
-      "enabled": true,
-      "renameLocals": true
-    },
-    "outputFileName": "wwwroot/js/site.min.js",
-    // Optionally generate .map file
-    "sourceMap": false
   },
   {
     "inputFiles": [
