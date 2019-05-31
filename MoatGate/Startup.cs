@@ -37,11 +37,11 @@ namespace MoatGate
 
             if (_env.IsDevelopment() || string.IsNullOrEmpty(identityServerConnectionString))
             {
-                identityServerConnectionString = Configuration.GetConnectionString("MoatGate.IdentityServer.ConnectionString");
+                identityServerConnectionString = Configuration.GetConnectionString("MoatGateIdentityServerConnectionString");
             }
 
             if (string.IsNullOrEmpty(identityServerConnectionString))
-                throw new ApplicationException("could't find Moatgate Connection String from environment variable MOATGATE_CONNECTION_STRING or configuration MoatGate.IdentityServer.ConnectionString on the appSettings.json file");
+                throw new ApplicationException("could't find Moatgate Connection String from environment variable MOATGATE_CONNECTION_STRING or configuration MoatGateIdentityServerConnectionString on the appSettings.json file");
 
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
