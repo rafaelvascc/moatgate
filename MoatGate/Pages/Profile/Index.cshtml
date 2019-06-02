@@ -2,7 +2,12 @@
 @using System.Globalization
 @model MoatGate.Pages.Profile.IndexModel
 @section Styles {
-    <link rel="stylesheet" href="~/css/profile.css" />
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/profile.min.css" asp-append-version="true" />
+    </environment>
 }
 <div>
     <h1>User Profile</h1>

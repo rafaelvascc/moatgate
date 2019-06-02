@@ -1,7 +1,12 @@
 ﻿@page
 @model MoatGate.Pages.Account.LogoutModel
 @section Styles {
-    <link rel="stylesheet" href="~/css/login.css" />
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/logout.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/logout.min.css" asp-append-version="true" />
+    </environment>
 }
 <!--
     you can substitue the span of reauth email for a input with the email and

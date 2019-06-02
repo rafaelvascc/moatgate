@@ -3,6 +3,83 @@
 [
   {
     "inputFiles": [
+      "wwwroot/css/site.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "outputFileName": "wwwroot/css/site.min.css"
+  },
+  {
+    "inputFiles": [
+      "wwwroot/css/consent.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "outputFileName": "wwwroot/css/consent.min.css"
+  },
+  {
+    "inputFiles": [
+      "wwwroot/css/login.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "outputFileName": "wwwroot/css/login.min.css"
+  },
+  {
+    "inputFiles": [
+      "wwwroot/css/logout.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "outputFileName": "wwwroot/css/logout.min.css"
+  },
+  {
+    "inputFiles": [
+      "wwwroot/css/profile.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "outputFileName": "wwwroot/css/profile.min.css"
+  },
+  {
+    "inputFiles": [
+      "wwwroot/css/role.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "outputFileName": "wwwroot/css/role.min.css"
+  },
+  {
+    "inputFiles": [
+      "wwwroot/lib/animatecss/animatecss.css"
+    ],
+    "outputFileName": "wwwroot/lib/animatecss/animatecss.min.css"
+  },
+  {
+    "inputFiles": [
+      "wwwroot/js/site.js"
+    ],
+    "outputFileName": "wwwroot/js/site.min.js",
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "inputFiles": [
       "wwwroot/js/Account/login.js"
     ],
     "outputFileName": "wwwroot/js/Account/login.min.js",
@@ -145,56 +222,13 @@
     "sourceMap": false
   },
   {
-    // An array of relative input file paths. Globbing patterns supported
     "inputFiles": [
-      "wwwroot/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css",
-      "wwwroot/lib/font-awesome/web-fonts-with-css/css/fontawesome-all.css",
-      "wwwroot/lib/animatecss/animatecss.css",
-      "wwwroot/lib/chosen/chosen.css",
-      "wwwroot/css/site.css"
+      "wwwroot/lib/jsrender/jsrender.js"
     ],
-    "outputFileName": "wwwroot/css/site.normal.css"
-  },
-  {
-    "inputFiles": [
-      "wwwroot/lib/jquery/dist/jquery.js",
-      "wwwroot/lib/moment/min/moment-with-locales.js",
-      "wwwroot/lib/jquery-validation/dist/jquery.validate.js",
-      "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
-      "wwwroot/lib/bootstrap/dist/js/bootstrap.js",
-      "wwwroot/lib/jsrender/jsrender.js",
-      "wwwroot/lib/remarkable-bootstrap-notify/dist/bootstrap-notify.js",
-      "wwwroot/lib/bootstrap-datepicker/js/bootstrap-datepicker.js",
-      "wwwroot/lib/chosen/chosen.jquery.js"
-    ],
-    // Optionally specify minification options
     "minify": {
       "enabled": true,
       "renameLocals": true
     },
-    "outputFileName": "wwwroot/js/vendor.min.js",
-    // Optionally generate .map file
-    "sourceMap": false
-  },
-  {
-    "inputFiles": [
-      "wwwroot/lib/jquery/dist/jquery.js",
-      "wwwroot/lib/moment/min/moment-with-locales.js",
-      "wwwroot/lib/jquery-validation/dist/jquery.validate.js",
-      "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
-      "wwwroot/lib/bootstrap/dist/js/bootstrap.js",
-      "wwwroot/lib/jsrender/jsrender.js",
-      "wwwroot/lib/remarkable-bootstrap-notify/dist/bootstrap-notify.js",
-      "wwwroot/lib/bootstrap-datepicker/js/bootstrap-datepicker.js",
-      "wwwroot/lib/chosen/chosen.jquery.js"
-    ],
-    // Optionally specify minification options
-    "minify": {
-      "enabled": false,
-      "renameLocals": false
-    },
-    "outputFileName": "wwwroot/js/vendor.js",
-    // Optionally generate .map file
-    "sourceMap": true
+    "outputFileName": "wwwroot/lib/jsrender/jsrender.min.js"
   }
 ]

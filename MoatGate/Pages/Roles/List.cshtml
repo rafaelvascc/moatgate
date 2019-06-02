@@ -4,8 +4,14 @@
     ViewData["Title"] = "Roles";
 }
 @section Styles {
-    <link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.min.css" asp-append-version="true" />
-    <link rel="stylesheet" type="text/css" href="~/css/role.css" asp-append-version="true" />
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/role.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/role.min.css" asp-append-version="true" />
+    </environment>
 }
 <div class="col-lg-12">
     <div class="col-lg-6">
@@ -34,11 +40,12 @@
     </div>
 </script>
 @section Scripts {
-    <script type="text/javascript" src="~/lib/datatables/datatables.min.js" asp-append-version="true"></script>
     <environment include="Development">
+        <script type="text/javascript" src="~/lib/datatables/datatables.js" asp-append-version="true"></script>
         <script type="text/javascript" src="~/js/Roles/list.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
+        <script type="text/javascript" src="~/lib/datatables/datatables.min.js" asp-append-version="true"></script>
         <script type="text/javascript" src="~/js/Roles/list.min.js" asp-append-version="true"></script>
     </environment>
 }

@@ -4,7 +4,12 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @section Styles {
-    <link rel="stylesheet" href="~/css/consent.css" />
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/consent.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/consent.min.css" asp-append-version="true"  />
+    </environment>
 }
 
 <div class="page-consent">

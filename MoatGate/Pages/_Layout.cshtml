@@ -7,9 +7,13 @@
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/lib/font-awesome/web-fonts-with-css/css/fontawesome-all.min.css" />
+        <link rel="stylesheet" href="~/lib/font-awesome/web-fonts-with-css/css/fontawesome-all.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="~/css/site.normal.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/font-awesome/web-fonts-with-css/css/fontawesome-all.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/animatecss/animatecss.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/chosen/chosen.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -17,6 +21,10 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/lib/font-awesome/web-fonts-with-css/css/fontawesome-all.min.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/font-awesome/web-fonts-with-css/css/fontawesome-all.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/animatecss/animatecss.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/chosen/chosen.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
     @RenderSection("Styles", required: false)
@@ -85,12 +93,29 @@
         </div>
     </div>
     <environment include="Development">
-        <script src="~/js/vendor.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
+        <script src="~/lib/moment/dist/moment-with-locales.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>
+        <script src="~/lib/jsrender/jsrender.js" asp-append-version="true"></script>
+        <script src="~/lib/remarkable-bootstrap-notify/dist/bootstrap-notify.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.js" asp-append-version="true"></script>
+        <script src="~/lib/chosen/chosen.jquery.js" asp-append-version="true"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
-        <script src="~/js/vendor.min.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+        <script src="~/lib/moment/dist/moment-with-locales.min.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+        <script src="~/lib/jsrender/jsrender.min.js" asp-append-version="true"></script>
+        <script src="~/lib/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js" asp-append-version="true"></script>
+        <script src="~/lib/chosen/chosen.jquery.min.js" asp-append-version="true"></script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

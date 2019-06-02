@@ -1,7 +1,12 @@
 ﻿@page
 @model MoatGate.Pages.Profile.EditModel
 @section Styles {
-    <link rel="stylesheet" href="~/css/profile.css" />
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/profile.min.css" asp-append-version="true" />
+    </environment>
 }
 <div>
     <h1>Edit Profile</h1>
