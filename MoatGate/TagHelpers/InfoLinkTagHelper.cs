@@ -18,7 +18,7 @@ namespace MoatGate.TagHelpers
                 output.Attributes.Add("src", Src);
                 output.Attributes.Add("target", "_blank");
             }
-            output.Content.AppendFormat("<i class='far fa-info-circle'><i/>");
+            output.Content.AppendHtml("<i class='far fa-info-circle'/>");
         }
     }
 }
