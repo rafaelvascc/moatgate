@@ -54,9 +54,13 @@
 
             <ul class="nav nav-pills bootstrapTabs">
                 <li role="presentation" class="active"><a href="#apiScopesTab">Api Scopes <help text="An API must have at least one scope. Each scope can have different settings."></help></a></li>
-                <li role="presentation"><a href="#apiSecretTabs">Api Secrets 
-                    <help text="The API secret is used for the introspection endpoint. The API can authenticate with introspection using the API name and secret."></help>
-                    <info-link src="http://docs.identityserver.io/en/latest/topics/secrets.html"></info-link></a></li>
+                <li role="presentation">
+                    <a href="#apiSecretTabs">
+                        Api Secrets
+                        <help text="The API secret is used for the introspection endpoint. The API can authenticate with introspection using the API name and secret."></help>
+                        <info-link src="http://docs.identityserver.io/en/latest/topics/secrets.html"></info-link>
+                    </a>
+                </li>
             </ul>
 
             <div class="tab-content">
@@ -83,11 +87,11 @@
     </div>
 </div>
 @section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <environment include="Development">
-        <script type="text/javascript" src="~/js/Resources/Api/api-reource-create-edit.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/js/Resources/Api/api-resource-create-edit.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
-        <script type="text/javascript" src="~/js/Resources/Api/api-reource-create-edit.min.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/js/Resources/Api/api-resource-create-edit.min.js" asp-append-version="true"></script>
     </environment>
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -136,6 +136,11 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script type="text/javascript" src="~/js/Profile/edit.js" asp-append-version="true"></script>
+    <environment include="Development">
+        <script type="text/javascript" src="~/js/Profile/edit.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script type="text/javascript" src="~/js/Profile/edit.min.js" asp-append-version="true"></script>
+    </environment>
 }
 

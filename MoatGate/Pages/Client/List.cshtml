@@ -81,5 +81,10 @@
 </script>
 @section Scripts {
     <script type="text/javascript" src="~/lib/datatables/datatables.min.js" asp-append-version="true"></script>
-    <script type="text/javascript" src="~/js//Clients/list.js" asp-append-version="true"></script>
+    <environment include="Development">
+        <script type="text/javascript" src="~/js/Clients/list.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script type="text/javascript" src="~/js/Clients/list.min.js" asp-append-version="true"></script>
+    </environment>
 }

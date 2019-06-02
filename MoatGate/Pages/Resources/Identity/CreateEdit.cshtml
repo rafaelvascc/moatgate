@@ -70,11 +70,11 @@
     </div>
 </div>
 @section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <environment include="Development">
-        <script type="text/javascript" src="~/js/Resources/Identity/identity-reource-create-edit.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/js/Resources/Identity/identity-resource-create-edit.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
-        <script type="text/javascript" src="~/js/Resources/Identity/identity-reource-create-edit.min.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/js/Resources/Identity/identity-resource-create-edit.min.js" asp-append-version="true"></script>
     </environment>
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

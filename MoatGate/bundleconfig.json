@@ -2,6 +2,149 @@
 // More info at https://go.microsoft.com/fwlink/?LinkId=808241
 [
   {
+    "inputFiles": [
+      "wwwroot/js/Account/login.js"
+    ],
+    "outputFileName": "wwwroot/js/Account/login.min.js",
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "inputFiles": [
+      "wwwroot/js/Clients/client-create-edit.js"
+    ],
+    "outputFileName": "wwwroot/js/Clients/client-create-edit.min.js",
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "inputFiles": [
+      "wwwroot/js/Clients/list.js"
+    ],
+    "outputFileName": "wwwroot/js/Clients/list.min.js",
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "inputFiles": [
+      "wwwroot/js/Consent/consent.js"
+    ],
+    "outputFileName": "wwwroot/js/Consent/consent.min.js",
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "inputFiles": [
+      "wwwroot/js/Profile/edit.js"
+    ],
+    "outputFileName": "wwwroot/js/Profile/edit.min.js",
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "inputFiles": [
+      "wwwroot/js/Profile/edit.js"
+    ],
+    "outputFileName": "wwwroot/js/Profile/edit.min.js",
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "inputFiles": [
+      "wwwroot/js/Profile/index.js"
+    ],
+    "outputFileName": "wwwroot/js/Profile/index.min.js",
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "inputFiles": [
+      "wwwroot/js/Resources/Api/api-resource-create-edit.js"
+    ],
+    "outputFileName": "wwwroot/js/Resources/Api/api-resource-create-edit.min.js",
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "inputFiles": [
+      "wwwroot/js/Resources/Api/list.js"
+    ],
+    "outputFileName": "wwwroot/js/Resources/Api/list.min.js",
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "inputFiles": [
+      "wwwroot/js/Resources/Identity/identity-resource-create-edit.js"
+    ],
+    "outputFileName": "wwwroot/js/Resources/Identity/identity-resource-create-edit.min.js",
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "inputFiles": [
+      "wwwroot/js/Resources/Identity/list.js"
+    ],
+    "outputFileName": "wwwroot/js/Resources/Identity/list.min.js",
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "inputFiles": [
+      "wwwroot/js/Roles/list.js"
+    ],
+    "outputFileName": "wwwroot/js/Roles/list.min.js",
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "inputFiles": [
+      "wwwroot/js/Users/list.js"
+    ],
+    "outputFileName": "wwwroot/js/Users/list.min.js",
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
     // An array of relative input file paths. Globbing patterns supported
     "inputFiles": [
       "wwwroot/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css",
