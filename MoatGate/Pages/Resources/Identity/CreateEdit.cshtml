@@ -9,17 +9,17 @@
             <input type="hidden" asp-for="IdentityResource.Id" />
             <div class="col-lg-8">
                 <div class="form-group">
-                    <label asp-for="IdentityResource.Name" class="control-label"></label>
+                    <label class="control-label">Name</label> <help text="The unique name of the identity resource. This is the value a client will use for the scope parameter in the authorize request."></help>
                     <input asp-for="IdentityResource.Name" class="form-control" />
                     <span asp-validation-for="IdentityResource.Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="IdentityResource.DisplayName" class="control-label"></label>
+                    <label class="control-label">Display Name</label> <help text="This value will be used e.g. on the consent screen."></help>
                     <input asp-for="IdentityResource.DisplayName" class="form-control" />
                     <span asp-validation-for="IdentityResource.DisplayName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="IdentityResource.Description" class="control-label"></label>
+                    <label class="control-label">Description</label> <help text="This value will be used e.g. on the consent screen."></help>
                     <input asp-for="IdentityResource.Description" class="form-control" />
                     <span asp-validation-for="IdentityResource.Description" class="text-danger"></span>
                 </div>
@@ -29,28 +29,28 @@
                 <div class="form-group">
                     <div class="checkbox">
                         <label>
-                            <input asp-for="IdentityResource.Enabled" /> @Html.DisplayNameFor(model => model.IdentityResource.Enabled)
+                            <input asp-for="IdentityResource.Enabled" /> Enabled <help text="Indicates if this resource is enabled and can be requested. Defaults to true."></help>
                         </label>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
                         <label>
-                            <input asp-for="IdentityResource.Emphasize" /> @Html.DisplayNameFor(model => model.IdentityResource.Emphasize)
+                            <input asp-for="IdentityResource.Emphasize" /> Emphasize <help text="Specifies whether the consent screen will emphasize this scope (if the consent screen wants to implement such a feature). Use this setting for sensitive or important scopes. Defaults to false."></help>
                         </label>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
                         <label>
-                            <input asp-for="IdentityResource.Required" /> @Html.DisplayNameFor(model => model.IdentityResource.Required)
+                            <input asp-for="IdentityResource.Required" /> Required <help text="Specifies whether the user can de-select the scope on the consent screen (if the consent screen wants to implement such a feature). Defaults to false."></help>
                         </label>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
                         <label>
-                            <input asp-for="IdentityResource.ShowInDiscoveryDocument" /> @Html.DisplayNameFor(model => model.IdentityResource.ShowInDiscoveryDocument)
+                            <input asp-for="IdentityResource.ShowInDiscoveryDocument" /> Show In Discovery Document <help text="Specifies whether this scope is shown in the discovery document. Defaults to true."></help>
                         </label>
                     </div>
                 </div>

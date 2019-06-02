@@ -15,21 +15,41 @@
                 <li role="presentation"><a href="#clientAuthTab">Authentication/Logout</a></li>
                 <li role="presentation"><a href="#clientTokenTab">Token</a></li>
                 <li role="presentation"><a href="#clientConsentScreenTab">Consent Screen</a></li>
+                <li role="presentation"><a href="#deviceFlowTab">Device Flow</a></li>
             </ul>
             <div class="tab-content">
                 <div id="clientBasicTab" class="tab-pane fade in active">
                     <div class="col-lg-8">
                         <div class="form-group">
-                            <label asp-for="Client.ClientId" class="control-label"></label>
+                            <label class="control-label">Client Id</label> <help text="Unique ID of the client"></help>
                             <input asp-for="Client.ClientId" class="form-control" />
                             <span asp-validation-for="Client.ClientId" class="text-danger"></span>
                         </div>
-
                         <ul class="nav nav-pills bootstrapTabs">
-                            <li role="presentation" class="active"><a href="#clientBasicTabSecrets">Client Secrets</a></li>
-                            <li role="presentation"><a href="#clientBasicTabRedirects">Redirect URLs</a></li>
-                            <li role="presentation"><a href="#clientBasicTabScopes">Scopes</a></li>
-                            <li role="presentation"><a href="#clientBasicTabProps">Properties</a></li>
+                            <li role="presentation" class="active">
+                                <a href="#clientBasicTabSecrets">
+                                    Client Secrets
+                                    <help text="List of client secrets - credentials to access the token endpoint."></help>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#clientBasicTabRedirects">
+                                    Redirect URLs
+                                    <help text="Specifies the allowed URIs to return tokens or authorization codes to."></help>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#clientBasicTabScopes">
+                                    Scopes
+                                    <help text="By default a client has no access to any resources - specify the allowed resources by adding the corresponding scopes names."></help>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#clientBasicTabProps">
+                                    Properties
+                                    <help text="Dictionary to hold any custom client-specific values as needed."></help>
+                                </a>
+                            </li>
                         </ul>
                         <div class="tab-content">
                             <div id="clientBasicTabSecrets" class="tab-pane fade in active">
@@ -58,47 +78,48 @@
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input asp-for="Client.Enabled" /> @Html.DisplayNameFor(model => model.Client.Enabled)
+                                    <input asp-for="Client.Enabled" /> Enabled <help text="Specifies if client is enabled. Defaults to true."></help>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input asp-for="Client.RequireClientSecret" /> @Html.DisplayNameFor(model => model.Client.RequireClientSecret)
+                                    <input asp-for="Client.RequireClientSecret" /> Require Client Secret <help text="Specifies whether this client needs a secret to request tokens from the token endpoint (defaults to true)."></help>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input asp-for="Client.RequirePkce" /> @Html.DisplayNameFor(model => model.Client.RequirePkce)
+                                    <input asp-for="Client.RequirePkce" /> Require Pkce <help text="Specifies whether clients using an authorization code based grant type must send a proof key."></help>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input asp-for="Client.AllowPlainTextPkce" /> @Html.DisplayNameFor(model => model.Client.AllowPlainTextPkce)
+                                    <input asp-for="Client.AllowPlainTextPkce" /> Allow Plain Text Pkce <help text="Specifies whether clients using PKCE can use a plain text code challenge (not recommended - and default to false)."></help>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input asp-for="Client.AllowOfflineAccess" /> @Html.DisplayNameFor(model => model.Client.AllowOfflineAccess)
+                                    <input asp-for="Client.AllowOfflineAccess" /> Allow Offline Access <help text="Specifies whether this client can request refresh tokens (be requesting the offline_access scope)."></help>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input asp-for="Client.AllowAccessTokensViaBrowser" /> @Html.DisplayNameFor(model => model.Client.AllowAccessTokensViaBrowser)
+                                    <input asp-for="Client.AllowAccessTokensViaBrowser" /> Allow Access Tokens Via Browser
+                                    <help text="Specifies whether this client is allowed to receive access tokens via the browser. This is useful to harden flows that allow multiple response types (e.g. by disallowing a hybrid flow client that is supposed to use code id_token to add the token response type and thus leaking the token to the browser."></help>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Grant Types (Flows)</label>
+                            <label class="control-label">Grant Types (Flows)</label> <help text="Specifies the grant types the client is allowed to use."></help>
                             @{
                                 <partial name="./PartialViews/GrantType" for="GrantTypes" />
                             }
@@ -108,21 +129,35 @@
                 <div id="clientAuthTab" class="tab-pane fade">
                     <div class="col-lg-8">
                         <div class="form-group">
-                            <label asp-for="Client.FrontChannelLogoutUri" class="control-label"></label>
+                            <label class="control-label">Front Channel Logout Uri</label> <help text="Specifies logout URI at client for HTTP based front-channel logout. See the OIDC Front-Channel spec for more details."></help>
                             <input asp-for="Client.FrontChannelLogoutUri" class="form-control" />
                             <span asp-validation-for="Client.FrontChannelLogoutUri" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Client.BackChannelLogoutUri" class="control-label"></label>
+                            <label class="control-label">Back Channel Logout Uri</label> <help text="Specifies logout URI at client for HTTP based back-channel logout. See the OIDC Back-Channel spec for more details."></help>
                             <input asp-for="Client.BackChannelLogoutUri" class="form-control" />
                             <span asp-validation-for="Client.BackChannelLogoutUri" class="text-danger"></span>
                         </div>
+                        <div class="form-group">
+                            <label class="control-label">User Sso Lifetime</label> <help text="The maximum duration (in seconds) since the last time the user authenticated. Defaults to null. You can adjust the lifetime of a session token to control when and how often a user is required to reenter credentials instead of being silently authenticated, when using a web application."></help>
+                            <input asp-for="Client.UserSsoLifetime" class="form-control" />
+                            <span asp-validation-for="Client.UserSsoLifetime" class="text-danger"></span>
+                        </div>
 
                         <ul class="nav nav-pills bootstrapTabs">
-                            <li role="presentation" class="active"><a href="#clientAuthTabRedirects">Logout Redirect URLs</a></li>
-                            <li role="presentation"><a href="#clientAuthTabRestrictions">Idp Restrictions</a></li>
+                            <li role="presentation" class="active">
+                                <a href="#clientAuthTabRedirects">
+                                    Post Logout Redirect URLs
+                                    <help text="Specifies allowed URIs to redirect to after logout. See the OIDC Connect Session Management spec for more details."></help>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#clientAuthTabRestrictions">
+                                    Identity Provider Restrictions
+                                    <help text="Specifies which external IdPs can be used with this client (if list is empty all IdPs are allowed). Defaults to empty."></help>
+                                </a>
+                            </li>
                         </ul>
-
                         <div class="tab-content">
                             <div id="clientAuthTabRedirects" class="tab-pane fade in active">
                                 <div class="form-group">
@@ -141,21 +176,21 @@
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input asp-for="Client.FrontChannelLogoutSessionRequired" /> @Html.DisplayNameFor(model => model.Client.FrontChannelLogoutSessionRequired)
+                                    <input asp-for="Client.FrontChannelLogoutSessionRequired" /> Front Channel Logout Session Required <help text="Specifies if the user’s session id should be sent to the FrontChannelLogoutUri. Defaults to true."></help>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input asp-for="Client.BackChannelLogoutSessionRequired" /> @Html.DisplayNameFor(model => model.Client.BackChannelLogoutSessionRequired)
+                                    <input asp-for="Client.BackChannelLogoutSessionRequired" /> Back Channel Logout Session Required <help text="Specifies if the user’s session id should be sent in the request to the BackChannelLogoutUri. Defaults to true."></help>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input asp-for="Client.EnableLocalLogin" /> @Html.DisplayNameFor(model => model.Client.EnableLocalLogin)
+                                    <input asp-for="Client.EnableLocalLogin" /> Enable Local Login <help text="Specifies if this client can use local accounts, or external IdPs only. Defaults to true."></help>
                                 </label>
                             </div>
                         </div>
@@ -165,48 +200,58 @@
                     <div class="col-lg-8">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label asp-for="Client.IdentityTokenLifetime" class="control-label"></label>
+                                <label class="control-label">Identity Token Lifetime</label> <help text="Lifetime to identity token in seconds (defaults to 300 seconds / 5 minutes)."></help>
                                 <input asp-for="Client.IdentityTokenLifetime" min="0" class="form-control" />
                                 <span asp-validation-for="Client.IdentityTokenLifetime" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Client.AccessTokenLifetime" class="control-label"></label>
+                                <label class="control-label">Access Token Lifetime</label> <help text="Lifetime of access token in seconds (defaults to 3600 seconds / 1 hour)."></help>
                                 <input asp-for="Client.AccessTokenLifetime" min="0" class="form-control" />
                                 <span asp-validation-for="Client.AccessTokenLifetime" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Client.AuthorizationCodeLifetime" class="control-label"></label>
+                                <label class="control-label">Authorization Code Lifetime</label> <help text="Lifetime of authorization code in seconds (defaults to 300 seconds / 5 minutes)."></help>
                                 <input asp-for="Client.AuthorizationCodeLifetime" min="0" class="form-control" />
                                 <span asp-validation-for="Client.AuthorizationCodeLifetime" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label asp-for="Client.AbsoluteRefreshTokenLifetime" class="control-label"></label>
+                                <label class="control-label">Absolute Refresh Token Lifetime</label> <help text="Maximum lifetime of a refresh token in seconds. Defaults to 2592000 seconds / 30 days."></help>
                                 <input asp-for="Client.AbsoluteRefreshTokenLifetime" min="0" class="form-control" />
                                 <span asp-validation-for="Client.AbsoluteRefreshTokenLifetime" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Client.SlidingRefreshTokenLifetime" class="control-label"></label>
+                                <label class="control-label">Sliding Refresh Token Lifetime</label> <help text="Sliding lifetime of a refresh token in seconds. Defaults to 1296000 seconds / 15 days."></help>
                                 <input asp-for="Client.SlidingRefreshTokenLifetime" min="0" class="form-control" />
                                 <span asp-validation-for="Client.SlidingRefreshTokenLifetime" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Client.ClientClaimsPrefix" class="control-label"></label>
+                                <label class="control-label">Client Claims Prefix</label> <help text="If set, the prefix client claim types will be prefixed with. Defaults to client_. The intent is to make sure they don’t accidentally collide with user claims."></help>
                                 <input asp-for="Client.ClientClaimsPrefix" class="form-control" />
                                 <span asp-validation-for="Client.ClientClaimsPrefix" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Client.PairWiseSubjectSalt" class="control-label"></label>
+                            <label class="control-label">Pair Wise Subject Salt</label> <help text="Salt value used in pair-wise subjectId generation for users of this client."></help>
                             <input asp-for="Client.PairWiseSubjectSalt" class="form-control" />
                             <span asp-validation-for="Client.PairWiseSubjectSalt" class="text-danger"></span>
                         </div>
 
 
                         <ul class="nav nav-pills bootstrapTabs">
-                            <li role="presentation" class="active"><a href="#clientTokenTabCors">Allowed Cors Origins</a></li>
-                            <li role="presentation"><a href="#clientTokenTabClaim"> Claims</a></li>
+                            <li role="presentation" class="active">
+                                <a href="#clientTokenTabCors">
+                                    Allowed Cors Origins
+                                    <help text="If specified, will be used by the default CORS policy service implementations (In-Memory and EF) to build a CORS policy for JavaScript clients."></help>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#clientTokenTabClaim">
+                                    Claims
+                                    <help text="Allows settings claims for the client (will be included in the access token)."></help>
+                                </a>
+                            </li>
                         </ul>
 
                         <div class="tab-content">
@@ -226,56 +271,56 @@
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input asp-for="Client.UpdateAccessTokenClaimsOnRefresh" /> @Html.DisplayNameFor(model => model.Client.UpdateAccessTokenClaimsOnRefresh)
+                                    <input asp-for="Client.UpdateAccessTokenClaimsOnRefresh" /> Update Access Token Claims On Refresh <help text="Gets or sets a value indicating whether the access token (and its claims) should be updated on a refresh token request."></help>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input asp-for="Client.IncludeJwtId" /> @Html.DisplayNameFor(model => model.Client.IncludeJwtId)
+                                    <input asp-for="Client.IncludeJwtId" /> Include Jwt Id <help text="Specifies whether JWT access tokens should have an embedded unique ID (via the jti claim)."></help>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input asp-for="Client.AlwaysIncludeUserClaimsInIdToken" /> @Html.DisplayNameFor(model => model.Client.AlwaysIncludeUserClaimsInIdToken)
+                                    <input asp-for="Client.AlwaysIncludeUserClaimsInIdToken" /> Always Include User Claims In Id Token <help text="When requesting both an id token and access token, should the user claims always be added to the id token instead of requring the client to use the userinfo endpoint. Default is false."></help>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">RefreshTokenUsage</label>
+                            <label class="control-label">Refresh Token Usage</label>
                             <div class="radio">
                                 <label>
                                     <input type="radio" asp-for="Client.RefreshTokenUsage" value="0">
-                                    Reuse
+                                    Reuse <help text="The refresh token handle will stay the same when refreshing tokens."></help>
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
                                     <input type="radio" asp-for="Client.RefreshTokenUsage" value="1">
-                                    One Time Only
+                                    One Time Only <help text="The refresh token handle will be updated when refreshing tokens. This is the default."></help>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">RefreshTokenExpiration</label>
+                            <label class="control-label">Refresh Token Expiration</label>
                             <div class="radio">
                                 <label>
                                     <input type="radio" asp-for="Client.RefreshTokenExpiration" value="0">
-                                    Sliding
+                                    Sliding <help text="The refresh token will expire on a fixed point in time (specified by the AbsoluteRefreshTokenLifetime)."></help>
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
                                     <input type="radio" asp-for="Client.RefreshTokenExpiration" value="1">
-                                    Absolute
+                                    Absolute <help text="when refreshing the token, the lifetime of the refresh token will be renewed (by the amount specified in SlidingRefreshTokenLifetime). The lifetime will not exceed AbsoluteRefreshTokenLifetime."></help>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">AccessTokenType</label>
+                            <label class="control-label">Access Token Type</label> <help text="Specifies whether the access token is a reference token or a self contained JWT token (defaults to Jwt)."></help>
                             <div class="radio">
                                 <label>
                                     <input type="radio" asp-for="Client.AccessTokenType" value="0">
@@ -293,24 +338,23 @@
                 </div>
                 <div id="clientConsentScreenTab" class="tab-pane fade">
                     <div class="col-lg-8">
-
                         <div class="form-group">
-                            <label asp-for="Client.ClientName" class="control-label"></label>
+                            <label class="control-label">Client Name</label> <help text="Client display name (used for logging and consent screen)."></help>
                             <input asp-for="Client.ClientName" class="form-control" />
                             <span asp-validation-for="Client.ClientName" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Client.ClientUri" class="control-label"></label>
+                            <label class="control-label">Client Uri</label> <help text="URI to further information about client (used on consent screen)."></help>
                             <input asp-for="Client.ClientUri" class="form-control" />
                             <span asp-validation-for="Client.ClientUri" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Client.LogoUri" class="control-label"></label>
+                            <label class="control-label">Logo Uri</label> <help text="URI to client logo (used on consent screen)."></help>
                             <input asp-for="Client.LogoUri" class="form-control" />
                             <span asp-validation-for="Client.LogoUri" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Client.ConsentLifetime" class="control-label"></label>
+                            <label class="control-label">Consent Lifetime</label> <help text="Lifetime of a user consent in seconds. Defaults to null (no expiration)."></help>
                             <input asp-for="Client.ConsentLifetime" class="form-control" />
                             <span asp-validation-for="Client.ConsentLifetime" class="text-danger"></span>
                         </div>
@@ -320,16 +364,30 @@
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input asp-for="Client.RequireConsent" /> @Html.DisplayNameFor(model => model.Client.RequireConsent)
+                                    <input asp-for="Client.RequireConsent" /> Require Consent <help text="Specifies whether a consent screen is required. Defaults to true."></help>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input asp-for="Client.AllowRememberConsent" /> @Html.DisplayNameFor(model => model.Client.AllowRememberConsent)
+                                    <input asp-for="Client.AllowRememberConsent" /> Allow Remember Consent <help text="Specifies whether user can choose to store consent decisions. Defaults to true."></help>
                                 </label>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="deviceFlowTab" class="tab-pane fade">
+                    <div class="col-lg-8">
+                        <div class="form-group">
+                            <label class="control-label">User Code Type</label> <help text="Specifies the type of user code to use for the client. Otherwise falls back to default."></help>
+                            <input asp-for="Client.UserCodeType" class="form-control" />
+                            <span asp-validation-for="Client.UserCodeType" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Device Code Lifetime</label> <help text="Lifetime to device code in seconds (defaults to 300 seconds / 5 minutes)."></help>
+                            <input asp-for="Client.DeviceCodeLifetime" class="form-control" />
+                            <span asp-validation-for="Client.DeviceCodeLifetime" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
