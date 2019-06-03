@@ -33,15 +33,12 @@ namespace MoatGate
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var identityServerConnectionString = Environment.GetEnvironmentVariable("MOATGATE_DB_CONNECTIONSTRING");
+            var configLoader = new EnvironmentConfigLoader(_env, Configuration);
 
-            if (_env.IsDevelopment() || string.IsNullOrEmpty(identityServerConnectionString))
-            {
-                identityServerConnectionString = Configuration.GetConnectionString("MoatGateIdentityServerConnectionString");
-            }
+            var identityServerConnectionString = configLoader.GetDbConnectionString();
 
             if (string.IsNullOrEmpty(identityServerConnectionString))
-                throw new ApplicationException("could't find Moatgate Connection String from environment variable MOATGATE_CONNECTION_STRING or configuration MoatGateIdentityServerConnectionString on the appSettings.json file");
+                throw new ApplicationException("Could't find Moatgate Connection String from environment variable MOATGATE_CONNECTION_STRING or configuration MoatGateIdentityServerConnectionString on the appSettings.json file");
 
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
@@ -134,14 +131,29 @@ namespace MoatGate
                 options.AddPolicy("IsIdentityAdmin", policy => policy.RequireRole("IdentityAdmin"));
             });
 
-            //services.AddSingleton<IEmailSender, SendGridEmailSender>();
-            //services.AddSingleton<ISmsSender, TwilioSmsSender>();
 
-            services.AddSingleton<IEmailSender, DummyMessagingService>();
-            services.AddSingleton<ISmsSender, DummyMessagingService>();
+            var (useSendgrid, sendgridOptions) = configLoader.GetSendGridOptions();
+            var (useTwilio, twilioOptions) = configLoader.GetSendGridOptions();
 
-            services.Configure<SendGridOptions>(Configuration);
-            services.Configure<TwilioOptions>(Configuration);
+            if (useSendgrid)
+            {
+                services.AddSingleton<IEmailSender, SendGridEmailSender>();
+                services.AddSingleton(sendgridOptions);
+            }
+            else
+            {
+                services.AddSingleton<IEmailSender, DummyMessagingService>();
+            }
+
+            if (useTwilio)
+            {
+                services.AddSingleton<ISmsSender, TwilioSmsSender>();
+                services.AddSingleton(twilioOptions);
+            }
+            else
+            {
+                services.AddSingleton<ISmsSender, DummyMessagingService>();
+            }
 
             Mapper.Initialize(c =>
             {
