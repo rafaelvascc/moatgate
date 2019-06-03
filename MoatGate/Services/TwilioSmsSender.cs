@@ -10,9 +10,9 @@ namespace MoatGate.Services
     {
         private readonly TwilioOptions _options;
 
-        public TwilioSmsSender(IOptions<TwilioOptions> optionsAcessor)
+        public TwilioSmsSender(TwilioOptions options)
         {
-            _options = optionsAcessor.Value;
+            _options = options;
         }
 
         public async Task SendSMSAsync(string number, string message)

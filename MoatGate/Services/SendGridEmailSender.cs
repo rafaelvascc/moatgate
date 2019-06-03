@@ -10,9 +10,9 @@ namespace MoatGate.Services
     {
         public SendGridOptions Options { get; } //set only via Secret Manager
 
-        public SendGridEmailSender(IOptions<SendGridOptions> optionsAccessor)
+        public SendGridEmailSender(SendGridOptions options)
         {
-            Options = optionsAccessor.Value;
+            Options = options;
         }
 
         public Task SendEmailAsync(string senderEmail, string senderName, string email, string subject, string message)
