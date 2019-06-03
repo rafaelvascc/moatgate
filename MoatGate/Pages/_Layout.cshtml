@@ -6,25 +6,27 @@
     <title>@ViewData["Title"] - MoatGate</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/lib/font-awesome/web-fonts-with-css/css/fontawesome-all.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/font-awesome/web-fonts-with-css/css/fontawesome-all.css" asp-append-version="true" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/lib/font-awesome/web-fonts-with-css/css/fontawesome-all.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/lib/animatecss/animatecss.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/lib/chosen/chosen.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/select2/css/select2.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/lib/font-awesome/web-fonts-with-css/css/fontawesome-all.min.css" />
+        <link rel="stylesheet" href="~/lib/font-awesome/web-fonts-with-css/css/fontawesome-all.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/lib/font-awesome/web-fonts-with-css/css/fontawesome-all.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/lib/animatecss/animatecss.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/lib/chosen/chosen.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/select2/css/select2.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
     @RenderSection("Styles", required: false)
@@ -69,7 +71,7 @@
     </div>
     <footer>
         <div class="container">
-            <p>&copy; 2017 - MoatGate</p>
+            <p>&copy; 2019 - MoatGate</p>
         </div>
     </footer>
     <div id="deleteModal" class="modal fade">
@@ -102,6 +104,7 @@
         <script src="~/lib/remarkable-bootstrap-notify/dist/bootstrap-notify.js" asp-append-version="true"></script>
         <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.js" asp-append-version="true"></script>
         <script src="~/lib/chosen/chosen.jquery.js" asp-append-version="true"></script>
+        <script src="~/lib/select2/js/select2.full.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
@@ -114,6 +117,7 @@
         <script src="~/lib/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js" asp-append-version="true"></script>
         <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js" asp-append-version="true"></script>
         <script src="~/lib/chosen/chosen.jquery.min.js" asp-append-version="true"></script>
+        <script src="~/lib/select2/js/select2.full.min.js" asp-append-version="true"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
     @RenderSection("Scripts", required: false)
