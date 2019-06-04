@@ -61,7 +61,7 @@ namespace MoatGate.Pages.Resources.Api
 
             var userClaimsOptions = new List<SelectListItem>();
             var allIdentityResources = (await _context.IdentityResources.Include(c => c.UserClaims).AsNoTracking().ToListAsync()).Select(i => i.ToModel());
-            var allClaimsInIdentityResources = allIdentityResources.SelectMany(c => c.UserClaims);
+            var allClaimsInIdentityResources = allIdentityResources.SelectMany(c => c.UserClaims).Distinct();
             var allPossibleClaimTypes = typeof(JwtClaimTypes).GetFields().Select(t => t.GetValue(null).ToString()).ToList();
             var missingClaimTypesOnDatabase = allPossibleClaimTypes.Except(allClaimsInIdentityResources).OrderBy(v => v).ToList();
             var claimTypesByIdentityResource = allIdentityResources

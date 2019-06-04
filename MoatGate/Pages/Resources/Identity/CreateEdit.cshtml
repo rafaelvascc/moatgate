@@ -1,6 +1,8 @@
 @page "{id:int?}"
 @model MoatGate.Pages.Resources.Identity.CreateEditModel
-
+@{ 
+    var UserClaimsOptions = (List<SelectListItem>)ViewData["UserClaimsOptions"];
+}
 <h2>@ViewData["Title"]</h2>
 <div class="row">
     <div class="col-md-12">
@@ -22,6 +24,11 @@
                     <label class="control-label">Description</label> <help text="This value will be used e.g. on the consent screen."></help>
                     <input asp-for="IdentityResource.Description" class="form-control" />
                     <span asp-validation-for="IdentityResource.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Included Claims</label> <help text="List of associated user claim types that should be included in the identity token." ></help>
+                    <select class="form-control select-user-claims" id="ddlAvailableClaims" asp-for="SelectedClaims" asp-items="UserClaimsOptions" multiple data-placeholder="Select Available Claims"></select>
+                    <span asp-validation-for="IdentityResource.UserClaims" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -54,9 +61,6 @@
                         </label>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <partial name="./PartialViews/IdentityResourceClaims" for="IdentityResource.UserClaims" />
             </div>
             <nav class="navbar navbar-default navbar-fixed-bottom">
                 <div class="container">
