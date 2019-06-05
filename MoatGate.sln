@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2008
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoatGate", "MoatGate\MoatGate.csproj", "{88F93623-3BC6-4795-9F36-D6CC93D63577}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoatGate.RequestHandling", "MoatGate.RequestHandling\MoatGate.RequestHandling.csproj", "{5050F0BC-E0BA-45EB-9928-461EE73633BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{88F93623-3BC6-4795-9F36-D6CC93D63577}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88F93623-3BC6-4795-9F36-D6CC93D63577}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88F93623-3BC6-4795-9F36-D6CC93D63577}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5050F0BC-E0BA-45EB-9928-461EE73633BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5050F0BC-E0BA-45EB-9928-461EE73633BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5050F0BC-E0BA-45EB-9928-461EE73633BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5050F0BC-E0BA-45EB-9928-461EE73633BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
