@@ -134,7 +134,9 @@
             <legend>Claims</legend>
             <ul>
                 {{props claims}}
+                {{if key != 'picture'}}
                 <li><label>{{:key}}</label>: {{:prop}}</li>
+                {{/if}}
                 {{/props}}
             </ul>
         </fieldset>

@@ -40,7 +40,7 @@
                         value: $("#ddlLockoutEnabled").val()
                     },
                     searchable: true
-                },{
+                }, {
                     data: "accessFailedCount",
                     name: "AccessFailedCount",
                     orderable: true,
@@ -52,7 +52,7 @@
                 },];
 
                 d.columns.concat(additionalSearchParams);
-                
+
                 d.Id = $("#txtId").val();
 
                 d.roles = $("#ddlRoles").val();
@@ -95,7 +95,7 @@
                 name: "PhoneNumber",
                 title: "Phone Number",
                 searchable: true,
-                searching: true            
+                searching: true
             },
             {
                 class: "actions-control",
@@ -124,16 +124,16 @@
     //https://datatables.net/examples/server_side/row_details.html
     var detailRows = [];
 
-    $table.on( 'click', 'tbody tr td.details-control', function () {
+    $table.on('click', 'tbody tr td.details-control', function () {
         var $tr = $(this).closest('tr');
         var row = $table.row($tr);
         var idx = $.inArray($tr.attr('id'), detailRows);
- 
+
         if (row.child.isShown()) {
             $tr.find('i:first').addClass('fa-plus');
             $tr.find('i:first').removeClass('fa-minus');
             row.child.hide();
- 
+
             // Remove from the 'open' array
             detailRows.splice(idx, 1);
         }
@@ -141,10 +141,10 @@
             $tr.find('i:first').removeClass('fa-plus');
             $tr.find('i:first').addClass('fa-minus');
             row.child(formatDetails(row.data())).show();
- 
+
             // Add to the 'open' array
-            if ( idx === -1 ) {
-                detailRows.push( $tr.attr('id') );
+            if (idx === -1) {
+                detailRows.push($tr.attr('id'));
             }
         }
     });
@@ -152,16 +152,16 @@
     // On each draw, loop over the `detailRows` array and show any child rows
     $table.on('draw', function () {
         $.each(detailRows, function (i, id) {
-            $('#' + id + ' td.details-control').trigger( 'click' );
+            $('#' + id + ' td.details-control').trigger('click');
         });
     });
-    
+
     var userDetailsTemplate = $.templates("#user-details-template");
 
-    function formatDetails (d) {
+    function formatDetails(d) {
         return userDetailsTemplate.render(d);
     }
-    
+
     var userActionsTemplate = $.templates("#user-actions-template");
 
     function renderUseractionButtons(user) {
