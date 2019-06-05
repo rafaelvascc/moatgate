@@ -1,6 +1,7 @@
 ﻿$(function () {
-    //https://harvesthq.github.io/chosen/
-    $("#ddlRoles").chosen({ width: "100%" });
+    $("#ddlRoles").select2({
+        theme: "bootstrap"
+    });
 
     //https://datatables.net/
     var $table = $('table').DataTable({

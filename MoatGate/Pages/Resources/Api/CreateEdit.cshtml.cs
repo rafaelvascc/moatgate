@@ -136,6 +136,26 @@ namespace MoatGate.Pages.Resources.Api
                     }
                 }
 
+                ApiResource.UserClaims = UserClaims.Select(c => new ApiResourceClaim() { Type = c }).ToList();
+
+                foreach (var scope in ApiResource.Scopes)
+                {
+                    if (scope.UserClaims == null)
+                    {
+                        scope.UserClaims = new List<ApiScopeClaim>();
+                    }
+
+                    var key = (ApiResource.Scopes.IndexOf(scope) + 1) * -1;
+                    if (ScopeUserClaims.ContainsKey(key.ToString()))
+                    {
+                        var claims = ScopeUserClaims[key.ToString()] as List<string>;
+                        if (claims != null && claims.Any())
+                        {
+                            scope.UserClaims = claims.Select(c => new ApiScopeClaim() { Type = c }).ToList();
+                        }
+                    }
+                }
+
                 _context.ApiResources.Add(ApiResource);
                 await _context.SaveChangesAsync();
             }
@@ -183,10 +203,13 @@ namespace MoatGate.Pages.Resources.Api
                     else
                     {
                         var key = (ApiResource.Scopes.IndexOf(scope) + 1) * -1;
-                        var claims = ScopeUserClaims[key.ToString()] as List<string>;
-                        if (claims != null && claims.Any())
+                        if (ScopeUserClaims.ContainsKey(key.ToString()))
                         {
-                            scope.UserClaims = claims.Select(c => new ApiScopeClaim() { Type = c }).ToList();
+                            var claims = ScopeUserClaims[key.ToString()] as List<string>;
+                            if (claims != null && claims.Any())
+                            {
+                                scope.UserClaims = claims.Select(c => new ApiScopeClaim() { Type = c }).ToList();
+                            }
                         }
                     }
                 }

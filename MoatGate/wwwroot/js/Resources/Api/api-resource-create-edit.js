@@ -1,6 +1,7 @@
 ﻿$(function () {
-    //https://harvesthq.github.io/chosen/
-    $(".select-user-claims").chosen({ width: "100%" });
+    $(".select-user-claims").select2({
+        theme: "bootstrap"
+    });
 
     function newApiResourceSecretModel(index) {
         this.index = index;
@@ -75,7 +76,9 @@
         var $newHtml = $(allowedScopeCreateTemplate.render(newModel));
         var $baseDdlClaims = $("#ddl-claims-base").clone().attr("id", "").addClass("select-user-claims").attr('name', 'ScopeUserClaims[' + (count + 1) * -1 + ']');
         $newHtml.find('.claims-cell').append($baseDdlClaims);
-        $baseDdlClaims.chosen({ width: "100%" });
+        $baseDdlClaims.select2({
+            theme: "bootstrap"
+        });
         $tblAllowedScopesBody.append($newHtml);
     });
 

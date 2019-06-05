@@ -9,6 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using MoatGate.Services;
 using System;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using IdentityServer4.EntityFramework.Mappers;
+using IdentityServer4.EntityFramework.Entities;
 
 namespace MoatGate.Pages.Client
 {
@@ -27,7 +30,10 @@ namespace MoatGate.Pages.Client
         [BindProperty]
         public string GrantTypes { set; get; } = "ClientCredentials";
 
-        public void OnGet(int? id)
+        [BindProperty]
+        public List<string> SelectedAllowedScopes { set; get; } = new List<string>();
+
+        public async Task<IActionResult> OnGet(int? id)
         {            
             if (id.HasValue)
             {
@@ -66,6 +72,57 @@ namespace MoatGate.Pages.Client
                     Claims = new List<IdentityServer4.EntityFramework.Entities.ClientClaim>()
                 };
             }
+
+            var allowedIdentityScopeOptions = new List<SelectListItem>();
+            var allowedApiScopeOptions = new List<SelectListItem>();
+
+            var identityResourceOptionsGroup = new SelectListGroup()
+            {
+                Name = "Identity Resource"
+            };
+
+            var apiResourceOptionsGroup = new SelectListGroup()
+            {
+                Name = "Api Resource"
+            };
+
+            var userClaimsOptions = new List<SelectListItem>();
+            var allApiResources = (await _context.ApiResources.Include(r => r.Scopes).AsNoTracking().ToListAsync()).Select(i => i.ToModel());
+            var allIdentityResources = await _context.IdentityResources.Select(r => r.Name).AsNoTracking().ToListAsync();
+            allIdentityResources.Add("offline_access");
+
+            if (allApiResources.Any() && allApiResources.SelectMany(r => r.Scopes).Any())
+            {
+                allowedApiScopeOptions = allApiResources.SelectMany(c => c.Scopes).Distinct().Select(s =>
+                {
+                    var scopeOf = string.Join(", ", allApiResources.Where(r => r.Scopes.Any(rs => rs.Name == s.Name)).Select(r => r.Name).OrderBy(n => n).ToList());
+                    var optionText = $"{s.Name} ({scopeOf})";
+                    return new SelectListItem(optionText, s.Name, false, false)
+                    {
+                        Group = apiResourceOptionsGroup
+                    };
+                }).ToList();
+            }
+
+            if (allIdentityResources.Any())
+            {
+                allowedIdentityScopeOptions = allIdentityResources.Distinct().OrderBy(n => n).Select(s =>
+                {
+                    return new SelectListItem(s, s, false, false)
+                    {
+                        Group = identityResourceOptionsGroup
+                    };
+                }).ToList();
+            }
+
+            ViewData["AllowedScopeOptions"] = allowedApiScopeOptions.Union(allowedIdentityScopeOptions).ToList();
+
+            if (Client.AllowedScopes != null && Client.AllowedScopes.Any())
+            {
+                SelectedAllowedScopes = Client.AllowedScopes.Select(s => s.Scope).ToList();
+            }
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -94,6 +151,8 @@ namespace MoatGate.Pages.Client
                     }
                 }
 
+                Client.AllowedScopes = SelectedAllowedScopes.Select(s => new ClientScope() { Scope = s }).ToList();
+
                 _context.Clients.Add(Client);
                 await _context.SaveChangesAsync();
             }
@@ -110,7 +169,9 @@ namespace MoatGate.Pages.Client
                     .Include(c => c.Properties)
                     .Include(c => c.RedirectUris)
                     .SingleOrDefault(c => c.Id == Client.Id);
-                
+
+                Client.AllowedScopes = SelectedAllowedScopes.Select(s => new ClientScope() { Scope = s }).ToList();
+
                 Mapper.Map(Client, CurrentClient);
                 CurrentClient.AllowedCorsOrigins.ReflectToEntityFrameworkState(Client.AllowedCorsOrigins, _context);
                 CurrentClient.AllowedGrantTypes.ReflectToEntityFrameworkState(Client.AllowedGrantTypes, _context);

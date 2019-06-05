@@ -1,4 +1,8 @@
 ﻿$(function () {
+    $("#ddlAllowedScopes").select2({
+        theme: "bootstrap"
+    });
+
     function newClientSecretModel(index) {
         this.index = index;
         this.id = 0;
@@ -9,12 +13,6 @@
     }
 
     function newClientRedirectUriModel(index) {
-        this.index = index;
-        this.id = 0;
-        this.value = "";
-    }
-
-    function newClientAllowedScopeModel(index) {
         this.index = index;
         this.id = 0;
         this.value = "";
@@ -109,38 +107,6 @@
         for (var i = 0; i < $rows.length; i++) {
             var $row = $($rows[i]);
             var $fields = $row.find("[name^='Client.RedirectUris[']");
-            for (var j = 0; j < $fields.length; j++) {
-                var $field = $($fields[j]);
-                $field.attr("name", $field.attr("name").replace(/\[([1-9]\d*)\]/, "[" + i + "]"));
-            }
-        }
-    }
-
-    //Allowed Scopes
-    var $allowedScopeScope = $("section[data-scope='client-partials-allowed-scopes']");
-    var allowedScopeCreateTemplate = $.templates("#allowed-scope-template");
-    var $tblAllowedScopes = $("#tbl-allowed-scope", $allowedScopeScope);
-    var $tblAllowedScopesBody = $("tbody", $tblAllowedScopes);
-    var $btnAddAllowedScope = $("#btn-add-allowed-scope", $allowedScopeScope);
-
-    $btnAddAllowedScope.off("click").on("click", function (event) {
-        var count = $("tr", $tblAllowedScopesBody).length;
-        var newModel = new newClientAllowedScopeModel(count);
-        var newHtml = allowedScopeCreateTemplate.render(newModel);
-        $tblAllowedScopesBody.append($(newHtml));
-    });
-
-    $tblAllowedScopesBody.off("click").on("click", ".btn-delete-allowed-scope", function (event) {
-        var $row = $(event.target).parents("tr:first");
-        $row.remove();
-        updateAllowedScopesIndexes();
-    });
-
-    function updateAllowedScopesIndexes() {
-        var $rows = $tblAllowedScopesBody.find("tr");
-        for (var i = 0; i < $rows.length; i++) {
-            var $row = $($rows[i]);
-            var $fields = $row.find("[name^='Client.AllowedScopes[']");
             for (var j = 0; j < $fields.length; j++) {
                 var $field = $($fields[j]);
                 $field.attr("name", $field.attr("name").replace(/\[([1-9]\d*)\]/, "[" + i + "]"));
