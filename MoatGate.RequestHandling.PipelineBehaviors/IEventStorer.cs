@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace MoatGate.RequestHandling
+namespace MoatGate.RequestHandling.PipelineBehaviors
 {
     public interface IEventStorer
     {

@@ -7,6 +7,5 @@
 
     public interface ICommand<T> : ICommand
     {
-
     }
 }

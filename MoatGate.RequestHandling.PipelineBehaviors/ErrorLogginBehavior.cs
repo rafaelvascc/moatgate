@@ -10,11 +10,11 @@ namespace MoatGate.RequestHandling.PipelineBehaviors
         where TRequest : Request
         where TResponse : Response
     {
-        public ILogger _logger;
+        public ILoggerFactory _loggerFactory;
 
         public ErrorLogginBehavior(ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger("MoatGate");
+            _loggerFactory = loggerFactory;
         }
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
@@ -22,7 +22,8 @@ namespace MoatGate.RequestHandling.PipelineBehaviors
             var result = await next();
             if (result is ErrorResponse)
             {
-                _logger.LogDebug(result.Exception, string.Join('|', result.Messages));
+                var logger = _loggerFactory.CreateLogger(typeof(TRequest).FullName);
+                logger.LogError(result.Exception, string.Join('|', result.Messages));
             }
             return result;
         }

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Account\" />
+    <Folder Include="Client\" />
+    <Folder Include="Consent\" />
+    <Folder Include="User\" />
+    <Folder Include="Roles\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Profile\" />
+  </ItemGroup>
+
+</Project>

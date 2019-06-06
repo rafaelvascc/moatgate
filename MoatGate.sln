@@ -5,7 +5,17 @@ VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoatGate", "MoatGate\MoatGate.csproj", "{88F93623-3BC6-4795-9F36-D6CC93D63577}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoatGate.RequestHandling", "MoatGate.RequestHandling\MoatGate.RequestHandling.csproj", "{5050F0BC-E0BA-45EB-9928-461EE73633BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoatGate.RequestHandling", "MoatGate.RequestHandling\MoatGate.RequestHandling.csproj", "{5050F0BC-E0BA-45EB-9928-461EE73633BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoatGate.Core", "MoatGate.Core\MoatGate.Core.csproj", "{AE4F6DFD-65C0-4BBF-BC22-1ACB918FE972}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoatGate.RequestHandling.Handlers", "MoatGate.RequestHandling.Handlers\MoatGate.RequestHandling.Handlers.csproj", "{7EB095E9-5845-4455-80E8-D3EF996B3A96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoatGate.RequestHandling.PipelineBehaviors", "MoatGate.RequestHandling.PipelineBehaviors\MoatGate.RequestHandling.PipelineBehaviors.csproj", "{2A53E3C2-B17E-4FFF-8ACB-C6B69D9902FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoatGate.Repositories.MongoDb", "MoatGate.Repositories.MongoDb\MoatGate.Repositories.MongoDb.csproj", "{27201AD9-48FC-4555-A802-9A3E252E8AC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoatGate.Services", "MoatGate.Services\MoatGate.Services.csproj", "{42A19D59-61EE-423A-AB0F-C117B660F997}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +31,26 @@ Global
 		{5050F0BC-E0BA-45EB-9928-461EE73633BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5050F0BC-E0BA-45EB-9928-461EE73633BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5050F0BC-E0BA-45EB-9928-461EE73633BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE4F6DFD-65C0-4BBF-BC22-1ACB918FE972}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE4F6DFD-65C0-4BBF-BC22-1ACB918FE972}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE4F6DFD-65C0-4BBF-BC22-1ACB918FE972}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE4F6DFD-65C0-4BBF-BC22-1ACB918FE972}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EB095E9-5845-4455-80E8-D3EF996B3A96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EB095E9-5845-4455-80E8-D3EF996B3A96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EB095E9-5845-4455-80E8-D3EF996B3A96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EB095E9-5845-4455-80E8-D3EF996B3A96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A53E3C2-B17E-4FFF-8ACB-C6B69D9902FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A53E3C2-B17E-4FFF-8ACB-C6B69D9902FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A53E3C2-B17E-4FFF-8ACB-C6B69D9902FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A53E3C2-B17E-4FFF-8ACB-C6B69D9902FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27201AD9-48FC-4555-A802-9A3E252E8AC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27201AD9-48FC-4555-A802-9A3E252E8AC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27201AD9-48FC-4555-A802-9A3E252E8AC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27201AD9-48FC-4555-A802-9A3E252E8AC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42A19D59-61EE-423A-AB0F-C117B660F997}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42A19D59-61EE-423A-AB0F-C117B660F997}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42A19D59-61EE-423A-AB0F-C117B660F997}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42A19D59-61EE-423A-AB0F-C117B660F997}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
