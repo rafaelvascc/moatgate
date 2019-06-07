@@ -7,6 +7,8 @@ namespace MoatGate
 {
     public static class EnvironmentVariablesKeys
     {
+        public static string ApplicationUrl => "MOATGATE_APPLICATION_URL";
+
         public static string DbConnectionString => "MOATGATE_DB_CONNECTIONSTRING";
         public static string RedisConnectionString => "MOATGATE_REDIS_CONNECTIONSTRING";
 

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MoatGate.Models.AspNetIIdentityCore.EntityFramework;
@@ -8,8 +9,10 @@ using MoatGate.Models.User;
 
 namespace MoatGate.Api
 {
+    [Area("api")]
     [Produces("application/json")]
-    [Route("api/users")]
+    [Route("[area]/users")]
+    [Authorize(AuthenticationSchemes = "Bearer", Policy = "IsAuthorizedUserApiClient")]
     public class UserController : Controller
     {
         private readonly UserManager<MoatGateIdentityUser> _userManager;

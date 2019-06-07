@@ -31,6 +31,7 @@
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0006" />
     <PackageReference Include="SixLabors.Shapes" Version="1.0.0-beta0008" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="4.5.5" />
     <PackageReference Include="Twilio" Version="5.29.0" />
   </ItemGroup>
   <ItemGroup>

@@ -134,5 +134,17 @@ namespace MoatGate
                 TwilioTestAccountFromNumber = twilioTestAccountFromNumber
             });
         }
+
+        public string GetApplicationUrl()
+        {
+            var applicationUrl = Environment.GetEnvironmentVariable(EnvironmentVariablesKeys.ApplicationUrl);
+
+            if (_env.IsDevelopment() || string.IsNullOrEmpty(applicationUrl))
+            {
+                applicationUrl = _configuration.GetValue<string>("ApplicationUrl");
+            }
+
+            return applicationUrl;
+        }
     }
 }

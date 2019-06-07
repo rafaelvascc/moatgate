@@ -13,9 +13,9 @@ using IdentityServer4.EntityFramework.Entities;
 using System.Linq;
 using MoatGate.Services;
 using Swashbuckle.AspNetCore.Swagger;
-using Microsoft.AspNetCore.Http;
 using MoatGate.Infrastructure;
-using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Authorization;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace MoatGate
 {
@@ -129,8 +129,21 @@ namespace MoatGate
             {
                 options.AddPolicy("IsAuthenticated", policy => policy.RequireAuthenticatedUser());
                 options.AddPolicy("IsIdentityAdmin", policy => policy.RequireRole("IdentityAdmin"));
+                options.AddPolicy("IsAuthorizedUserApiClient", policy =>
+                {
+                    policy.RequireScope("moatgate_api_users");
+                });
             });
 
+            //TODO: use IdentityServer4.Hosting.LocalAccessTokenValidation when identity server 3.0 ships
+            services.AddAuthentication()                
+                .AddIdentityServerAuthentication("Bearer", options =>
+                {
+                    options.Authority = configLoader.GetApplicationUrl();
+                    options.RequireHttpsMetadata = false;
+                    options.ApiName = "moatgate_api";
+                    options.ApiSecret = "moatgate_api_secret";
+                });
 
             var (useSendgrid, sendgridOptions) = configLoader.GetSendGridOptions();
             var (useTwilio, twilioOptions) = configLoader.GetSendGridOptions();
@@ -226,6 +239,14 @@ namespace MoatGate
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Moat Gate Public API", Version = "v1" });
+                c.AddSecurityDefinition("oauth2", new ApiKeyScheme
+                {
+                    Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
+                    In = "header",
+                    Name = "Authorization",
+                    Type = "apiKey"      
+                });
+                c.OperationFilter<SecurityRequirementsOperationFilter>();
             });
 
             //if (!_env.IsDevelopment())
@@ -281,6 +302,8 @@ namespace MoatGate
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Moat Gate Public API");
             });
+
+            app.UseAuthentication();
 
             app.UseMvc();
         }

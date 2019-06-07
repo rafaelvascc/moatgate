@@ -98,6 +98,46 @@ namespace MoatGate
                 context.IdentityResources.Add(Mapper.Map<IdentityServer4.EntityFramework.Entities.IdentityResource>(new IdentityResources.Profile()));
                 await context.SaveChangesAsync();
             }
+
+            if (!context.ApiResources.Any(a => a.Name == "moatgate_api"))
+            {
+                var moatgateApi = new IdentityServer4.EntityFramework.Entities.ApiResource
+                {
+                    Name = "moatgate_api",
+                    DisplayName = "MoatGate's Public API",
+                    Description = "MoatGate's public API for client applications",
+                    NonEditable = true,
+                    Created = DateTime.UtcNow,
+                    Secrets = new System.Collections.Generic.List<IdentityServer4.EntityFramework.Entities.ApiSecret>
+                    {
+                        new IdentityServer4.EntityFramework.Entities.ApiSecret
+                        {
+                            Created = DateTime.UtcNow,
+                            Type = "SharedSecret",
+                            Value = "moatgate_api_secret".Sha256()
+                        }
+                    },
+                    Scopes = new System.Collections.Generic.List<IdentityServer4.EntityFramework.Entities.ApiScope>
+                    {
+                        new IdentityServer4.EntityFramework.Entities.ApiScope
+                        {
+                            Name = "moatgate_api_users",
+                            DisplayName = "MoatGate's Users API",
+                            Description = "MoatGate's public API for manipulation of users",
+                            Required = false,
+                            Emphasize = true,
+                            ShowInDiscoveryDocument = true,
+                            UserClaims = new IdentityResources.Email().UserClaims.Union(new IdentityResources.OpenId().UserClaims)
+                                                .Select(c => new IdentityServer4.EntityFramework.Entities.ApiScopeClaim
+                                                {
+                                                    Type = c
+                                                }).ToList()
+                        }
+                    }
+                };
+                context.ApiResources.Add(moatgateApi);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }
