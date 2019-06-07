@@ -5,10 +5,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
 WORKDIR /src
-COPY ["MoatGate/MoatGate.csproj", "MoatGate/"]
+COPY ["MoatGate.csproj", "MoatGate/"]
 RUN dotnet restore "MoatGate/MoatGate.csproj"
-COPY . .
 WORKDIR "/src/MoatGate"
+COPY . .
 RUN dotnet build "MoatGate.csproj" -c Release -o /app
 
 FROM build AS publish

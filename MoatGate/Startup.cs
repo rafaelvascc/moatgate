@@ -16,6 +16,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using MoatGate.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Swashbuckle.AspNetCore.Filters;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace MoatGate
 {
@@ -38,7 +39,7 @@ namespace MoatGate
             var identityServerConnectionString = configLoader.GetDbConnectionString();
 
             if (string.IsNullOrEmpty(identityServerConnectionString))
-                throw new ApplicationException("Could't find Moatgate Connection String from environment variable MOATGATE_CONNECTION_STRING or configuration MoatGateIdentityServerConnectionString on the appSettings.json file");
+                throw new ApplicationException("Could't find Moatgate Connection String from environment variable MOATGATE_DB_CONNECTION_STRING or configuration MoatGateIdentityServerConnectionString on the appSettings.json file");
 
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
@@ -73,6 +74,11 @@ namespace MoatGate
                 options.User.RequireUniqueEmail = true;
             });
 
+            var (useRedisTicketStore, redisServer) = configLoader.GetRedisOptions();
+
+            if (useRedisTicketStore && string.IsNullOrWhiteSpace(redisServer))
+                throw new ApplicationException("Could't find Redis serer configuration from environment variable MOATGATE_REDIS_CONNECTION_STRING or configuration RedisConnectionString on the appSettings.json file");
+
             services.ConfigureApplicationCookie(options =>
             {
                 // Cookie settings
@@ -82,7 +88,7 @@ namespace MoatGate
                 options.LogoutPath = "/Account/Logout"; // If the LogoutPath is not set here, ASP.NET Core will default to /Account/Logout
                 options.AccessDeniedPath = "/Account/AccessDenied"; // If the AccessDeniedPath is not set here, ASP.NET Core will default to /Account/AccessDenied
                 options.SlidingExpiration = true;
-                options.SessionStore = new InMemoryTicketStore();
+                options.SessionStore = useRedisTicketStore ? new RedisTicketStore(redisServer) : (ITicketStore)new InMemoryTicketStore();
             });
 
             // configure identity server
@@ -136,7 +142,7 @@ namespace MoatGate
             });
 
             //TODO: use IdentityServer4.Hosting.LocalAccessTokenValidation when identity server 3.0 ships
-            services.AddAuthentication()                
+            services.AddAuthentication()
                 .AddIdentityServerAuthentication("Bearer", options =>
                 {
                     options.Authority = configLoader.GetApplicationUrl();
@@ -244,7 +250,7 @@ namespace MoatGate
                     Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
                     In = "header",
                     Name = "Authorization",
-                    Type = "apiKey"      
+                    Type = "apiKey"
                 });
                 c.OperationFilter<SecurityRequirementsOperationFilter>();
             });

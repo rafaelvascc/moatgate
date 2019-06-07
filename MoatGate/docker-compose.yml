@@ -6,8 +6,11 @@ services:
       - "5001:80"
     depends_on:
       - sql-server
+      - redis
     environment:
-      MOATGATE_DB_CONNECTIONSTRING: "Server=sql-server;Database=MoatGate.IdentityServer;User Id=sa;Password=1q2w!Q@W;"
+      MOATGATE_DB_CONNECTION_STRING: "Server=sql-server;Database=MoatGate.IdentityServer;User Id=sa;Password=1q2w!Q@W;"
+      MOATGATE_USE_REDIS_TICKET_STORE: "true"
+      MOATGATE_REDIS_CONNECTION_STRING: "redis:6379"
   sql-server:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
     ports:
@@ -18,3 +21,9 @@ services:
       MSSQL_PID: Express
       SA_PASSWORD: 1q2w!Q@W
       ACCEPT_EULA: Y
+    restart: always
+  redis:
+    image: redis:5.0.5
+    ports: 
+      - "6380:6379"
+    restart: always

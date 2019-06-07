@@ -9,8 +9,10 @@ namespace MoatGate
     {
         public static string ApplicationUrl => "MOATGATE_APPLICATION_URL";
 
-        public static string DbConnectionString => "MOATGATE_DB_CONNECTIONSTRING";
-        public static string RedisConnectionString => "MOATGATE_REDIS_CONNECTIONSTRING";
+        public static string DbConnectionString => "MOATGATE_DB_CONNECTION_STRING";
+
+        public static string UseRedisTicketStore => "MOATGATE_USE_REDIS_TICKET_STORE";
+        public static string RedisConnectionString => "MOATGATE_REDIS_CONNECTION_STRING";
 
         public static string UseSendGrid => "MOATGATE_USE_SENDGRID";
         public static string SendGridUser => "MOATGATE_SENDGRID_USER";
