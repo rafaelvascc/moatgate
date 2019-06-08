@@ -15,7 +15,7 @@ namespace MoatGate.Services
             Options = options;
         }
 
-        public Task SendEmailAsync(string senderEmail, string senderName, string email, string subject, string message)
+        public async Task SendEmailAsync(string senderEmail, string senderName, string email, string subject, string message)
         {
             var client = new SendGridClient(Options.SendGridKey);
             var msg = new SendGridMessage()
@@ -26,7 +26,7 @@ namespace MoatGate.Services
                 HtmlContent = message
             };
             msg.AddTo(new EmailAddress(email));
-            return client.SendEmailAsync(msg);
+            await client.SendEmailAsync(msg);
         }
 
         public async Task SendEmailPasswordResetAsync(string sendTo, string callbackUrl)

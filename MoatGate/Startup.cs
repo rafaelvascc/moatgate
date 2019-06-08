@@ -152,7 +152,7 @@ namespace MoatGate
                 });
 
             var (useSendgrid, sendgridOptions) = configLoader.GetSendGridOptions();
-            var (useTwilio, twilioOptions) = configLoader.GetSendGridOptions();
+            var (useTwilio, twilioOptions) = configLoader.GetTwillioOptions();
 
             if (useSendgrid)
             {
