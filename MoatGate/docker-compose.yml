@@ -9,8 +9,9 @@ services:
       - redis
     environment:
       MOATGATE_DB_CONNECTION_STRING: "Server=sql-server;Database=MoatGate.IdentityServer;User Id=sa;Password=1q2w!Q@W;"
-      MOATGATE_USE_REDIS_TICKET_STORE: "true"
+      MOATGATE_USE_REDIS_TICKET_STORE: "false"
       MOATGATE_REDIS_CONNECTION_STRING: "redis:6379"
+    restart: always
   sql-server:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
     ports:

@@ -87,7 +87,7 @@
             <div class="form-group">
                 <label class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.TimeZone)</label>
                 <div>
-                    <select class="form-control applyChosen" data-placeholder="Select Timezone" id="ddlTimezone" asp-for="EditProfileViewModel.TimeZone" asp-items="@(new SelectList(Model.TimeZones, "Key", "Value"))">
+                    <select class="form-control applySelectTwo" data-placeholder="Select Timezone" id="ddlTimezone" asp-for="EditProfileViewModel.TimeZone" asp-items="@(new SelectList(Model.TimeZones, "Key", "Value"))">
                         <option value=""></option>
                     </select>
                 </div>
@@ -95,7 +95,7 @@
             <div class="form-group">
                 <label class=" control-label">@Html.DisplayNameFor(model => model.EditProfileViewModel.Locale)</label>
                 <div>
-                    <select class="form-control applyChosen" data-placeholder="Select Locale" id="ddlLocale" asp-for="EditProfileViewModel.Locale" asp-items="@(new SelectList(Model.Cultures, "Key", "Value"))">
+                    <select class="form-control applySelectTwo" data-placeholder="Select Locale" id="ddlLocale" asp-for="EditProfileViewModel.Locale" asp-items="@(new SelectList(Model.Cultures, "Key", "Value"))">
                         <option value=""></option>
                     </select>
                 </div>
