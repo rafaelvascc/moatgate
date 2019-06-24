@@ -17,6 +17,8 @@ using MoatGate.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Swashbuckle.AspNetCore.Filters;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace MoatGate
 {
@@ -281,7 +283,7 @@ namespace MoatGate
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IOptions<ForwardedHeadersOptions> baseForwardOptions)
         {
             if (env.IsDevelopment())
             {
@@ -291,6 +293,17 @@ namespace MoatGate
             else
             {
                 app.UseExceptionHandler("/Error");
+
+                //https://github.com/IdentityServer/IdentityServer4/issues/1462
+                if (baseForwardOptions.Value.ForwardedHeaders == ForwardedHeaders.None)
+                {
+                    var options = new ForwardedHeadersOptions
+                    {
+                        ForwardedHeaders = ForwardedHeaders.All,
+                        RequireHeaderSymmetry = false
+                    };
+                    app.UseForwardedHeaders(options);
+                }
                 //app.UseHsts();
             }
 
