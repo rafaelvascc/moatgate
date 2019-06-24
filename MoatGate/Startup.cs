@@ -294,16 +294,18 @@ namespace MoatGate
             {
                 app.UseExceptionHandler("/Error");
 
-                //https://github.com/IdentityServer/IdentityServer4/issues/1462
-                if (baseForwardOptions.Value.ForwardedHeaders == ForwardedHeaders.None)
+                //https://github.com/IdentityServer/IdentityServer4/issues/1331
+                var forwardOptions = new ForwardedHeadersOptions
                 {
-                    var options = new ForwardedHeadersOptions
-                    {
-                        ForwardedHeaders = ForwardedHeaders.All,
-                        RequireHeaderSymmetry = false
-                    };
-                    app.UseForwardedHeaders(options);
-                }
+                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
+                    RequireHeaderSymmetry = false
+                };
+
+                forwardOptions.KnownNetworks.Clear();
+                forwardOptions.KnownProxies.Clear();
+
+                // ref: https://github.com/aspnet/Docs/issues/2384
+                app.UseForwardedHeaders(forwardOptions);
                 //app.UseHsts();
             }
 
